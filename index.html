@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProfileVault — Quản Lý Hồ Sơ Cá Nhân</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+  :root {
+    --navy: #0f1b35;
+    --navy-2: #1a2d52;
+    --navy-3: #243a6a;
+    --accent: #3b82f6;
+    --accent-light: #dbeafe;
+    --accent-mid: #93c5fd;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --surface: #f8faff;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text-1: #0f172a;
+    --text-2: #475569;
+    --text-3: #94a3b8;
+    --sidebar-w: 240px;
+    --header-h: 60px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--surface);
+    color: var(--text-1);
+    display: flex;
+    min-height: 100vh;
+    font-size: 14px;
+  }
+
+  /* ── Sidebar ─────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    background: var(--navy);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .logo-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-mark span {
+    color: var(--accent-mid);
+  }
+
+  .logo-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .nav-section {
+    padding: 16px 12px 8px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 0 8px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: 8px;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 13.5px;
+    margin-bottom: 1px;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
+
+  .nav-item.active {
+    background: rgba(59,130,246,0.18);
+    color: var(--accent-mid);
+  }
+
+  .nav-item .ti { font-size: 17px; }
+
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 99px;
+    font-weight: 600;
+  }
+
+  .sidebar-footer {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .user-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .user-chip:hover { background: rgba(255,255,255,0.07); }
+
+  .avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px; color: #fff;
+    flex-shrink: 0;
+  }
+
+  .user-info { flex: 1; min-width: 0; }
+
+  .user-name {
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+
+  .user-role {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── Main ─────────────────────────────────────── */
+  .main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Topbar ───────────────────────────────────── */
+  .topbar {
+    height: var(--header-h);
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .topbar-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+
+  .search-box {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    width: 240px;
+  }
+
+  .search-box input {
+    border: none; background: none; outline: none;
+    font-family: inherit; font-size: 13.5px;
+    color: var(--text-1); width: 100%;
+  }
+
+  .search-box .ti { color: var(--text-3); font-size: 16px; }
+
+  .topbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .icon-btn {
+    width: 34px; height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--text-2);
+    position: relative;
+  }
+
+  .icon-btn:hover { background: var(--surface); }
+  .icon-btn .ti { font-size: 17px; }
+
+  .notif-dot {
+    position: absolute; top: 5px; right: 5px;
+    width: 7px; height: 7px;
+    background: var(--red);
+    border-radius: 50%;
+    border: 1.5px solid #fff;
+  }
+
+  /* ── Content ──────────────────────────────────── */
+  .content {
+    padding: 24px;
+    flex: 1;
+  }
+
+  /* ── Progress Banner ──────────────────────────── */
+  .progress-banner {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .progress-ring-wrap {
+    position: relative;
+    width: 72px; height: 72px;
+    flex-shrink: 0;
+  }
+
+  .progress-ring-wrap svg { transform: rotate(-90deg); }
+
+  .progress-center {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .progress-pct {
+    font-size: 17px; font-weight: 700;
+    color: var(--text-1);
+  }
+
+  .progress-info { flex: 1; }
+
+  .progress-title {
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .progress-sub {
+    font-size: 13px; color: var(--text-2);
+    margin-bottom: 12px;
+  }
+
+  .progress-bar-track {
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    width: 72%;
+    background: var(--accent);
+    border-radius: 99px;
+  }
+
+  .progress-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-weight: 500;
+  }
+
+  .tag-warn { background: var(--amber-light); color: #92400e; }
+  .tag-ok { background: var(--green-light); color: #14532d; }
+
+  .progress-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-secondary {
+    background: var(--card);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13.5px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* ── Stats Row ────────────────────────────────── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  .stat-icon.blue { background: #eff6ff; color: var(--accent); }
+  .stat-icon.teal { background: #f0fdfa; color: var(--teal); }
+  .stat-icon.amber { background: #fffbeb; color: var(--amber); }
+  .stat-icon.green { background: #f0fdf4; color: var(--green); }
+
+  .stat-label { font-size: 12px; color: var(--text-3); margin-bottom: 3px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text-1); }
+  .stat-change { font-size: 11px; color: var(--green); margin-top: 2px; }
+
+  /* ── Two columns ──────────────────────────────── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 18px;
+    margin-bottom: 20px;
+  }
+
+  /* ── Section Card ─────────────────────────────── */
+  .section-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .section-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .section-head-title {
+    font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .section-head-title .ti { color: var(--accent); font-size: 17px; }
+
+  .section-link {
+    font-size: 12.5px; color: var(--accent);
+    cursor: pointer; text-decoration: none;
+  }
+
+  /* ── Certificate List ─────────────────────────── */
+  .cert-list { padding: 8px 12px; }
+
+  .cert-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+
+  .cert-item:hover { background: var(--surface); }
+
+  .cert-icon {
+    width: 38px; height: 38px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  .cert-icon.blue { background: #eff6ff; color: var(--accent); }
+  .cert-icon.teal { background: #f0fdfa; color: var(--teal); }
+  .cert-icon.amber { background: #fffbeb; color: var(--amber); }
+
+  .cert-name { font-size: 13.5px; font-weight: 500; }
+  .cert-meta { font-size: 12px; color: var(--text-3); margin-top: 1px; }
+
+  .cert-status {
+    margin-left: auto;
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .status-verified { background: var(--green-light); color: #15803d; }
+  .status-pending { background: var(--amber-light); color: #b45309; }
+  .status-new { background: #eff6ff; color: #1d4ed8; }
+
+  /* ── Skills ───────────────────────────────────── */
+  .skills-body { padding: 16px 20px; }
+
+  .skill-row {
+    margin-bottom: 14px;
+  }
+
+  .skill-row:last-child { margin-bottom: 0; }
+
+  .skill-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+
+  .skill-name { font-size: 13px; font-weight: 500; }
+  .skill-pct { font-size: 12px; color: var(--text-3); }
+
+  .skill-track {
+    height: 5px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--accent);
+  }
+
+  .skill-fill.teal { background: var(--teal); }
+  .skill-fill.amber { background: var(--amber); }
+
+  /* ── Activity ─────────────────────────────────── */
+  .activity-list { padding: 8px 12px; }
+
+  .activity-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px 8px;
+    align-items: flex-start;
+  }
+
+  .activity-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-top: 4px;
+    flex-shrink: 0;
+  }
+
+  .dot-blue { background: var(--accent); }
+  .dot-green { background: var(--green); }
+  .dot-amber { background: var(--amber); }
+  .dot-teal { background: var(--teal); }
+
+  .activity-text { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .activity-text strong { color: var(--text-1); font-weight: 500; }
+  .activity-time { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+  /* ── Bottom row ───────────────────────────────── */
+  .bottom-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  /* ── Quick Actions ────────────────────────────── */
+  .quick-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .quick-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    padding: 14px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--surface);
+    transition: all 0.12s;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-2);
+    text-align: center;
+  }
+
+  .quick-btn:hover {
+    background: var(--card);
+    border-color: var(--accent-mid);
+    color: var(--accent);
+  }
+
+  .quick-btn .ti { font-size: 22px; color: var(--accent); }
+
+  /* ── Employers Interested ─────────────────────── */
+  .employer-list { padding: 8px 12px; }
+
+  .employer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .employer-item:hover { background: var(--surface); }
+
+  .employer-logo {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--navy-2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--accent-mid);
+    flex-shrink: 0;
+  }
+
+  .employer-name { font-size: 13px; font-weight: 500; }
+  .employer-role { font-size: 11.5px; color: var(--text-3); }
+  .employer-time { margin-left: auto; font-size: 11px; color: var(--text-3); }
+
+  /* ── QR Share floating card ───────────────────── */
+  .share-card {
+    background: var(--navy);
+    border-radius: 12px;
+    padding: 20px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    text-align: center;
+  }
+
+  .qr-box {
+    width: 90px; height: 90px;
+    background: #fff;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .qr-inner {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    padding: 8px;
+    width: 100%;
+  }
+
+  .qr-cell {
+    aspect-ratio: 1;
+    border-radius: 1px;
+    background: var(--navy);
+  }
+
+  .qr-cell.w { background: transparent; }
+
+  .share-title { font-size: 14px; font-weight: 600; }
+  .share-sub { font-size: 12px; color: rgba(255,255,255,0.45); }
+
+  .share-link {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--accent-mid);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .btn-ghost-white {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    <div class="logo-mark">Profile<span>Vault</span></div>
+    <div class="logo-sub">Hồ sơ số cá nhân</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Tổng quan</div>
+    <a class="nav-item active" href="#" data-tab="dashboard" onclick="switchTab('dashboard',this);return false;">
+      <i class="ti ti-layout-dashboard"></i> Dashboard
+    </a>
+    <a class="nav-item" href="#" data-tab="profile" onclick="switchTab('profile',this);return false;">
+      <i class="ti ti-user-circle"></i> Hồ sơ cá nhân
+    </a>
+    <a class="nav-item" href="#" data-tab="chungchi" onclick="switchTab('chungchi',this);return false;">
+      <i class="ti ti-file-certificate"></i> Chứng chỉ
+      <span class="nav-badge">3</span>
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Nghề nghiệp</div>
+    <a class="nav-item" href="#" data-tab="portfolio" onclick="switchTab('portfolio',this);return false;">
+      <i class="ti ti-briefcase"></i> Portfolio dự án
+    </a>
+    <a class="nav-item" href="#" data-tab="kinhnghiem" onclick="switchTab('kinhnghiem',this);return false;">
+      <i class="ti ti-medal"></i> Kinh nghiệm & Giải thưởng
+    </a>
+    <a class="nav-item" href="#" data-tab="chiase" onclick="switchTab('chiase',this);return false;">
+      <i class="ti ti-share"></i> Chia sẻ hồ sơ
+    </a>
+    <a class="nav-item" href="#" data-tab="album" onclick="switchTab('album',this);return false;">
+      <i class="ti ti-layout-grid"></i> Album ảnh nổi bật
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Công cụ</div>
+    <a class="nav-item" href="#" data-tab="lich" onclick="switchTab('lich',this);return false;">
+      <i class="ti ti-calendar"></i> Lịch / Công việc
+    </a>
+    <a class="nav-item" href="#" data-tab="hoatdong" onclick="switchTab('hoatdong',this);return false;">
+      <i class="ti ti-history"></i> Hoạt động & Nhật ký
+    </a>
+    <a class="nav-item" href="#" data-tab="thongbao" onclick="switchTab('thongbao',this);return false;">
+      <i class="ti ti-bell"></i> Thông báo
+      <span class="nav-badge">5</span>
+    </a>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-chip">
+      <div class="avatar">NV</div>
+      <div class="user-info">
+        <div class="user-name">Nguyễn Văn An</div>
+        <div class="user-role">Sinh viên CNTT</div>
+      </div>
+      <i class="ti ti-dots-vertical" style="color:rgba(255,255,255,0.3); font-size:16px;"></i>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <span class="topbar-title" id="topbar-title">Dashboard</span>
+    <div class="search-box">
+      <i class="ti ti-search"></i>
+      <input type="text" placeholder="Tìm kiếm chứng chỉ, kỹ năng...">
+    </div>
+    <div class="topbar-actions">
+      <div class="icon-btn">
+        <i class="ti ti-bell"></i>
+        <div class="notif-dot"></div>
+      </div>
+      <div class="icon-btn">
+        <i class="ti ti-settings"></i>
+      </div>
+      <div class="avatar" style="width:34px;height:34px;font-size:13px;cursor:pointer;">NV</div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+  <!-- ═══ TAB: DASHBOARD ═══════════════════════════ -->
+  <div id="tab-dashboard" class="tab-page">
+
+    <!-- Progress Banner -->
+    <div class="progress-banner">
+      <div class="progress-ring-wrap">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#e2e8f0" stroke-width="5"/>
+          <circle cx="36" cy="36" r="30" fill="none" stroke="#3b82f6" stroke-width="5"
+            stroke-dasharray="188.4" stroke-dashoffset="52.75" stroke-linecap="round"/>
+        </svg>
+        <div class="progress-center">
+          <div class="progress-pct">72%</div>
+        </div>
+      </div>
+      <div class="progress-info">
+        <div class="progress-title">Hồ sơ của bạn chưa hoàn thiện</div>
+        <div class="progress-sub">Hoàn thành thêm để tăng khả năng được nhà tuyển dụng chú ý</div>
+        <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+        <div class="progress-tags">
+          <span class="tag tag-warn"><i class="ti ti-alert-triangle" style="font-size:12px;"></i> Thiếu ảnh đại diện</span>
+          <span class="tag tag-warn"><i class="ti ti-alert-triangle" style="font-size:12px;"></i> Chưa có giới thiệu bản thân</span>
+          <span class="tag tag-ok"><i class="ti ti-check" style="font-size:12px;"></i> Kỹ năng đã cập nhật</span>
+          <span class="tag tag-ok"><i class="ti ti-check" style="font-size:12px;"></i> 3 dự án</span>
+        </div>
+      </div>
+      <div class="progress-cta">
+        <button class="btn-primary"><i class="ti ti-edit" style="font-size:14px;margin-right:6px;"></i>Hoàn thiện ngay</button>
+        <button class="btn-secondary"><i class="ti ti-eye" style="font-size:14px;margin-right:6px;"></i>Xem trước CV</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-icon blue"><i class="ti ti-certificate"></i></div>
+        <div>
+          <div class="stat-label">Chứng chỉ</div>
+          <div class="stat-value">8</div>
+          <div class="stat-change">↑ 2 tháng này</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon teal"><i class="ti ti-code"></i></div>
+        <div>
+          <div class="stat-label">Kỹ năng</div>
+          <div class="stat-value">14</div>
+          <div class="stat-change">↑ 3 kỹ năng mới</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon amber"><i class="ti ti-folder-open"></i></div>
+        <div>
+          <div class="stat-label">Dự án</div>
+          <div class="stat-value">3</div>
+          <div class="stat-change">1 đang thực hiện</div>
+        </div>
+      </div>
+     
+    </div>
+
+    <!-- Two col -->
+    <div class="two-col">
+
+      <!-- Certificates -->
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-head-title"><i class="ti ti-file-certificate"></i>Chứng chỉ gần đây</div>
+          <a class="section-link" href="#">Xem tất cả →</a>
+        </div>
+        <div class="cert-list">
+          <div class="cert-item">
+            <div class="cert-icon blue"><i class="ti ti-brand-aws"></i></div>
+            <div>
+              <div class="cert-name">AWS Cloud Practitioner</div>
+              <div class="cert-meta">Amazon Web Services · 05/2025</div>
+            </div>
+            <span class="cert-status status-verified">✓ Đã xác minh</span>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon teal"><i class="ti ti-language"></i></div>
+            <div>
+              <div class="cert-name">TOEIC 850</div>
+              <div class="cert-meta">ETS · 03/2025</div>
+            </div>
+            <span class="cert-status status-verified">✓ Đã xác minh</span>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon amber"><i class="ti ti-chart-bar"></i></div>
+            <div>
+              <div class="cert-name">Data Analysis with Python</div>
+              <div class="cert-meta">Coursera · 02/2025</div>
+            </div>
+            <span class="cert-status status-pending">⏳ Chờ duyệt</span>
+          </div>
+          <div class="cert-item">
+            <div class="cert-icon blue"><i class="ti ti-brand-google"></i></div>
+            <div>
+              <div class="cert-name">Google UX Design</div>
+              <div class="cert-meta">Google · 01/2025</div>
+            </div>
+            <span class="cert-status status-new">Mới upload</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-head-title"><i class="ti ti-chart-bar"></i>Kỹ năng nổi bật</div>
+          <a class="section-link" href="#">Chỉnh sửa →</a>
+        </div>
+        <div class="skills-body">
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">JavaScript / TypeScript</span><span class="skill-pct">85%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:85%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">React & Next.js</span><span class="skill-pct">78%</span></div>
+            <div class="skill-track"><div class="skill-fill" style="width:78%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">70%</span></div>
+            <div class="skill-track"><div class="skill-fill teal" style="width:70%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">UI/UX Design</span><span class="skill-pct">60%</span></div>
+            <div class="skill-track"><div class="skill-fill teal" style="width:60%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">SQL & Database</span><span class="skill-pct">65%</span></div>
+            <div class="skill-track"><div class="skill-fill amber" style="width:65%"></div></div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-top"><span class="skill-name">Git & DevOps</span><span class="skill-pct">72%</span></div>
+            <div class="skill-track"><div class="skill-fill amber" style="width:72%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="bottom-row">
+
+      <!-- Activity -->
+      <div class="section-card">
+        <div class="section-head">
+          <div class="section-head-title"><i class="ti ti-history"></i>Hoạt động gần đây</div>
+          <a class="section-link" href="#">Nhật ký đầy đủ →</a>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-dot dot-blue"></div>
+            <div>
+              <div class="activity-text"><strong>AWS Cloud Practitioner</strong> được xác minh thành công</div>
+              <div class="activity-time">2 giờ trước</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-green"></div>
+            <div>
+              <div class="activity-text">Nhà tuyển dụng <strong>FPT Software</strong> đã xem hồ sơ của bạn</div>
+              <div class="activity-time">5 giờ trước</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-amber"></div>
+            <div>
+              <div class="activity-text">Upload chứng chỉ <strong>Data Analysis with Python</strong> — đang chờ kiểm duyệt</div>
+              <div class="activity-time">Hôm qua, 14:30</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-teal"></div>
+            <div>
+              <div class="activity-text">Thêm dự án <strong>E-commerce Web App</strong> vào portfolio</div>
+              <div class="activity-time">2 ngày trước</div>
+            </div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot dot-blue"></div>
+            <div>
+              <div class="activity-text">Chia sẻ link hồ sơ qua <strong>QR code</strong> tới 3 nhà tuyển dụng</div>
+              <div class="activity-time">3 ngày trước</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     
+
+        <!-- Quick Actions -->
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-bolt"></i>Thao tác nhanh</div>
+          </div>
+          <div class="quick-grid">
+            <div class="quick-btn"><i class="ti ti-upload"></i>Upload chứng chỉ</div>
+            <div class="quick-btn"><i class="ti ti-file-plus"></i>Tạo CV mới</div>
+            <div class="quick-btn"><i class="ti ti-plus"></i>Thêm dự án</div>
+            <div class="quick-btn"><i class="ti ti-send"></i>Gửi hồ sơ</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /tab-dashboard -->
+
+  <!-- ═══ TAB: ALBUM ═══════════════════════════════ -->
+  <div id="tab-album" class="tab-page" style="display:none;">
+
+    <!-- Album Ảnh Nổi Bật -->
+    <div class="section-card" id="album-section">
+      <div class="section-head">
+        <div class="section-head-title"><i class="ti ti-photo-album"></i>Album ảnh nổi bật</div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <!-- Filter bar -->
+          <div id="filter-bar" style="display:flex;align-items:center;gap:6px;">
+            <select id="filter-month" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-2);cursor:pointer;outline:none;">
+              <option value="">Tất cả tháng</option>
+              <option value="1">Tháng 1</option><option value="2">Tháng 2</option>
+              <option value="3">Tháng 3</option><option value="4">Tháng 4</option>
+              <option value="5">Tháng 5</option><option value="6">Tháng 6</option>
+              <option value="7">Tháng 7</option><option value="8">Tháng 8</option>
+              <option value="9">Tháng 9</option><option value="10">Tháng 10</option>
+              <option value="11">Tháng 11</option><option value="12">Tháng 12</option>
+            </select>
+            <select id="filter-year" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-2);cursor:pointer;outline:none;">
+              <option value="">Tất cả năm</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+            <button onclick="applyFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-filter" style="font-size:13px;margin-right:4px;"></i>Lọc</button>
+            <button onclick="resetFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;"><i class="ti ti-x" style="font-size:13px;"></i></button>
+          </div>
+          <!-- Add photo btn -->
+          <button onclick="addPhoto()" style="font-family:inherit;font-size:12.5px;padding:6px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-plus" style="font-size:14px;"></i>Thêm ảnh</button>
+        </div>
+      </div>
+
+      <!-- Album body -->
+      <div id="album-body" style="padding:20px 20px 24px;"></div>
+    </div>
+
+    <!-- Hidden file input -->
+    <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleFiles(event)">
+
+    <!-- Add photo modal backdrop -->
+    <div id="modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,27,53,0.55);z-index:999;align-items:center;justify-content:center;">
+      <div style="background:var(--card);border-radius:14px;padding:28px;width:420px;max-width:90vw;position:relative;">
+        <div style="font-size:15px;font-weight:600;margin-bottom:4px;">Thêm ảnh mới</div>
+        <div style="font-size:12.5px;color:var(--text-3);margin-bottom:20px;">Ảnh sẽ được thêm theo ngày hôm nay</div>
+        <div id="drop-zone" style="border:2px dashed var(--border);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color 0.15s;margin-bottom:16px;" onclick="document.getElementById('file-input').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleDrop(event)">
+          <i class="ti ti-photo-up" style="font-size:36px;color:var(--accent);display:block;margin-bottom:10px;"></i>
+          <div style="font-size:13.5px;font-weight:500;margin-bottom:4px;">Kéo thả ảnh vào đây</div>
+          <div style="font-size:12px;color:var(--text-3);">hoặc nhấn để chọn từ máy tính</div>
+        </div>
+        <div id="modal-preview" style="display:none;margin-bottom:14px;">
+          <div style="font-size:12px;color:var(--text-3);margin-bottom:8px;" id="file-count-label"></div>
+          <div id="preview-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;"></div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <input id="photo-title" type="text" placeholder="Tiêu đề ảnh..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:8px;">
+          <textarea id="photo-desc" placeholder="Mô tả ảnh (tuỳ chọn)..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:70px;"></textarea>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;">
+          <button onclick="closeModal()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
+          <button onclick="confirmAdd()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Thêm vào album</button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- ── Photo Detail Modal ─────────────────────── -->
+    <div id="detail-backdrop" style="display:none;position:fixed;inset:0;background:rgba(10,18,40,0.72);z-index:1000;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;">
+      <div id="detail-box" style="background:var(--card);border-radius:16px;width:100%;max-width:680px;margin:auto;overflow:hidden;position:relative;">
+
+        <!-- Image preview -->
+        <div id="detail-img-wrap" style="width:100%;background:var(--navy);min-height:260px;display:flex;align-items:center;justify-content:center;position:relative;">
+          <!-- image or color placeholder rendered by JS -->
+          <div id="detail-img-content" style="width:100%;"></div>
+          <!-- Close btn -->
+          <button onclick="closeDetail()" style="position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(0,0,0,0.45);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;"><i class="ti ti-x"></i></button>
+        </div>
+
+        <!-- Info panel -->
+        <div style="padding:22px 24px 24px;">
+
+          <!-- Title row -->
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;">
+            <div id="detail-title" style="font-size:18px;font-weight:700;color:var(--text-1);line-height:1.3;flex:1;"></div>
+            <!-- Action buttons -->
+            <div style="display:flex;gap:7px;flex-shrink:0;">
+              <button onclick="editPhoto()" style="font-family:inherit;font-size:12.5px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-edit" style="font-size:14px;"></i>Sửa</button>
+              <button onclick="deletePhoto()" style="font-family:inherit;font-size:12.5px;padding:7px 14px;border:1px solid #fecaca;border-radius:8px;background:#fff5f5;color:var(--red);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-trash" style="font-size:14px;"></i>Xoá</button>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div id="detail-desc" style="font-size:13.5px;color:var(--text-2);margin-bottom:18px;line-height:1.6;"></div>
+
+          <!-- Meta info -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+              <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-plus" style="font-size:13px;"></i>Ngày thêm</div>
+              <div id="detail-created" style="font-size:14px;font-weight:600;color:var(--text-1);"></div>
+            </div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+              <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-event" style="font-size:13px;"></i>Chỉnh sửa lần cuối</div>
+              <div id="detail-updated" style="font-size:14px;font-weight:600;color:var(--text-1);"></div>
+            </div>
+          </div>
+
+        </div><!-- /info panel -->
+
+        <!-- Edit panel (hidden by default) -->
+        <div id="edit-panel" style="display:none;border-top:1px solid var(--border);padding:20px 24px 24px;">
+          <div style="font-size:13.5px;font-weight:600;margin-bottom:12px;color:var(--text-1);">Chỉnh sửa ảnh</div>
+          <input id="edit-title" type="text" placeholder="Tiêu đề..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:8px;">
+          <textarea id="edit-desc" placeholder="Mô tả..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:68px;margin-bottom:12px;"></textarea>
+          <div style="display:flex;gap:8px;justify-content:flex-end;">
+            <button onclick="cancelEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
+            <button onclick="saveEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Lưu thay đổi</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  <!-- ═══ TAB: PLACEHOLDER (other pages) ══════════ -->
+ <div id="tab-profile" class="tab-page" style="display:none;">
+    
+    <div class="section-card" style="margin-bottom: 20px; position: relative;">
+      <div style="height: 120px; background: linear-gradient(135deg, var(--navy-2) 0%, var(--accent) 100%);"></div>
+      <div style="padding: 0 24px 24px; display: flex; gap: 20px; align-items: flex-end; margin-top: -45px;">
+        <div style="width: 100px; height: 100px; border-radius: 50%; background: var(--card); border: 4px solid var(--surface); display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); flex-shrink: 0; position: relative;">
+          NV
+          <div style="position: absolute; bottom: 2px; right: 2px; width: 18px; height: 18px; background: var(--green); border: 3px solid var(--card); border-radius: 50%;"></div>
+        </div>
+        <div style="flex: 1; padding-bottom: 5px;">
+          <div style="font-size: 20px; font-weight: 700; color: var(--text-1);">Nguyễn Văn An</div>
+          <div style="font-size: 13.5px; color: var(--text-2); margin-top: 4px;">Thực tập sinh IT (Full-stack) | Sinh viên CNTT</div>
+        </div>
+        <div style="padding-bottom: 5px; display: flex; gap: 8px;">
+          
+          <button class="btn-primary"><i class="ti ti-edit" style="font-size:14px;margin-right:6px;"></i>Chỉnh sửa hồ sơ</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 340px 1fr; gap: 20px;">
+      
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-address-book"></i>Thông tin cơ bản</div>
+          </div>
+          <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--text-2);"><i class="ti ti-cake"></i></div>
+              <div>
+                <div style="font-size: 11.5px; color: var(--text-3);">Ngày sinh</div>
+                <div style="font-size: 13.5px; font-weight: 500;">28/11/2004</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--text-2);"><i class="ti ti-map-pin"></i></div>
+              <div>
+                <div style="font-size: 11.5px; color: var(--text-3);">Khu vực</div>
+                <div style="font-size: 13.5px; font-weight: 500;">TP. Hồ Chí Minh, Việt Nam</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--text-2);"><i class="ti ti-mail"></i></div>
+              <div>
+                <div style="font-size: 11.5px; color: var(--text-3);">Email liên hệ</div>
+                <div style="font-size: 13.5px; font-weight: 500; color: var(--accent); cursor: pointer;">an.nguyen.it@example.com</div>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: var(--surface); display: flex; align-items: center; justify-content: center; color: var(--text-2);"><i class="ti ti-phone"></i></div>
+              <div>
+                <div style="font-size: 11.5px; color: var(--text-3);">Số điện thoại</div>
+                <div style="font-size: 13.5px; font-weight: 500;">+84 987 654 321</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-link"></i>Liên kết chuyên môn</div>
+          </div>
+          <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 12px;">
+            <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #0f172a; font-size: 18px;"><i class="ti ti-brand-github"></i></div>
+              <div>
+                <div style="font-size: 13px; font-weight: 500;">GitHub Profile</div>
+                <div style="font-size: 11.5px; color: var(--text-3);">github.com/an-nguyen</div>
+              </div>
+            </a>
+            <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <div style="width: 32px; height: 32px; border-radius: 8px; background: #e0f2fe; display: flex; align-items: center; justify-content: center; color: #0369a1; font-size: 18px;"><i class="ti ti-brand-linkedin"></i></div>
+              <div>
+                <div style="font-size: 13px; font-weight: 500;">LinkedIn</div>
+                <div style="font-size: 11.5px; color: var(--text-3);">linkedin.com/in/an-nguyen-it</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-chart-bar"></i>Kỹ năng chuyên môn</div>
+          </div>
+          <div class="skills-body">
+            <div class="skill-row">
+              <div class="skill-top"><span class="skill-name">Java / Spring Boot</span><span class="skill-pct">82%</span></div>
+              <div class="skill-track"><div class="skill-fill" style="width:82%"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top"><span class="skill-name">React & Next.js</span><span class="skill-pct">78%</span></div>
+              <div class="skill-track"><div class="skill-fill" style="width:78%"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top"><span class="skill-name">PHP & MySQL</span><span class="skill-pct">75%</span></div>
+              <div class="skill-track"><div class="skill-fill teal" style="width:75%"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top"><span class="skill-name">Git & DevOps Basis</span><span class="skill-pct">70%</span></div>
+              <div class="skill-track"><div class="skill-fill amber" style="width:70%"></div></div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-top"><span class="skill-name">Agile / Scrum (Jira)</span><span class="skill-pct">72%</span></div>
+              <div class="skill-track"><div class="skill-fill amber" style="width:72%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-device-gamepad"></i>Sở thích & Giải trí</div>
+          </div>
+          <div style="padding: 16px 20px; display: flex; flex-wrap: wrap; gap: 8px;">
+            <span class="tag" style="background: var(--surface); color: var(--text-1); border: 1px solid var(--border);">Nghiên cứu những dự án</span>
+            <span class="tag" style="background: var(--surface); color: var(--text-1); border: 1px solid var(--border);">Nghe nhạc</span>
+            
+          </div>
+        </div>
+
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-user-scan"></i>Giới thiệu bản thân</div>
+          </div>
+          <div style="padding: 20px; font-size: 13.5px; color: var(--text-2); line-height: 1.6;">
+            <p style="margin-bottom: 12px;">Xin chào, tôi là An! Hiện tại tôi đang là sinh viên ngành CNTT và làm Thực tập sinh dưới sự hướng dẫn trực tiếp từ các Senior Mentor. Tôi có niềm đam mê mãnh liệt với mảng <strong>Full-stack Web Development</strong>, đặc biệt thích tối ưu hóa hệ thống và xây dựng các tính năng thân thiện với người dùng.</p>
+            <p style="margin-bottom: 12px;">Công nghệ cốt lõi của tôi bao gồm <strong>Java Spring Boot, PHP, React và Next.js</strong>. Tôi có kinh nghiệm thực chiến qua các dự án như hệ thống quản lý CRM, website dịch vụ in ấn tài liệu và ứng dụng lên kế hoạch du lịch (TravelGood).</p>
+            <p>Ngoài giờ code, tôi còn là đối tác tài xế của ứng dụng <strong>Be</strong> để rèn luyện kỹ năng giao tiếp và tự chủ tài chính. Khi có thời gian rảnh, tôi thường tìm tòi các mod quản lý cho RimWorld hoặc leo rank cùng bạn bè trong CS2.</p>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-school"></i>Học vấn & Trình độ</div>
+          </div>
+          <div class="activity-list" style="padding: 16px 20px;">
+            <div style="display: flex; gap: 16px; position: relative;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: #f0fdf4; color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0;"><i class="ti ti-school"></i></div>
+              <div>
+                <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Chuyên ngành Công nghệ thông tin</div>
+                <div style="font-size: 12.5px; color: var(--green); font-weight: 500; margin-bottom: 4px;">Trường Đại học / Cao đẳng Công nghệ</div>
+                <div style="font-size: 12px; color: var(--text-3); margin-bottom: 6px;">Niên khóa: 2022 - 2026 (Dự kiến tốt nghiệp)</div>
+                <div style="font-size: 13px; color: var(--text-2);">Tập trung nghiên cứu Kiến trúc phần mềm, Hệ quản trị cơ sở dữ liệu và Phát triển ứng dụng Web hệ phân tán.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <div class="section-head">
+            <div class="section-head-title"><i class="ti ti-briefcase"></i>Kinh nghiệm làm việc tóm tắt</div>
+          </div>
+          <div class="activity-list" style="padding: 12px 20px;">
+            <div style="display: flex; gap: 16px; margin-bottom: 20px; position: relative;">
+              <div style="width: 2px; background: var(--border); position: absolute; left: 19px; top: 40px; bottom: -20px;"></div>
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-code"></i></div>
+              <div>
+                <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Thực tập sinh IT (Full-stack)</div>
+                <div style="font-size: 12.5px; color: var(--accent); font-weight: 500; margin-bottom: 6px;">Công ty Công nghệ • Thực tập</div>
+                <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js. Quản lý source code qua GitHub và tracking task bằng Jira.</div>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; position: relative;">
+              <div style="width: 40px; height: 40px; border-radius: 10px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-car"></i></div>
+              <div>
+                <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Tài xế công nghệ</div>
+                <div style="font-size: 12.5px; color: var(--amber); font-weight: 500; margin-bottom: 6px;">Be Group • Bán thời gian</div>
+                <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Làm việc linh hoạt ngoài giờ học để gia tăng thu nhập và trải nghiệm môi trường dịch vụ khách hàng thực tế.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div id="tab-chungchi" class="tab-page" style="display:none;"></div>
+  <div id="tab-portfolio" class="tab-page" style="display:none;"></div>
+  <div id="tab-kinhnghiem" class="tab-page" style="display:none;"></div>
+  <div id="tab-chiase" class="tab-page" style="display:none;"></div>
+  <div id="tab-lich" class="tab-page" style="display:none;"></div>
+  <div id="tab-hoatdong" class="tab-page" style="display:none;"></div>
+  <div id="tab-thongbao" class="tab-page" style="display:none;"></div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<style>
+  .photo-card { cursor:pointer; border-radius:10px; overflow:hidden; border:1px solid var(--border); background:var(--card); transition:transform 0.15s, box-shadow 0.15s; }
+  .photo-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(15,27,53,0.1); }
+  .photo-thumb { width:100%; aspect-ratio:9/13; object-fit:cover; display:block; background:var(--surface); }
+  .photo-thumb-landscape { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--surface); }
+  .photo-info { padding:9px 11px 11px; }
+  .photo-title-text { font-size:13px; font-weight:500; color:var(--text-1); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .photo-desc-text { font-size:11.5px; color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .month-label {
+    display:flex; align-items:center; gap:12px;
+    background: linear-gradient(90deg, #1a2d52 0%, #243a6a 60%, transparent 100%);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 10px 18px 10px 14px;
+    margin: 0 0 14px;
+  }
+  .month-label-text {
+    font-size: 15px; font-weight: 700;
+    color: #fff; letter-spacing: 0.3px;
+  }
+  .month-label-count {
+    font-size: 11.5px; font-weight: 500;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    padding: 2px 10px; border-radius: 99px;
+  }
+  .month-label-year {
+    font-size: 12px; font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    margin-left: 2px;
+  }
+  .month-group { margin-bottom: 32px; }
+  .month-group:last-child { margin-bottom: 0; }
+  /* Each row is its own 5-col grid — no gaps, no orphan cells */
+  .photo-grid-row { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:10px; }
+  .photo-grid-row:last-child { margin-bottom:0; }
+  .photo-grid-row .span2 { grid-column:span 2; }
+  /* Last row: if not 5 cols used, override via inline style */
+  .photo-placeholder { border-radius:10px; border:2px dashed var(--border); aspect-ratio:9/13; display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-3);cursor:pointer;transition:border-color 0.15s;font-size:12.5px; }
+  .photo-placeholder:hover { border-color:var(--accent); color:var(--accent); }
+  #modal-backdrop { display:none; }
+  #modal-backdrop.open { display:flex !important; }
+</style>
+
+<script>
+  // ── Seed data ────────────────────────────────────
+  const COLORS = [
+    '#c7d2fe','#bfdbfe','#bbf7d0','#fde68a','#fecaca',
+    '#a5f3fc','#ddd6fe','#fbcfe8','#d1fae5','#fee2e2',
+    '#e0e7ff','#cffafe','#dcfce7','#fef9c3','#ffe4e6'
+  ];
+
+  let photos = [
+    { id:1,  title:'Hội thảo AI 2025',      desc:'Sự kiện công nghệ tại HCMC',      month:5, year:2025, color:COLORS[0],  wide:false },
+    { id:2,  title:'Dự án tốt nghiệp',      desc:'Buổi bảo vệ đồ án CNTT',         month:5, year:2025, color:COLORS[1],  wide:true  },
+    { id:3,  title:'Workshop React',         desc:'Khóa học frontend nâng cao',      month:5, year:2025, color:COLORS[2],  wide:false },
+    { id:4,  title:'Team building',          desc:'Công ty FPT Software',            month:5, year:2025, color:COLORS[6],  wide:false },
+    { id:5,  title:'Lễ khai giảng',         desc:'Năm học mới 2025',                month:5, year:2025, color:COLORS[12], wide:false },
+    { id:6,  title:'Demo sản phẩm',         desc:'Buổi demo cuối kỳ',               month:5, year:2025, color:COLORS[3],  wide:true  },
+    { id:7,  title:'Gặp gỡ mentor',         desc:'Coaching session tháng 5',        month:5, year:2025, color:COLORS[13], wide:false },
+    { id:8,  title:'Code review session',   desc:'Họp nhóm dự án thực tập',         month:5, year:2025, color:COLORS[4],  wide:false },
+    { id:9,  title:'Triển lãm CNTT',        desc:'Exhibition tại SECC HCMC',        month:5, year:2025, color:COLORS[14], wide:false },
+    // Bổ sung tháng 5/2025
+    { id:18, title:'Họp định hướng quý 2',   desc:'Lập kế hoạch dự án mới',          month:5, year:2025, color:COLORS[5],  wide:false },
+    { id:19, title:'Giao lưu CLB Tin học',   desc:'Sharing kinh nghiệm Web Dev',     month:5, year:2025, color:COLORS[8],  wide:true  },
+
+    { id:10, title:'Nhận chứng chỉ AWS',    desc:'Cloud Practitioner Cert',         month:4, year:2025, color:COLORS[3],  wide:false },
+    { id:11, title:'Hackathon HCMUT',       desc:'Giải nhì cuộc thi lập trình',     month:4, year:2025, color:COLORS[4],  wide:true  },
+    { id:12, title:'Kỳ thực tập',           desc:'Tại công ty Axon Active',         month:4, year:2025, color:COLORS[5],  wide:false },
+    // Bổ sung tháng 4/2025
+    { id:20, title:'Workshop Docker',       desc:'Cơ bản về Containerization',       month:4, year:2025, color:COLORS[0],  wide:false },
+   
+
+    { id:13, title:'Tốt nghiệp IELTS',      desc:'Band 7.0 tại IDP Vietnam',        month:3, year:2025, color:COLORS[7],  wide:false },
+    { id:14, title:'Triển lãm sản phẩm',    desc:'ProductFest Vietnam 2025',        month:3, year:2025, color:COLORS[8],  wide:false },
+    // Bổ sung tháng 3/2025
+    { id:22, title:'Seminar Clean Code',    desc:'Áp dụng SOLID trong thực tế',     month:3, year:2025, color:COLORS[2],  wide:true  },
+
+    { id:15, title:'Khóa UX Design',        desc:'Google Certificate hoàn thành',   month:2, year:2025, color:COLORS[9],  wide:true  },
+    // Bổ sung tháng 2/2025
+    { id:23, title:'Khai xuân đầu năm',     desc:'Gặp mặt đầu năm âm lịch',         month:2, year:2025, color:COLORS[13], wide:false },
+
+    { id:16, title:'Hội nghị startup',      desc:'VNG Campus Startup Day',          month:1, year:2025, color:COLORS[10], wide:false },
+    { id:17, title:'Dự án side project',    desc:'E-commerce App launch',           month:1, year:2025, color:COLORS[11], wide:false },
+    // Bổ sung tháng 1/2025
+    { id:24, title:'Hackathon Mini',        desc:'Sân chơi lập trình nội bộ',       month:1, year:2025, color:COLORS[1],  wide:false },
+    { id:25, title:'Tổng kết năm cũ',       desc:'Nhìn lại hành trình 2024',        month:1, year:2025, color:COLORS[6],  wide:true  }
+];
+  let nextId = 18;
+  let pendingFiles = [];
+  let activeMonth = '', activeYear = '';
+
+  // ── Render ────────────────────────────────────────
+  function groupByMonth(list) {
+    const map = {};
+    list.forEach(p => {
+      const key = `${p.year}-${String(p.month).padStart(2,'0')}`;
+      if (!map[key]) map[key] = { month:p.month, year:p.year, items:[] };
+      map[key].items.push(p);
+    });
+    return Object.values(map).sort((a,b)=> b.year!==a.year ? b.year-a.year : b.month-a.month);
+  }
+
+  const VI_MONTHS = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
+
+  // ── Smart row-packing: fills 5 columns per row with no gaps ─────
+  // Each photo has a "weight": wide=2, normal=1. We pack rows of 5.
+  // Patterns per row: [2,2,1] [2,1,2] [1,2,2] [2,1,1,1] [1,2,1,1]
+  // [1,1,2,1] [1,1,1,2] [1,1,1,1,1] etc.
+  function packRows(items) {
+    const rows = [];
+    let queue = [...items];
+    while (queue.length) {
+      const row = [];
+      let slots = 5;
+      let qi = 0;
+      // Try to fill exactly 5 slots from remaining items
+      while (slots > 0 && qi < queue.length) {
+        const item = queue[qi];
+        const w = item.wide ? 2 : 1;
+        if (w <= slots) {
+          row.push(item);
+          slots -= w;
+          queue.splice(qi, 1);
+        } else {
+          // Item doesn't fit: try next in queue (look-ahead up to 4)
+          let found = false;
+          for (let look = qi + 1; look < Math.min(qi + 5, queue.length); look++) {
+            const alt = queue[look];
+            const aw = alt.wide ? 2 : 1;
+            if (aw <= slots) {
+              row.push(alt);
+              slots -= aw;
+              queue.splice(look, 1);
+              found = true;
+              break;
+            }
+          }
+          // If nothing fits, just bump qi to avoid infinite loop
+          if (!found) qi++;
+        }
+      }
+      // If leftover slots > 0 on last row, force remaining items in (no gap)
+      if (slots > 0 && row.length === 0 && queue.length > 0) {
+        row.push(queue.shift());
+      }
+      if (row.length) rows.push(row);
+    }
+    return rows;
+  }
+
+  function buildCell(p) {
+    const isWide = p.wide;
+    const aspectClass = isWide ? 'photo-thumb-landscape' : 'photo-thumb';
+    const spanClass   = isWide ? 'span2' : '';
+    const imgContent  = p.src
+      ? `<img src="${p.src}" class="${aspectClass}" alt="${p.title}">`
+      : `<div class="${aspectClass}" style="background:${p.color};display:flex;align-items:center;justify-content:center;"><i class="ti ti-photo" style="font-size:28px;color:rgba(0,0,0,0.18);"></i></div>`;
+    return `
+      <div class="photo-card ${spanClass}" onclick="viewPhoto(${p.id})">
+        ${imgContent}
+        <div class="photo-info">
+          <div class="photo-title-text">${p.title}</div>
+          <div class="photo-desc-text">${p.desc || '—'}</div>
+        </div>
+      </div>`;
+  }
+
+  function renderAlbum() {
+    let list = [...photos];
+    if (activeMonth) list = list.filter(p => p.month === parseInt(activeMonth));
+    if (activeYear)  list = list.filter(p => p.year  === parseInt(activeYear));
+
+    const body = document.getElementById('album-body');
+    const groups = groupByMonth(list);
+
+    if (!groups.length) {
+      body.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--text-3);"><i class="ti ti-photo-off" style="font-size:36px;display:block;margin-bottom:10px;"></i>Không có ảnh nào phù hợp</div>`;
+      return;
+    }
+
+    body.innerHTML = groups.map(g => {
+      const rows = packRows(g.items);
+      const rowsHtml = rows.map(row => {
+        // Each row is its own 5-col grid so last row also has no gap
+        const usedCols = row.reduce((s, p) => s + (p.wide ? 2 : 1), 0);
+        // If last row is not full, distribute remaining space evenly
+        const extraFr = usedCols < 5 ? `;grid-template-columns:repeat(${usedCols},1fr)` : '';
+        return `<div class="photo-grid-row" style="--used:${usedCols}${extraFr}">${row.map(buildCell).join('')}</div>`;
+      }).join('');
+
+      return `
+        <div class="month-group" data-month="${g.month}" data-year="${g.year}">
+          <div class="month-label">
+            <i class="ti ti-calendar-month" style="font-size:18px;color:var(--accent-mid);flex-shrink:0;"></i>
+            <span class="month-label-text">${VI_MONTHS[g.month-1]}</span>
+            <span class="month-label-year">${g.year}</span>
+            <span class="month-label-count">${g.items.length} ảnh</span>
+          </div>
+          ${rowsHtml}
+        </div>`;
+    }).join('');
+  }
+
+  // ── Filters ───────────────────────────────────────
+  function applyFilter() {
+    activeMonth = document.getElementById('filter-month').value;
+    activeYear  = document.getElementById('filter-year').value;
+    renderAlbum();
+  }
+
+  function resetFilter() {
+    document.getElementById('filter-month').value = '';
+    document.getElementById('filter-year').value  = '';
+    activeMonth = ''; activeYear = '';
+    renderAlbum();
+  }
+
+  // ── Modal ─────────────────────────────────────────
+  function addPhoto() {
+    pendingFiles = [];
+    document.getElementById('photo-title').value = '';
+    document.getElementById('photo-desc').value  = '';
+    document.getElementById('modal-preview').style.display = 'none';
+    document.getElementById('preview-grid').innerHTML = '';
+    document.getElementById('modal-backdrop').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal-backdrop').classList.remove('open');
+  }
+
+  function handleDrop(e) {
+    e.preventDefault();
+    document.getElementById('drop-zone').style.borderColor = 'var(--border)';
+    const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
+    processFiles(files);
+  }
+
+  function handleFiles(e) {
+    const files = Array.from(e.target.files);
+    processFiles(files);
+    e.target.value = '';
+  }
+
+  function processFiles(files) {
+    if (!files.length) return;
+    pendingFiles = files;
+    const preview = document.getElementById('modal-preview');
+    const grid    = document.getElementById('preview-grid');
+    const label   = document.getElementById('file-count-label');
+    label.textContent = `Đã chọn ${files.length} ảnh`;
+    grid.innerHTML = '';
+    files.slice(0,8).forEach(f => {
+      const url = URL.createObjectURL(f);
+      const img = document.createElement('img');
+      img.src = url;
+      img.style.cssText = 'width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;';
+      grid.appendChild(img);
+    });
+    if (files.length > 8) {
+      const more = document.createElement('div');
+      more.style.cssText = 'aspect-ratio:1;border-radius:6px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-3);';
+      more.textContent = `+${files.length-8}`;
+      grid.appendChild(more);
+    }
+    preview.style.display = 'block';
+  }
+
+  function confirmAdd() {
+    const title = document.getElementById('photo-title').value.trim() || 'Ảnh mới';
+    const desc  = document.getElementById('photo-desc').value.trim();
+    const now   = new Date();
+
+    if (pendingFiles.length > 0) {
+      pendingFiles.forEach((f, i) => {
+        const url = URL.createObjectURL(f);
+        photos.unshift({ id:nextId++, title: i===0 ? title : `${title} (${i+1})`, desc, month:now.getMonth()+1, year:now.getFullYear(), src:url, color:COLORS[nextId%COLORS.length], wide:false });
+      });
+    } else {
+      photos.unshift({ id:nextId++, title, desc, month:now.getMonth()+1, year:now.getFullYear(), color:COLORS[nextId%COLORS.length], wide:false });
+    }
+    closeModal();
+    renderAlbum();
+  }
+
+  let detailId = null;
+
+  function fmtDate(ts) {
+    if (!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' })
+      + ' ' + d.toLocaleTimeString('vi-VN', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  function viewPhoto(id) {
+    const p = photos.find(x => x.id === id);
+    if (!p) return;
+    detailId = id;
+
+    // Image content
+    const wrap = document.getElementById('detail-img-content');
+    if (p.src) {
+      wrap.innerHTML = `<img src="${p.src}" style="width:100%;max-height:420px;object-fit:contain;display:block;">`;
+    } else {
+      wrap.innerHTML = `<div style="width:100%;height:280px;background:${p.color};display:flex;align-items:center;justify-content:center;"><i class="ti ti-photo" style="font-size:56px;color:rgba(0,0,0,0.18);"></i></div>`;
+    }
+
+    document.getElementById('detail-title').textContent   = p.title;
+    document.getElementById('detail-desc').textContent    = p.desc || 'Chưa có mô tả.';
+    document.getElementById('detail-created').textContent = fmtDate(p.createdAt);
+    document.getElementById('detail-updated').textContent = fmtDate(p.updatedAt) || fmtDate(p.createdAt);
+
+    document.getElementById('edit-panel').style.display = 'none';
+    const bd = document.getElementById('detail-backdrop');
+    bd.style.display = 'flex';
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-backdrop').style.display = 'none';
+    detailId = null;
+  }
+
+  function editPhoto() {
+    const p = photos.find(x => x.id === detailId);
+    if (!p) return;
+    document.getElementById('edit-title').value = p.title;
+    document.getElementById('edit-desc').value  = p.desc || '';
+    document.getElementById('edit-panel').style.display = 'block';
+    document.getElementById('edit-title').focus();
+  }
+
+  function cancelEdit() {
+    document.getElementById('edit-panel').style.display = 'none';
+  }
+
+  function saveEdit() {
+    const p = photos.find(x => x.id === detailId);
+    if (!p) return;
+    const newTitle = document.getElementById('edit-title').value.trim();
+    const newDesc  = document.getElementById('edit-desc').value.trim();
+    if (!newTitle) return;
+    p.title     = newTitle;
+    p.desc      = newDesc;
+    p.updatedAt = Date.now();
+
+    document.getElementById('detail-title').textContent   = p.title;
+    document.getElementById('detail-desc').textContent    = p.desc || 'Chưa có mô tả.';
+    document.getElementById('detail-updated').textContent = fmtDate(p.updatedAt);
+    document.getElementById('edit-panel').style.display  = 'none';
+    renderAlbum();
+  }
+
+  function deletePhoto() {
+    if (!confirm(`Xoá ảnh "${photos.find(x=>x.id===detailId)?.title}"?\nHành động này không thể hoàn tác.`)) return;
+    photos = photos.filter(x => x.id !== detailId);
+    closeDetail();
+    renderAlbum();
+  }
+
+  // ── Tab navigation ────────────────────────────────
+  const TAB_TITLES = {
+    dashboard:   'Dashboard',
+    profile:     'Hồ sơ cá nhân',
+    chungchi:    'Chứng chỉ',
+    portfolio:   'Portfolio dự án',
+    kinhnghiem:  'Kinh nghiệm & Giải thưởng',
+    chiase:      'Chia sẻ hồ sơ',
+    album:       'Album ảnh nổi bật',
+    lich:        'Lịch / Công việc',
+    hoatdong:    'Hoạt động & Nhật ký',
+    thongbao:    'Thông báo',
+  };
+
+  const TAB_ICONS = {
+    dashboard:  'ti-layout-dashboard',
+    profile:    'ti-user-circle',
+    chungchi:   'ti-file-certificate',
+    portfolio:  'ti-briefcase',
+    kinhnghiem: 'ti-medal',
+    chiase:     'ti-share',
+    album:      'ti-photo-album',
+    lich:       'ti-calendar',
+    hoatdong:   'ti-history',
+    thongbao:   'ti-bell',
+  };
+
+  const PLACEHOLDER_TABS = ['chungchi','portfolio','kinhnghiem','chiase','lich','hoatdong','thongbao'];
+
+  PLACEHOLDER_TABS.forEach(id => {
+    const el = document.getElementById('tab-' + id);
+    if (!el) return;
+    el.innerHTML = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:420px;gap:16px;color:var(--text-3);">
+        <i class="ti ${TAB_ICONS[id]}" style="font-size:52px;opacity:0.35;"></i>
+        <div style="font-size:16px;font-weight:500;color:var(--text-2);">${TAB_TITLES[id]}</div>
+        <div style="font-size:13px;color:var(--text-3);">Trang này đang được xây dựng.</div>
+      </div>`;
+  });
+
+  let currentTab = 'dashboard';
+
+  function switchTab(tabId, linkEl) {
+    if (currentTab === tabId) return;
+    // Hide current
+    document.getElementById('tab-' + currentTab).style.display = 'none';
+    // Show new
+    const newEl = document.getElementById('tab-' + tabId);
+    if (newEl) newEl.style.display = 'block';
+    // Update topbar title
+    document.getElementById('topbar-title').textContent = TAB_TITLES[tabId] || tabId;
+    // Update active nav
+    document.querySelectorAll('.nav-item').forEach(a => a.classList.remove('active'));
+    if (linkEl) linkEl.classList.add('active');
+    currentTab = tabId;
+    // Scroll top
+    document.querySelector('.main').scrollTop = 0;
+  }
+
+  // ── Init ──────────────────────────────────────────
+  renderAlbum();
+
+  // Close modal on backdrop click
+  document.getElementById('modal-backdrop').addEventListener('click', function(e){
+    if (e.target === this) closeModal();
+  });
+</script>
+
+</body>
+</html>
