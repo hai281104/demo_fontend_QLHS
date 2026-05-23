@@ -971,12 +971,10 @@
   <!-- ═══ TAB: ALBUM ═══════════════════════════════ -->
   <div id="tab-album" class="tab-page" style="display:none;">
 
-    <!-- Album Ảnh Nổi Bật -->
     <div class="section-card" id="album-section">
       <div class="section-head">
-        <div class="section-head-title"><i class="ti ti-photo-album"></i>Album ảnh nổi bật</div>
+        <div class="section-head-title"><i class="ti ti-photo-album"></i>Album sự kiện nổi bật</div>
         <div style="display:flex;align-items:center;gap:8px;">
-          <!-- Filter bar -->
           <div id="filter-bar" style="display:flex;align-items:center;gap:6px;">
             <select id="filter-month" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text-2);cursor:pointer;outline:none;">
               <option value="">Tất cả tháng</option>
@@ -993,102 +991,113 @@
               <option value="2024">2024</option>
               <option value="2023">2023</option>
             </select>
-            <button onclick="applyFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-filter" style="font-size:13px;margin-right:4px;"></i>Lọc</button>
-            <button onclick="resetFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;"><i class="ti ti-x" style="font-size:13px;"></i></button>
+            <button onclick="applyAlbumFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 12px;border:1px solid var(--accent);border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-filter" style="font-size:13px;margin-right:4px;"></i>Lọc</button>
+            <button onclick="resetAlbumFilter()" style="font-family:inherit;font-size:12.5px;padding:5px 10px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;"><i class="ti ti-x" style="font-size:13px;"></i></button>
           </div>
-          <!-- Add photo btn -->
-          <button onclick="addPhoto()" style="font-family:inherit;font-size:12.5px;padding:6px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-plus" style="font-size:14px;"></i>Thêm ảnh</button>
+          <button onclick="openAddEventModal()" style="font-family:inherit;font-size:12.5px;padding:6px 14px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-plus" style="font-size:14px;"></i>Đăng sự kiện mới</button>
         </div>
       </div>
 
-      <!-- Album body -->
-      <div id="album-body" style="padding:20px 20px 24px;"></div>
+      <div id="album-body" style="padding:20px 20px 0px;"></div>
+      
+      <div id="album-pagination" style="padding: 16px 20px 24px; display: flex; justify-content: center; gap: 8px;"></div>
     </div>
 
-    <!-- Hidden file input -->
-    <input type="file" id="file-input" accept="image/*" multiple style="display:none" onchange="handleFiles(event)">
+    <input type="file" id="event-file-input" accept="image/*" multiple style="display:none" onchange="handleEventFiles(event)">
 
-    <!-- Add photo modal backdrop -->
-    <div id="modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,27,53,0.55);z-index:999;align-items:center;justify-content:center;">
-      <div style="background:var(--card);border-radius:14px;padding:28px;width:420px;max-width:90vw;position:relative;">
-        <div style="font-size:15px;font-weight:600;margin-bottom:4px;">Thêm ảnh mới</div>
-        <div style="font-size:12.5px;color:var(--text-3);margin-bottom:20px;">Ảnh sẽ được thêm theo ngày hôm nay</div>
-        <div id="drop-zone" style="border:2px dashed var(--border);border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color 0.15s;margin-bottom:16px;" onclick="document.getElementById('file-input').click()" ondragover="event.preventDefault();this.style.borderColor='var(--accent)'" ondragleave="this.style.borderColor='var(--border)'" ondrop="handleDrop(event)">
-          <i class="ti ti-photo-up" style="font-size:36px;color:var(--accent);display:block;margin-bottom:10px;"></i>
-          <div style="font-size:13.5px;font-weight:500;margin-bottom:4px;">Kéo thả ảnh vào đây</div>
-          <div style="font-size:12px;color:var(--text-3);">hoặc nhấn để chọn từ máy tính</div>
+    <div id="event-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,27,53,0.55);z-index:900;align-items:center;justify-content:center;">
+      <div style="background:var(--card);border-radius:14px;padding:28px;width:520px;max-width:90vw;position:relative;">
+        <div style="font-size:16px;font-weight:600;margin-bottom:4px;">Tạo nhóm sự kiện mới</div>
+        <div style="font-size:12.5px;color:var(--text-3);margin-bottom:20px;">Tối đa 5 ảnh cho mỗi sự kiện. Ảnh sẽ tự động được yêu cầu cắt về tỷ lệ 16:9.</div>
+        
+        <div style="margin-bottom:16px;">
+          <input id="event-title" type="text" placeholder="Tên sự kiện..." style="width:100%;font-family:inherit;font-size:14px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:10px;font-weight:500;">
+          <textarea id="event-desc" placeholder="Mô tả chi tiết (tuỳ chọn)..." style="width:100%;font-family:inherit;font-size:13.5px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:80px;"></textarea>
         </div>
-        <div id="modal-preview" style="display:none;margin-bottom:14px;">
-          <div style="font-size:12px;color:var(--text-3);margin-bottom:8px;" id="file-count-label"></div>
-          <div id="preview-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px;"></div>
+
+        <div id="event-preview-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;">
+          </div>
+
+        <div id="event-drop-zone" style="border:2px dashed var(--border);border-radius:10px;padding:24px 20px;text-align:center;cursor:pointer;transition:border-color 0.15s;margin-bottom:20px;" onclick="document.getElementById('event-file-input').click()">
+          <i class="ti ti-photo-plus" style="font-size:32px;color:var(--accent);display:block;margin-bottom:8px;"></i>
+          <div style="font-size:13.5px;font-weight:500;">Chọn tối đa 5 ảnh</div>
         </div>
-        <div style="margin-bottom:12px;">
-          <input id="photo-title" type="text" placeholder="Tiêu đề ảnh..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:8px;">
-          <textarea id="photo-desc" placeholder="Mô tả ảnh (tuỳ chọn)..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:70px;"></textarea>
-        </div>
+
         <div style="display:flex;gap:8px;justify-content:flex-end;">
-          <button onclick="closeModal()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
-          <button onclick="confirmAdd()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Thêm vào album</button>
+          <button onclick="closeAddEventModal()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
+          <button onclick="confirmEventAdd()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Đăng sự kiện</button>
         </div>
-      </div>
       </div>
     </div>
 
-    <!-- ── Photo Detail Modal ─────────────────────── -->
-    <div id="detail-backdrop" style="display:none;position:fixed;inset:0;background:rgba(10,18,40,0.72);z-index:1000;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;">
-      <div id="detail-box" style="background:var(--card);border-radius:16px;width:100%;max-width:680px;margin:auto;overflow:hidden;position:relative;">
+    <div id="cropper-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;">
+      <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:16px;">Cắt ảnh theo chuẩn 16:9</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Giữ chuột/chạm và kéo để di chuyển vùng hiển thị của ảnh.</div>
+      
+      <div style="width:800px;max-width:90vw;aspect-ratio:16/9;background:#111;position:relative;border:2px solid #fff;border-radius:8px;overflow:hidden;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);">
+        <canvas id="cropper-canvas" width="800" height="450" style="width:100%;height:100%;cursor:move;touch-action:none;"></canvas>
+        <div style="position:absolute;top:33.33%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
+        <div style="position:absolute;top:66.66%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
+        <div style="position:absolute;top:0;left:33.33%;width:1px;height:100%;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
+        <div style="position:absolute;top:0;left:66.66%;width:1px;height:100%;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
+      </div>
 
-        <!-- Image preview -->
-        <div id="detail-img-wrap" style="width:100%;background:var(--navy);min-height:260px;display:flex;align-items:center;justify-content:center;position:relative;">
-          <!-- image or color placeholder rendered by JS -->
-          <div id="detail-img-content" style="width:100%;"></div>
-          <!-- Close btn -->
-          <button onclick="closeDetail()" style="position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:none;background:rgba(0,0,0,0.45);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;"><i class="ti ti-x"></i></button>
+      <div style="display:flex;gap:12px;margin-top:24px;">
+        <button onclick="skipCrop()" style="padding:10px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-weight:500;">Bỏ qua</button>
+        <button onclick="confirmCrop()" style="padding:10px 24px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;"><i class="ti ti-crop" style="margin-right:6px;"></i>Xác nhận cắt</button>
+      </div>
+    </div>
+    <div id="detail-backdrop" style="display:none;position:fixed;inset:0;background:rgba(10,18,40,0.85);z-index:1000;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;" onclick="if(event.target===this) closeDetail()">
+      <div id="detail-box" style="background:var(--card);border-radius:16px;width:100%;max-width:680px;margin:auto;overflow:hidden;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.2);">
+        
+        <div style="padding:24px 24px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; position:sticky; top:0; background:var(--card); z-index:10;">
+           <div>
+             <div id="detail-title" style="font-size:18px;font-weight:700;color:var(--text-1);margin-bottom:4px;line-height:1.3;"></div>
+             <div style="font-size:13px;color:var(--text-3);"><i class="ti ti-photo-album" style="margin-right:4px;"></i>Thông tin nhóm sự kiện</div>
+           </div>
+           <div style="display:flex;gap:8px;flex-shrink:0;">
+              <button onclick="editEvent()" style="padding:6px 12px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;transition:0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--card)'"><i class="ti ti-edit"></i>Sửa</button>
+              <button onclick="deleteEvent()" style="padding:6px 12px;border:1px solid #fecaca;border-radius:8px;background:#fff5f5;color:var(--red);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;transition:0.15s;" onmouseover="this.style.background='#fee2e2'" onmouseout="this.style.background='#fff5f5'"><i class="ti ti-trash"></i>Xóa</button>
+              <button onclick="closeDetail()" style="width:32px;height:32px;border-radius:50%;border:none;background:var(--surface);color:var(--text-1);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:0.15s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='var(--surface)'"><i class="ti ti-x"></i></button>
+           </div>
         </div>
 
-        <!-- Info panel -->
-        <div style="padding:22px 24px 24px;">
+        <div style="padding:24px;">
+           <div id="detail-desc" style="font-size:14.5px;color:var(--text-2);line-height:1.6;margin-bottom:24px;white-space:pre-wrap;"></div>
+           
+           <div id="detail-images" style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px;"></div>
 
-          <!-- Title row -->
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px;">
-            <div id="detail-title" style="font-size:18px;font-weight:700;color:var(--text-1);line-height:1.3;flex:1;"></div>
-            <!-- Action buttons -->
-            <div style="display:flex;gap:7px;flex-shrink:0;">
-              <button onclick="editPhoto()" style="font-family:inherit;font-size:12.5px;padding:7px 14px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-edit" style="font-size:14px;"></i>Sửa</button>
-              <button onclick="deletePhoto()" style="font-family:inherit;font-size:12.5px;padding:7px 14px;border:1px solid #fecaca;border-radius:8px;background:#fff5f5;color:var(--red);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-trash" style="font-size:14px;"></i>Xoá</button>
-            </div>
-          </div>
+           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border);padding-top:20px;">
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+                <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-plus" style="font-size:13px;"></i>Ngày đăng sự kiện</div>
+                <div id="detail-created" style="font-size:13.5px;font-weight:600;color:var(--text-1);"></div>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+                <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-event" style="font-size:13px;"></i>Chỉnh sửa lần cuối</div>
+                <div id="detail-updated" style="font-size:13.5px;font-weight:600;color:var(--text-1);"></div>
+              </div>
+           </div>
+        </div>
 
-          <!-- Description -->
-          <div id="detail-desc" style="font-size:13.5px;color:var(--text-2);margin-bottom:18px;line-height:1.6;"></div>
+        <div id="event-edit-panel" style="display:none;border-top:1px solid var(--border);padding:20px 24px 24px;background:var(--surface);">
+          <div style="font-size:13.5px;font-weight:600;margin-bottom:12px;color:var(--text-1);">Chỉnh sửa thông tin & hình ảnh</div>
+          
+          <input id="edit-event-title" type="text" placeholder="Tiêu đề sự kiện..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:8px;background:var(--card);color:var(--text-1);font-weight:500;">
+          <textarea id="edit-event-desc" placeholder="Mô tả sự kiện..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:75px;margin-bottom:16px;background:var(--card);color:var(--text-1);"></textarea>
+          
+          <div style="font-size:12.5px;font-weight:600;color:var(--text-2);margin-bottom:8px;">Quản lý ảnh (Tối đa 5 ảnh)</div>
+          <div id="edit-event-preview-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:20px;">
+             </div>
 
-          <!-- Meta info -->
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
-              <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-plus" style="font-size:13px;"></i>Ngày thêm</div>
-              <div id="detail-created" style="font-size:14px;font-weight:600;color:var(--text-1);"></div>
-            </div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
-              <div style="font-size:11px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;display:flex;align-items:center;gap:5px;"><i class="ti ti-calendar-event" style="font-size:13px;"></i>Chỉnh sửa lần cuối</div>
-              <div id="detail-updated" style="font-size:14px;font-weight:600;color:var(--text-1);"></div>
-            </div>
-          </div>
-
-        </div><!-- /info panel -->
-
-        <!-- Edit panel (hidden by default) -->
-        <div id="edit-panel" style="display:none;border-top:1px solid var(--border);padding:20px 24px 24px;">
-          <div style="font-size:13.5px;font-weight:600;margin-bottom:12px;color:var(--text-1);">Chỉnh sửa ảnh</div>
-          <input id="edit-title" type="text" placeholder="Tiêu đề..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:8px;">
-          <textarea id="edit-desc" placeholder="Mô tả..." style="width:100%;font-family:inherit;font-size:13.5px;padding:9px 12px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:68px;margin-bottom:12px;"></textarea>
           <div style="display:flex;gap:8px;justify-content:flex-end;">
-            <button onclick="cancelEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
-            <button onclick="saveEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Lưu thay đổi</button>
+            <button onclick="cancelEventEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
+            <button onclick="saveEventEdit()" style="font-family:inherit;font-size:13px;padding:7px 16px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Lưu thay đổi</button>
           </div>
         </div>
 
       </div>
     </div>
+  </div>
 
   <!-- ═══ TAB: PLACEHOLDER (other pages) ══════════ -->
  <div id="tab-profile" class="tab-page" style="display:none;">
@@ -1272,6 +1281,7 @@
 
       </div>
     </div>
+    
   </div>
 
 
@@ -1433,47 +1443,47 @@
 </div><!-- /main -->
 
 <style>
-  .photo-card { cursor:pointer; border-radius:10px; overflow:hidden; border:1px solid var(--border); background:var(--card); transition:transform 0.15s, box-shadow 0.15s; }
-  .photo-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(15,27,53,0.1); }
-  .photo-thumb { width:100%; aspect-ratio:9/13; object-fit:cover; display:block; background:var(--surface); }
-  .photo-thumb-landscape { width:100%; aspect-ratio:16/9; object-fit:cover; display:block; background:var(--surface); }
-  .photo-info { padding:9px 11px 11px; }
-  .photo-title-text { font-size:13px; font-weight:500; color:var(--text-1); margin-bottom:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .photo-desc-text { font-size:11.5px; color:var(--text-3); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .month-label {
-    display:flex; align-items:center; gap:12px;
-    background: linear-gradient(90deg, #1a2d52 0%, #243a6a 60%, transparent 100%);
-    border-left: 4px solid var(--accent);
-    border-radius: 0 8px 8px 0;
-    padding: 10px 18px 10px 14px;
-    margin: 0 0 14px;
+ /* Cấu trúc Grid cho Nhóm Sự kiện (1 đến 5 ảnh chuẩn 16:9) */
+.event-card { 
+    background: var(--card); 
+    border: 1px solid var(--border); 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 24px; 
+    transition: transform 0.15s, box-shadow 0.15s; 
+    cursor: pointer; 
   }
-  .month-label-text {
-    font-size: 15px; font-weight: 700;
-    color: #fff; letter-spacing: 0.3px;
+  .event-card:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 24px rgba(15,27,53,0.08); 
   }
-  .month-label-count {
-    font-size: 11.5px; font-weight: 500;
-    background: rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.85);
-    padding: 2px 10px; border-radius: 99px;
-  }
-  .month-label-year {
-    font-size: 12px; font-weight: 400;
-    color: rgba(255,255,255,0.5);
-    margin-left: 2px;
-  }
+  .event-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .event-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
+  .event-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+  .event-date { font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface); padding: 4px 10px; border-radius: 99px; }
+  
+  .event-photos { display: grid; gap: 6px; border-radius: 8px; overflow: hidden; }
+  .event-photos img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface); border-radius: 4px; border: 1px solid rgba(0,0,0,0.05); }
+  
+  /* Bố cục Collage tùy số lượng ảnh */
+  .event-photos.count-1 { grid-template-columns: 1fr; }
+  .event-photos.count-2 { grid-template-columns: 1fr 1fr; }
+  .event-photos.count-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .event-photos.count-4 { grid-template-columns: 1fr 1fr; }
+  .event-photos.count-5 { grid-template-columns: repeat(6, 1fr); }
+  .event-photos.count-5 > img:nth-child(1), .event-photos.count-5 > img:nth-child(2) { grid-column: span 3; }
+  .event-photos.count-5 > img:nth-child(n+3) { grid-column: span 2; }
+
+  /* Giao diện phân trang */
+  .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text-2); cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.15s; }
+  .page-btn:hover { background: var(--surface); color: var(--accent); border-color: var(--accent-mid); }
+  .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Group Tháng */
+  .month-label { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, #1a2d52 0%, #243a6a 60%, transparent 100%); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 18px 10px 14px; margin: 0 0 16px; }
+  .month-label-text { font-size: 15px; font-weight: 700; color: #fff; }
+  .month-label-count { font-size: 11.5px; font-weight: 500; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); padding: 2px 10px; border-radius: 99px; margin-left: auto; }
   .month-group { margin-bottom: 32px; }
-  .month-group:last-child { margin-bottom: 0; }
-  /* Each row is its own 5-col grid — no gaps, no orphan cells */
-  .photo-grid-row { display:grid; grid-template-columns:repeat(5,1fr); gap:10px; margin-bottom:10px; }
-  .photo-grid-row:last-child { margin-bottom:0; }
-  .photo-grid-row .span2 { grid-column:span 2; }
-  /* Last row: if not 5 cols used, override via inline style */
-  .photo-placeholder { border-radius:10px; border:2px dashed var(--border); aspect-ratio:9/13; display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--text-3);cursor:pointer;transition:border-color 0.15s;font-size:12.5px; }
-  .photo-placeholder:hover { border-color:var(--accent); color:var(--accent); }
-  #modal-backdrop { display:none; }
-  #modal-backdrop.open { display:flex !important; }
 </style>
 
 <script>
@@ -1484,314 +1494,410 @@
     '#e0e7ff','#cffafe','#dcfce7','#fef9c3','#ffe4e6'
   ];
 
-  let photos = [
-    { id:1,  title:'Hội thảo AI 2025',      desc:'Sự kiện công nghệ tại HCMC',      month:5, year:2025, color:COLORS[0],  wide:false },
-    { id:2,  title:'Dự án tốt nghiệp',      desc:'Buổi bảo vệ đồ án CNTT',         month:5, year:2025, color:COLORS[1],  wide:true  },
-    { id:3,  title:'Workshop React',         desc:'Khóa học frontend nâng cao',      month:5, year:2025, color:COLORS[2],  wide:false },
-    { id:4,  title:'Team building',          desc:'Công ty FPT Software',            month:5, year:2025, color:COLORS[6],  wide:false },
-    { id:5,  title:'Lễ khai giảng',         desc:'Năm học mới 2025',                month:5, year:2025, color:COLORS[12], wide:false },
-    { id:6,  title:'Demo sản phẩm',         desc:'Buổi demo cuối kỳ',               month:5, year:2025, color:COLORS[3],  wide:true  },
-    { id:7,  title:'Gặp gỡ mentor',         desc:'Coaching session tháng 5',        month:5, year:2025, color:COLORS[13], wide:false },
-    { id:8,  title:'Code review session',   desc:'Họp nhóm dự án thực tập',         month:5, year:2025, color:COLORS[4],  wide:false },
-    { id:9,  title:'Triển lãm CNTT',        desc:'Exhibition tại SECC HCMC',        month:5, year:2025, color:COLORS[14], wide:false },
-    // Bổ sung tháng 5/2025
-    { id:18, title:'Họp định hướng quý 2',   desc:'Lập kế hoạch dự án mới',          month:5, year:2025, color:COLORS[5],  wide:false },
-    { id:19, title:'Giao lưu CLB Tin học',   desc:'Sharing kinh nghiệm Web Dev',     month:5, year:2025, color:COLORS[8],  wide:true  },
+  // ── DỮ LIỆU SỰ KIỆN (MOCK DATA) ───────────────────
+  function getMock169(color, text) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450"><rect width="100%" height="100%" fill="${color}"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="28" font-weight="bold" fill="#ffffff90">${text}</text></svg>`;
+    return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+  }
 
-    { id:10, title:'Nhận chứng chỉ AWS',    desc:'Cloud Practitioner Cert',         month:4, year:2025, color:COLORS[3],  wide:false },
-    { id:11, title:'Hackathon HCMUT',       desc:'Giải nhì cuộc thi lập trình',     month:4, year:2025, color:COLORS[4],  wide:true  },
-    { id:12, title:'Kỳ thực tập',           desc:'Tại công ty Axon Active',         month:4, year:2025, color:COLORS[5],  wide:false },
-    // Bổ sung tháng 4/2025
-    { id:20, title:'Workshop Docker',       desc:'Cơ bản về Containerization',       month:4, year:2025, color:COLORS[0],  wide:false },
-   
+  let eventList = [
+    { id: 1, title: 'Hội thảo AI 2025', desc: 'Sự kiện công nghệ tại SECC, HCM.', month: 5, year: 2025, date: '15/05/2025', updatedDate: '16/05/2025 14:20', images: [getMock169('#1a2d52','Ảnh 1'), getMock169('#243a6a','Ảnh 2'), getMock169('#3b82f6','Ảnh 3'), getMock169('#1d4ed8','Ảnh 4'), getMock169('#0f1b35','Ảnh 5')] },
+    { id: 2, title: 'Bảo vệ Đồ án Tốt nghiệp', desc: 'Thuyết trình trước hội đồng chuyên môn.', month: 5, year: 2025, date: '02/05/2025', updatedDate: '02/05/2025 17:00', images: [getMock169('#0d9488','Ảnh 1'), getMock169('#115e59','Ảnh 2')] },
+    { id: 3, title: 'Hackathon HCMUT', desc: 'Đội thi đạt giải nhì.', month: 4, year: 2025, date: '20/04/2025', updatedDate: '21/04/2025 09:15', images: [getMock169('#d97706','Ảnh 1'), getMock169('#b45309','Ảnh 2'), getMock169('#92400e','Ảnh 3')] },
+    { id: 4, title: 'Lễ tốt nghiệp khóa IELTS', desc: 'Nhận chứng chỉ band 7.0', month: 3, year: 2025, date: '10/03/2025', updatedDate: '10/03/2025 11:30', images: [getMock169('#16a34a','Ảnh 1')] },
+    { id: 5, title: 'Year End Party 2024', desc: 'Tổng kết năm cũ cùng team dự án', month: 1, year: 2025, date: '15/01/2025', updatedDate: '15/01/2025 23:10', images: [getMock169('#dc2626','Ảnh 1'), getMock169('#991b1b','Ảnh 2'), getMock169('#7f1d1d','Ảnh 3'), getMock169('#f87171','Ảnh 4')] }
+  ];
+  // ── XEM CHI TIẾT SỰ KIỆN ──────────────────────────
+  let detailEvId = null;
 
-    { id:13, title:'Tốt nghiệp IELTS',      desc:'Band 7.0 tại IDP Vietnam',        month:3, year:2025, color:COLORS[7],  wide:false },
-    { id:14, title:'Triển lãm sản phẩm',    desc:'ProductFest Vietnam 2025',        month:3, year:2025, color:COLORS[8],  wide:false },
-    // Bổ sung tháng 3/2025
-    { id:22, title:'Seminar Clean Code',    desc:'Áp dụng SOLID trong thực tế',     month:3, year:2025, color:COLORS[2],  wide:true  },
+  function viewEvent(id) {
+    const ev = eventList.find(x => x.id === id);
+    if (!ev) return;
+    detailEvId = id;
 
-    { id:15, title:'Khóa UX Design',        desc:'Google Certificate hoàn thành',   month:2, year:2025, color:COLORS[9],  wide:true  },
-    // Bổ sung tháng 2/2025
-    { id:23, title:'Khai xuân đầu năm',     desc:'Gặp mặt đầu năm âm lịch',         month:2, year:2025, color:COLORS[13], wide:false },
+    // Cập nhật Tiêu đề và Mô tả
+    document.getElementById('detail-title').textContent = ev.title;
+    const descEl = document.getElementById('detail-desc');
+    descEl.textContent = ev.desc || '';
+    descEl.style.display = ev.desc ? 'block' : 'none';
 
-    { id:16, title:'Hội nghị startup',      desc:'VNG Campus Startup Day',          month:1, year:2025, color:COLORS[10], wide:false },
-    { id:17, title:'Dự án side project',    desc:'E-commerce App launch',           month:1, year:2025, color:COLORS[11], wide:false },
-    // Bổ sung tháng 1/2025
-    { id:24, title:'Hackathon Mini',        desc:'Sân chơi lập trình nội bộ',       month:1, year:2025, color:COLORS[1],  wide:false },
-    { id:25, title:'Tổng kết năm cũ',       desc:'Nhìn lại hành trình 2024',        month:1, year:2025, color:COLORS[6],  wide:true  }
-];
-  let nextId = 18;
-  let pendingFiles = [];
-  let activeMonth = '', activeYear = '';
+    // Đổ danh sách ảnh sự kiện
+    const imgContainer = document.getElementById('detail-images');
+    imgContainer.innerHTML = ev.images.map(img => `<img src="${img}" style="width:100%; border-radius:8px; border:1px solid var(--border);">`).join('');
 
-  // ── Render ────────────────────────────────────────
-  function groupByMonth(list) {
-    const map = {};
-    list.forEach(p => {
-      const key = `${p.year}-${String(p.month).padStart(2,'0')}`;
-      if (!map[key]) map[key] = { month:p.month, year:p.year, items:[] };
-      map[key].items.push(p);
+    // Hiển thị ngày tạo và ngày sửa đổi chi tiết
+    document.getElementById('detail-created').textContent = ev.date;
+    document.getElementById('detail-updated').textContent = ev.updatedDate || ev.date;
+
+    // Bật hiệu ứng mở modal
+    document.getElementById('detail-backdrop').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; 
+  }
+
+ 
+  // ── LOGIC CHỈNH SỬA SỰ KIỆN ────────────────────────
+  function editEvent() {
+    const ev = eventList.find(x => x.id === detailEvId);
+    if (!ev) return;
+    
+    // Đổ dữ liệu hiện tại vào form nhập liệu
+    document.getElementById('edit-event-title').value = ev.title;
+    document.getElementById('edit-event-desc').value = ev.desc || '';
+    
+    // Hiển thị form sửa đổi thông tin
+    document.getElementById('event-edit-panel').style.display = 'block';
+    
+    // Cuộn mượt modal xuống khu vực chỉnh sửa dưới đáy
+    document.getElementById('detail-backdrop').scrollTo({
+      top: document.getElementById('detail-box').scrollHeight,
+      behavior: 'smooth'
     });
-    return Object.values(map).sort((a,b)=> b.year!==a.year ? b.year-a.year : b.month-a.month);
   }
 
-  const VI_MONTHS = ['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
-
-  // ── Smart row-packing: fills 5 columns per row with no gaps ─────
-  // Each photo has a "weight": wide=2, normal=1. We pack rows of 5.
-  // Patterns per row: [2,2,1] [2,1,2] [1,2,2] [2,1,1,1] [1,2,1,1]
-  // [1,1,2,1] [1,1,1,2] [1,1,1,1,1] etc.
-  function packRows(items) {
-    const rows = [];
-    let queue = [...items];
-    while (queue.length) {
-      const row = [];
-      let slots = 5;
-      let qi = 0;
-      // Try to fill exactly 5 slots from remaining items
-      while (slots > 0 && qi < queue.length) {
-        const item = queue[qi];
-        const w = item.wide ? 2 : 1;
-        if (w <= slots) {
-          row.push(item);
-          slots -= w;
-          queue.splice(qi, 1);
-        } else {
-          // Item doesn't fit: try next in queue (look-ahead up to 4)
-          let found = false;
-          for (let look = qi + 1; look < Math.min(qi + 5, queue.length); look++) {
-            const alt = queue[look];
-            const aw = alt.wide ? 2 : 1;
-            if (aw <= slots) {
-              row.push(alt);
-              slots -= aw;
-              queue.splice(look, 1);
-              found = true;
-              break;
-            }
-          }
-          // If nothing fits, just bump qi to avoid infinite loop
-          if (!found) qi++;
-        }
-      }
-      // If leftover slots > 0 on last row, force remaining items in (no gap)
-      if (slots > 0 && row.length === 0 && queue.length > 0) {
-        row.push(queue.shift());
-      }
-      if (row.length) rows.push(row);
-    }
-    return rows;
+  function cancelEventEdit() {
+    document.getElementById('event-edit-panel').style.display = 'none';
   }
 
-  function buildCell(p) {
-    const isWide = p.wide;
-    const aspectClass = isWide ? 'photo-thumb-landscape' : 'photo-thumb';
-    const spanClass   = isWide ? 'span2' : '';
-    const imgContent  = p.src
-      ? `<img src="${p.src}" class="${aspectClass}" alt="${p.title}">`
-      : `<div class="${aspectClass}" style="background:${p.color};display:flex;align-items:center;justify-content:center;"><i class="ti ti-photo" style="font-size:28px;color:rgba(0,0,0,0.18);"></i></div>`;
-    return `
-      <div class="photo-card ${spanClass}" onclick="viewPhoto(${p.id})">
-        ${imgContent}
-        <div class="photo-info">
-          <div class="photo-title-text">${p.title}</div>
-          <div class="photo-desc-text">${p.desc || '—'}</div>
-        </div>
-      </div>`;
-  }
+  function saveEventEdit() {
+    const ev = eventList.find(x => x.id === detailEvId);
+    if (!ev) return;
 
-  function renderAlbum() {
-    let list = [...photos];
-    if (activeMonth) list = list.filter(p => p.month === parseInt(activeMonth));
-    if (activeYear)  list = list.filter(p => p.year  === parseInt(activeYear));
+    const newTitle = document.getElementById('edit-event-title').value.trim();
+    const newDesc = document.getElementById('edit-event-desc').value.trim();
 
-    const body = document.getElementById('album-body');
-    const groups = groupByMonth(list);
-
-    if (!groups.length) {
-      body.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--text-3);"><i class="ti ti-photo-off" style="font-size:36px;display:block;margin-bottom:10px;"></i>Không có ảnh nào phù hợp</div>`;
+    if (!newTitle) {
+      alert('Vui lòng nhập tiêu đề sự kiện!');
       return;
     }
 
-    body.innerHTML = groups.map(g => {
-      const rows = packRows(g.items);
-      const rowsHtml = rows.map(row => {
-        // Each row is its own 5-col grid so last row also has no gap
-        const usedCols = row.reduce((s, p) => s + (p.wide ? 2 : 1), 0);
-        // If last row is not full, distribute remaining space evenly
-        const extraFr = usedCols < 5 ? `;grid-template-columns:repeat(${usedCols},1fr)` : '';
-        return `<div class="photo-grid-row" style="--used:${usedCols}${extraFr}">${row.map(buildCell).join('')}</div>`;
-      }).join('');
+    const now = new Date();
+    const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+    const timeStr = `${dateStr} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-      return `
-        <div class="month-group" data-month="${g.month}" data-year="${g.year}">
-          <div class="month-label">
-            <i class="ti ti-calendar-month" style="font-size:18px;color:var(--accent-mid);flex-shrink:0;"></i>
-            <span class="month-label-text">${VI_MONTHS[g.month-1]}</span>
-            <span class="month-label-year">${g.year}</span>
-            <span class="month-label-count">${g.items.length} ảnh</span>
-          </div>
-          ${rowsHtml}
-        </div>`;
-    }).join('');
-  }
+    // Cập nhật dữ liệu vào mảng chính
+    ev.title = newTitle;
+    ev.desc = newDesc;
+    ev.updatedDate = timeStr;
 
-  // ── Filters ───────────────────────────────────────
-  function applyFilter() {
-    activeMonth = document.getElementById('filter-month').value;
-    activeYear  = document.getElementById('filter-year').value;
+    // Cập nhật nóng nội dung đang hiển thị ngay trên màn hình chi tiết
+    document.getElementById('detail-title').textContent = ev.title;
+    const descEl = document.getElementById('detail-desc');
+    descEl.textContent = ev.desc || '';
+    descEl.style.display = ev.desc ? 'block' : 'none';
+    document.getElementById('detail-updated').textContent = ev.updatedDate;
+
+    // Đóng panel chỉnh sửa thông tin
+    document.getElementById('event-edit-panel').style.display = 'none';
+
+    // Làm mới danh sách bài đăng ở background phía sau
     renderAlbum();
   }
 
-  function resetFilter() {
-    document.getElementById('filter-month').value = '';
-    document.getElementById('filter-year').value  = '';
-    activeMonth = ''; activeYear = '';
-    renderAlbum();
-  }
 
-  // ── Modal ─────────────────────────────────────────
-  function addPhoto() {
-    pendingFiles = [];
-    document.getElementById('photo-title').value = '';
-    document.getElementById('photo-desc').value  = '';
-    document.getElementById('modal-preview').style.display = 'none';
-    document.getElementById('preview-grid').innerHTML = '';
-    document.getElementById('modal-backdrop').classList.add('open');
-  }
-
-  function closeModal() {
-    document.getElementById('modal-backdrop').classList.remove('open');
-  }
-
-  function handleDrop(e) {
-    e.preventDefault();
-    document.getElementById('drop-zone').style.borderColor = 'var(--border)';
-    const files = Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/'));
-    processFiles(files);
-  }
-
-  function handleFiles(e) {
-    const files = Array.from(e.target.files);
-    processFiles(files);
-    e.target.value = '';
-  }
-
-  function processFiles(files) {
-    if (!files.length) return;
-    pendingFiles = files;
-    const preview = document.getElementById('modal-preview');
-    const grid    = document.getElementById('preview-grid');
-    const label   = document.getElementById('file-count-label');
-    label.textContent = `Đã chọn ${files.length} ảnh`;
-    grid.innerHTML = '';
-    files.slice(0,8).forEach(f => {
-      const url = URL.createObjectURL(f);
-      const img = document.createElement('img');
-      img.src = url;
-      img.style.cssText = 'width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;';
-      grid.appendChild(img);
-    });
-    if (files.length > 8) {
-      const more = document.createElement('div');
-      more.style.cssText = 'aspect-ratio:1;border-radius:6px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--text-3);';
-      more.textContent = `+${files.length-8}`;
-      grid.appendChild(more);
-    }
-    preview.style.display = 'block';
-  }
-
-  function confirmAdd() {
-    const title = document.getElementById('photo-title').value.trim() || 'Ảnh mới';
-    const desc  = document.getElementById('photo-desc').value.trim();
-    const now   = new Date();
-
-    if (pendingFiles.length > 0) {
-      pendingFiles.forEach((f, i) => {
-        const url = URL.createObjectURL(f);
-        photos.unshift({ id:nextId++, title: i===0 ? title : `${title} (${i+1})`, desc, month:now.getMonth()+1, year:now.getFullYear(), src:url, color:COLORS[nextId%COLORS.length], wide:false });
-      });
-    } else {
-      photos.unshift({ id:nextId++, title, desc, month:now.getMonth()+1, year:now.getFullYear(), color:COLORS[nextId%COLORS.length], wide:false });
-    }
-    closeModal();
-    renderAlbum();
-  }
-
-  let detailId = null;
-
-  function fmtDate(ts) {
-    if (!ts) return '—';
-    const d = new Date(ts);
-    return d.toLocaleDateString('vi-VN', { day:'2-digit', month:'2-digit', year:'numeric' })
-      + ' ' + d.toLocaleTimeString('vi-VN', { hour:'2-digit', minute:'2-digit' });
-  }
-
-  function viewPhoto(id) {
-    const p = photos.find(x => x.id === id);
-    if (!p) return;
-    detailId = id;
-
-    // Image content
-    const wrap = document.getElementById('detail-img-content');
-    if (p.src) {
-      wrap.innerHTML = `<img src="${p.src}" style="width:100%;max-height:420px;object-fit:contain;display:block;">`;
-    } else {
-      wrap.innerHTML = `<div style="width:100%;height:280px;background:${p.color};display:flex;align-items:center;justify-content:center;"><i class="ti ti-photo" style="font-size:56px;color:rgba(0,0,0,0.18);"></i></div>`;
-    }
-
-    document.getElementById('detail-title').textContent   = p.title;
-    document.getElementById('detail-desc').textContent    = p.desc || 'Chưa có mô tả.';
-    document.getElementById('detail-created').textContent = fmtDate(p.createdAt);
-    document.getElementById('detail-updated').textContent = fmtDate(p.updatedAt) || fmtDate(p.createdAt);
-
-    document.getElementById('edit-panel').style.display = 'none';
-    const bd = document.getElementById('detail-backdrop');
-    bd.style.display = 'flex';
-  }
-
-  function closeDetail() {
-    document.getElementById('detail-backdrop').style.display = 'none';
-    detailId = null;
-  }
-
-  function editPhoto() {
-    const p = photos.find(x => x.id === detailId);
-    if (!p) return;
-    document.getElementById('edit-title').value = p.title;
-    document.getElementById('edit-desc').value  = p.desc || '';
-    document.getElementById('edit-panel').style.display = 'block';
-    document.getElementById('edit-title').focus();
-  }
-
-  function cancelEdit() {
-    document.getElementById('edit-panel').style.display = 'none';
-  }
-
-  function saveEdit() {
-    const p = photos.find(x => x.id === detailId);
-    if (!p) return;
-    const newTitle = document.getElementById('edit-title').value.trim();
-    const newDesc  = document.getElementById('edit-desc').value.trim();
-    if (!newTitle) return;
-    p.title     = newTitle;
-    p.desc      = newDesc;
-    p.updatedAt = Date.now();
-
-    document.getElementById('detail-title').textContent   = p.title;
-    document.getElementById('detail-desc').textContent    = p.desc || 'Chưa có mô tả.';
-    document.getElementById('detail-updated').textContent = fmtDate(p.updatedAt);
-    document.getElementById('edit-panel').style.display  = 'none';
-    renderAlbum();
-  }
-
-  function deletePhoto() {
-    if (!confirm(`Xoá ảnh "${photos.find(x=>x.id===detailId)?.title}"?\nHành động này không thể hoàn tác.`)) return;
-    photos = photos.filter(x => x.id !== detailId);
+  function deleteEvent() {
+    if (!confirm('Bạn có chắc chắn muốn xóa sự kiện này? Hành động này không thể hoàn tác.')) return;
+    eventList = eventList.filter(x => x.id !== detailEvId);
     closeDetail();
     renderAlbum();
   }
 
+  let activeMonth = '', activeYear = '';
+  let currentPage = 1;
+  const MONTHS_PER_PAGE = 2; // Số tháng hiển thị trên 1 trang
+
+  // ── RENDER ALBUM SỰ KIỆN ──────────────────────────
+  function renderAlbum() {
+    let list = [...eventList];
+    
+    // Gom nhóm theo tháng-năm
+    const groupsMap = {};
+    list.forEach(ev => {
+      const key = `${ev.year}-${String(ev.month).padStart(2,'0')}`;
+      if (!groupsMap[key]) groupsMap[key] = { month: ev.month, year: ev.year, events: [] };
+      groupsMap[key].events.push(ev);
+    });
+    
+    let groups = Object.values(groupsMap).sort((a,b) => b.year !== a.year ? b.year - a.year : b.month - a.month);
+
+    // Lọc dữ liệu
+    if (activeMonth) groups = groups.filter(g => g.month == parseInt(activeMonth));
+    if (activeYear)  groups = groups.filter(g => g.year == parseInt(activeYear));
+
+    const body = document.getElementById('album-body');
+    const pagination = document.getElementById('album-pagination');
+
+    if (!groups.length) {
+      body.innerHTML = `<div style="text-align:center;padding:48px 0;color:var(--text-3);"><i class="ti ti-calendar-off" style="font-size:36px;display:block;margin-bottom:10px;"></i>Không có sự kiện nào</div>`;
+      pagination.innerHTML = '';
+      return;
+    }
+
+    // Phân trang
+    const totalPages = Math.ceil(groups.length / MONTHS_PER_PAGE);
+    if (currentPage > totalPages) currentPage = totalPages;
+    const startIdx = (currentPage - 1) * MONTHS_PER_PAGE;
+    const pageGroups = groups.slice(startIdx, startIdx + MONTHS_PER_PAGE);
+
+    // Render HTML
+    body.innerHTML = pageGroups.map(g => {
+      const eventsHtml = g.events.map(ev => `
+        <div class="event-card" onclick="viewEvent(${ev.id})">
+          <div class="event-header">
+            <div>
+              <div class="event-title">${ev.title}</div>
+              <div class="event-desc">${ev.desc || ''}</div>
+            </div>
+            <div class="event-date">${ev.date}</div>
+          </div>
+          <div class="event-photos count-${ev.images.length}">
+            ${ev.images.map(img => `<img src="${img}" alt="Photo">`).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      return `
+        <div class="month-group">
+          <div class="month-label">
+            <i class="ti ti-calendar-month" style="font-size:18px;color:var(--accent-mid);flex-shrink:0;"></i>
+            <span class="month-label-text">Tháng ${g.month}/${g.year}</span>
+            <span class="month-label-count">${g.events.length} sự kiện</span>
+          </div>
+          ${eventsHtml}
+        </div>
+      `;
+    }).join('');
+
+    // Render Pagination
+    let pageHtml = '';
+    for(let i=1; i<=totalPages; i++) {
+      pageHtml += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+    }
+    pagination.innerHTML = totalPages > 1 ? pageHtml : '';
+  }
+
+  function changePage(p) { currentPage = p; renderAlbum(); document.querySelector('.main').scrollTop = 0; }
+  function applyAlbumFilter() { activeMonth = document.getElementById('filter-month').value; activeYear = document.getElementById('filter-year').value; currentPage = 1; renderAlbum(); }
+  function resetAlbumFilter() { document.getElementById('filter-month').value = ''; document.getElementById('filter-year').value = ''; activeMonth = ''; activeYear = ''; currentPage = 1; renderAlbum(); }
+
+  // ── LOGIC ADD EVENT & CROPPER ─────────────────────
+// ── BIẾN TOÀN CỤC CHO CROPPER VÀ ẢNH ───────────────
+  let rawFilesQueue = [];
+  let eventImages = []; // Dùng chung cho cả lúc Tạo mới và Sửa
+  let nextEvId = 100;
+  let cropperContext = 'create'; // Xác định đang ở chế độ 'create' hay 'edit'
+
+  // ── LOGIC TẠO MỚI (CREATE) ─────────────────────────
+  function openAddEventModal() {
+    cropperContext = 'create';
+    rawFilesQueue = []; eventImages = [];
+    document.getElementById('event-title').value = ''; 
+    document.getElementById('event-desc').value = '';
+    renderEventPreview();
+    document.getElementById('event-modal-backdrop').style.display = 'flex';
+  }
+  
+  function closeAddEventModal() { 
+    document.getElementById('event-modal-backdrop').style.display = 'none'; 
+  }
+
+  function renderEventPreview() {
+    const grid = document.getElementById('event-preview-grid');
+    grid.innerHTML = eventImages.map((img, i) => `
+      <div style="aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+        <div onclick="removeEventImg(${i})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.6);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;"><i class="ti ti-x"></i></div>
+      </div>
+    `).join('');
+  }
+
+  // ── LOGIC CHỈNH SỬA (EDIT) ─────────────────────────
+  function editEvent() {
+    const ev = eventList.find(x => x.id === detailEvId);
+    if (!ev) return;
+    
+    cropperContext = 'edit';
+    eventImages = [...ev.images]; // Nạp ảnh cũ vào mảng chờ xử lý
+    
+    document.getElementById('edit-event-title').value = ev.title;
+    document.getElementById('edit-event-desc').value = ev.desc || '';
+    
+    renderEventEditPreview(); // Vẽ lại khung ảnh
+    
+    document.getElementById('event-edit-panel').style.display = 'block';
+    
+    // Tự động cuộn xuống
+    document.getElementById('detail-backdrop').scrollTo({
+      top: document.getElementById('detail-box').scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+
+  function renderEventEditPreview() {
+    const grid = document.getElementById('edit-event-preview-grid');
+    let html = eventImages.map((img, i) => `
+      <div style="aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;border:1px solid var(--border);">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
+        <div onclick="removeEventImg(${i})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;transition:0.15s;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'"><i class="ti ti-x"></i></div>
+      </div>
+    `).join('');
+    
+    // Nếu chưa đủ 5 ảnh, hiện thêm nút Add
+    if (eventImages.length < 5) {
+      html += `
+        <div onclick="document.getElementById('event-file-input').click()" style="aspect-ratio:16/9;border-radius:6px;border:1.5px dashed var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);background:#eff6ff;flex-direction:column;gap:4px;transition:0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+          <i class="ti ti-plus" style="font-size:22px;"></i>
+          <span style="font-size:11px;font-weight:600;">Thêm ảnh</span>
+        </div>
+      `;
+    }
+    grid.innerHTML = html;
+  }
+
+  function cancelEventEdit() { document.getElementById('event-edit-panel').style.display = 'none'; }
+
+  function saveEventEdit() {
+    const ev = eventList.find(x => x.id === detailEvId);
+    if (!ev) return;
+
+    const newTitle = document.getElementById('edit-event-title').value.trim();
+    const newDesc = document.getElementById('edit-event-desc').value.trim();
+
+    if (!newTitle) { alert('Vui lòng nhập tiêu đề sự kiện!'); return; }
+    if (eventImages.length === 0) { alert('Sự kiện phải có ít nhất 1 hình ảnh!'); return; }
+
+    const now = new Date();
+    const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+    const timeStr = `${dateStr} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+    ev.title = newTitle;
+    ev.desc = newDesc;
+    ev.updatedDate = timeStr;
+    ev.images = [...eventImages]; // Lưu toàn bộ ảnh mới/cũ đã cập nhật
+
+    // Cập nhật lại màn hình chi tiết hiện tại
+    document.getElementById('detail-title').textContent = ev.title;
+    const descEl = document.getElementById('detail-desc');
+    descEl.textContent = ev.desc || '';
+    descEl.style.display = ev.desc ? 'block' : 'none';
+    document.getElementById('detail-updated').textContent = ev.updatedDate;
+    
+    document.getElementById('detail-images').innerHTML = ev.images.map(img => `<img src="${img}" style="width:100%; border-radius:8px; border:1px solid var(--border);">`).join('');
+
+    document.getElementById('event-edit-panel').style.display = 'none';
+    renderAlbum(); // Render lại mảng lưới sự kiện ngoài cùng
+  }
+
+  function closeDetail() {
+    document.getElementById('detail-backdrop').style.display = 'none';
+    document.getElementById('event-edit-panel').style.display = 'none';
+    document.body.style.overflow = '';
+    detailEvId = null;
+  }
+
+  // ── LOGIC CROPPER & UPLOAD (DÙNG CHUNG) ─────────────
+  function handleEventFiles(e) {
+    const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+    if (eventImages.length + files.length > 5) {
+      alert('Chỉ được phép tối đa 5 ảnh trong 1 sự kiện!'); 
+      e.target.value = ''; return; 
+    }
+    rawFilesQueue.push(...files);
+    e.target.value = '';
+    processNextCrop();
+  }
+
+  function removeEventImg(idx) { 
+    eventImages.splice(idx,1); 
+    // Tự động phân luồng vẽ lại UI tùy chế độ
+    if (cropperContext === 'create') renderEventPreview();
+    else renderEventEditPreview(); 
+  }
+
+  let crpImg = null; let crpScale = 1, crpX = 0, crpY = 0;
+  let isDrag = false, lastX, lastY;
+  const cvs = document.getElementById('cropper-canvas');
+  const ctx = cvs.getContext('2d');
+
+  function processNextCrop() {
+    if(rawFilesQueue.length === 0) { 
+       // Dừng crop -> Render lại ảnh
+       if (cropperContext === 'create') renderEventPreview(); 
+       else renderEventEditPreview();
+       return; 
+    }
+    const file = rawFilesQueue.shift();
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => { openCropper(img); };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function openCropper(img) {
+    crpImg = img;
+    crpScale = Math.max(800 / img.width, 450 / img.height);
+    crpX = (800 - img.width * crpScale) / 2; 
+    crpY = (450 - img.height * crpScale) / 2;
+    drawCropper();
+    document.getElementById('cropper-modal').style.display = 'flex';
+  }
+
+  function drawCropper() {
+    ctx.fillStyle = '#000'; ctx.fillRect(0,0,800,450);
+    if(crpImg) ctx.drawImage(crpImg, crpX, crpY, crpImg.width * crpScale, crpImg.height * crpScale);
+  }
+
+  function startDrag(clientX, clientY) { isDrag = true; lastX = clientX; lastY = clientY; }
+  function moveDrag(clientX, clientY) {
+    if(!isDrag) return;
+    crpX += (clientX - lastX) * 1.5; crpY += (clientY - lastY) * 1.5;
+    const maxX = 800 - crpImg.width * crpScale; const maxY = 450 - crpImg.height * crpScale;
+    if(crpX > 0) crpX = 0; if(crpY > 0) crpY = 0;
+    if(crpX < maxX) crpX = maxX; if(crpY < maxY) crpY = maxY;
+    lastX = clientX; lastY = clientY;
+    drawCropper();
+  }
+  
+  cvs.onmousedown = (e) => startDrag(e.clientX, e.clientY);
+  window.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
+  window.addEventListener('mouseup', () => { isDrag = false; });
+  cvs.ontouchstart = (e) => { startDrag(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }
+  cvs.ontouchmove = (e) => { moveDrag(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }
+  cvs.ontouchend = () => { isDrag = false; }
+
+  function confirmCrop() {
+    eventImages.push(cvs.toDataURL('image/jpeg', 0.85));
+    document.getElementById('cropper-modal').style.display = 'none';
+    processNextCrop();
+  }
+
+  function skipCrop() {
+    document.getElementById('cropper-modal').style.display = 'none';
+    processNextCrop(); 
+  }
+
+  // ── LƯU SỰ KIỆN MỚI ────────────────────────────────
+  function confirmEventAdd() {
+    if(eventImages.length === 0) { alert('Vui lòng thêm ít nhất 1 ảnh!'); return; }
+    const title = document.getElementById('event-title').value.trim() || 'Sự kiện mới';
+    const desc = document.getElementById('event-desc').value.trim();
+    const now = new Date();
+    const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+    const timeStr = `${dateStr} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+    
+    eventList.unshift({ 
+      id: nextEvId++, title, desc, 
+      month: now.getMonth()+1, year: now.getFullYear(), 
+      date: dateStr, updatedDate: timeStr, 
+      images: [...eventImages] 
+    });
+    
+    closeAddEventModal();
+    currentPage = 1; 
+    renderAlbum();
+  }
   // ── Tab navigation ────────────────────────────────
   const TAB_TITLES = {
     dashboard:   'Dashboard',
