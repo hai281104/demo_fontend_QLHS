@@ -667,6 +667,194 @@
     background: var(--border);
     margin: 0;
   }
+  /* ── TAB: HÀNH TRÌNH PHÁT TRIỂN (TIMELINE CHUẨN) ── */
+  .hanhtrinh-wrapper {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    margin-top: 10px;
+  }
+
+  .hanhtrinh-main {
+    flex: 1;
+    position: relative;
+    padding-bottom: 40px;
+  }
+
+  /* Đường kẻ dọc xuyên suốt */
+  .hanhtrinh-main::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    bottom: 0;
+    left: 120px;
+    width: 2px;
+    background: var(--border);
+    z-index: 1;
+  }
+
+  .ht-period {
+    position: relative;
+    margin-bottom: 60px;
+  }
+
+  /* Nút thời kỳ đè lên đường line (Màu tím giống mẫu) */
+  .ht-badge {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    background: #6b46c1; 
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-left: 20px; /* Canh tâm nút nằm trên đường kẻ */
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(107, 70, 193, 0.3);
+  }
+
+  /* Thẻ nội dung (Card) */
+  .ht-card {
+    margin-left: 160px; /* Thụt vào nhường chỗ cho đường line */
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    position: relative;
+    z-index: 2;
+    transition: transform 0.2s;
+  }
+
+  .ht-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  }
+
+  /* Dấu chấm nối trên đường thẳng */
+  .ht-dot {
+    position: absolute;
+    left: 115px; /* Giữa đường line */
+    top: 130px;
+    width: 12px;
+    height: 12px;
+    background: #6b46c1;
+    border-radius: 50%;
+    border: 3px solid var(--surface);
+    z-index: 2;
+  }
+
+  .ht-card-img {
+    height: 220px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-color: var(--navy-2);
+  }
+
+  .ht-card-time {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ht-card-body { padding: 24px; }
+
+  .ht-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #6b46c1;
+    margin-bottom: 12px;
+  }
+
+  .ht-card-desc {
+    font-size: 13.5px;
+    color: var(--text-2);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* Khối Kỹ năng/Nhân vật tiêu biểu */
+  .ht-card-feature {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border);
+  }
+
+  .ht-card-feature .feature-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: #f3e8ff;
+    color: #6b46c1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+
+  .ht-feature-label {
+    font-size: 11px;
+    color: var(--text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .ht-feature-name { font-size: 14px; font-weight: 700; color: var(--text-1); }
+
+  /* Menu cố định bên phải (Sticky Sidebar) */
+  .ht-sidebar {
+    width: 280px;
+    position: sticky;
+    top: 80px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    flex-shrink: 0;
+  }
+
+  .ht-sidebar-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .ht-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    color: var(--text-2);
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 4px;
+    transition: 0.2s;
+  }
+
+  .ht-nav-item:hover { background: var(--surface); }
+
+  .ht-nav-item.active {
+    background: #6b46c1;
+    color: #fff;
 </style>
 </head>
 <body>
@@ -685,6 +873,10 @@
     </a>
     <a class="nav-item" href="#" data-tab="profile" onclick="switchTab('profile',this);return false;">
       <i class="ti ti-user-circle"></i> Hồ sơ cá nhân
+    </a>
+    
+    <a class="nav-item" href="#" data-tab="hanhtrinh" onclick="switchTab('hanhtrinh',this);return false;">
+      <i class="ti ti-route"></i> Hành trình phát triển
     </a>
   </div>
 
@@ -731,15 +923,25 @@
   </div>
 
   <div class="sidebar-footer">
-    <div class="user-chip">
-      <div class="avatar">NV</div>
-      <div class="user-info">
-        <div class="user-name">Nguyễn Văn An</div>
-        <div class="user-role">Sinh viên CNTT</div>
-      </div>
+  <div class="user-chip" style="position: relative;">
+    <div class="avatar">NV</div>
+    <div class="user-info">
+      <div class="user-name">Nguyễn Văn An</div>
+      <div class="user-role">Sinh viên CNTT</div>
+    </div>
+    
+    <div onclick="toggleUserMenu(event)" style="cursor:pointer; padding: 4px;">
       <i class="ti ti-dots-vertical" style="color:rgba(255,255,255,0.3); font-size:16px;"></i>
     </div>
+
+    <div id="user-menu" style="display:none; position:absolute; bottom:110%; right:0; width:160px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:200; overflow:hidden;">
+      <div onclick="alert('Mở Cài đặt...')" style="padding:10px 16px; cursor:pointer; font-size:13px; color:var(--text-1); transition:0.1s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><i class="ti ti-settings" style="margin-right:8px;"></i>Cài đặt</div>
+      <div onclick="alert('Mở Chính sách...')" style="padding:10px 16px; cursor:pointer; font-size:13px; color:var(--text-1); transition:0.1s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><i class="ti ti-file-text" style="margin-right:8px;"></i>Chính sách</div>
+      <div style="height:1px; background:var(--border);"></div>
+      <div onclick="alert('Đăng xuất...')" style="padding:10px 16px; cursor:pointer; font-size:13px; color:var(--red); transition:0.1s;" onmouseover="this.style.background='#fef2f2'" onmouseout="this.style.background='transparent'"><i class="ti ti-logout" style="margin-right:8px;"></i>Đăng xuất</div>
+    </div>
   </div>
+</div>
 </aside>
 
 <!-- MAIN -->
@@ -948,7 +1150,24 @@
     </div> </div>
 
 
-  
+  <div id="tab-hanhtrinh" class="tab-page" style="display:none;">
+    
+    <div style="margin-bottom: 10px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">Dòng thời gian tự động</div>
+      <h2 style="font-size: 26px; font-weight: 800; color: var(--text-1); margin-bottom: 8px;">Hành Trình Phát Triển</h2>
+      <div style="font-size: 14px; color: var(--text-2); max-width: 600px; line-height: 1.5;">Hệ thống tự động tổng hợp các cột mốc từ Học vấn, Kinh nghiệm, Dự án, Chứng chỉ và Thành tựu của bạn.</div>
+    </div>
+
+    <div class="hanhtrinh-wrapper">
+      <div class="hanhtrinh-main" id="timeline-main-content"></div>
+
+      <div class="ht-sidebar">
+        <div class="ht-sidebar-title">Các mốc thời gian</div>
+        <div id="timeline-sidebar-content"></div>
+      </div>
+    </div>
+    
+  </div>
 
   <!-- ═══ TAB: ALBUM ═══════════════════════════════ -->
   <div id="tab-album" class="tab-page" style="display:none;">
@@ -1016,7 +1235,7 @@
       <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:16px;">Cắt ảnh theo chuẩn 16:9</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Giữ chuột/chạm và kéo để di chuyển vùng hiển thị của ảnh.</div>
       
-      <div style="width:800px;max-width:90vw;aspect-ratio:16/9;background:#111;position:relative;border:2px solid #fff;border-radius:8px;overflow:hidden;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);">
+      <div style="width:800px;max-width:90vw;aspect-ratio:1/1;background:#111;position:relative;border:2px solid #fff;border-radius:8px;overflow:hidden;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);">
         <canvas id="cropper-canvas" width="800" height="450" style="width:100%;height:100%;cursor:move;touch-action:none;"></canvas>
         <div style="position:absolute;top:33.33%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
         <div style="position:absolute;top:66.66%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
@@ -1854,9 +2073,9 @@
         <h2 style="font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Quản lý CV</h2>
         <div style="font-size: 13.5px; color: var(--text-2);">Tự tay thiết kế CV chuyên nghiệp, chọn CV chính để xuất file ở tab Chia sẻ.</div>
       </div>
-      <button onclick="alert('Chuyển đến trang chọn Template CV...')" class="btn-primary" style="display: flex; align-items: center; gap: 6px;">
-        <i class="ti ti-plus" style="font-size: 14px;"></i> Tạo CV mới
-      </button>
+      <button onclick="openCvMethodModal()" class="btn-primary" style="display: flex; align-items: center; gap: 6px;">
+  <i class="ti ti-plus" style="font-size: 14px;"></i> Tạo CV mới
+</button>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
@@ -2167,17 +2386,50 @@
   .event-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
   .event-date { font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface); padding: 4px 10px; border-radius: 99px; }
   
-  .event-photos { display: grid; gap: 6px; border-radius: 8px; overflow: hidden; }
-  .event-photos img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface); border-radius: 4px; border: 1px solid rgba(0,0,0,0.05); }
+ /* Bố cục Collage tự động sắp xếp thông minh */
+ /* ── Bố cục Masonry (Pinterest Style) - Giữ 100% tỷ lệ gốc, KHÔNG CẮT ẢNH ── */
+  .event-photos { 
+    column-gap: 4px; /* Khoảng cách giữa các cột */
+    border-radius: 12px; 
+    overflow: hidden; 
+  }
   
-  /* Bố cục Collage tùy số lượng ảnh */
-  .event-photos.count-1 { grid-template-columns: 1fr; }
-  .event-photos.count-2 { grid-template-columns: 1fr 1fr; }
-  .event-photos.count-3 { grid-template-columns: 1fr 1fr 1fr; }
-  .event-photos.count-4 { grid-template-columns: 1fr 1fr; }
-  .event-photos.count-5 { grid-template-columns: repeat(6, 1fr); }
-  .event-photos.count-5 > img:nth-child(1), .event-photos.count-5 > img:nth-child(2) { grid-column: span 3; }
-  .event-photos.count-5 > img:nth-child(n+3) { grid-column: span 2; }
+  .event-photos img { 
+    width: 100%; 
+    height: auto !important; /* Tôn trọng tuyệt đối chiều cao gốc của ảnh */
+    display: block;
+    margin-bottom: 4px; /* Khoảng cách giữa các ảnh trong cùng 1 cột */
+    break-inside: avoid; /* Ngăn ảnh bị bẻ nửa vắt ngang qua 2 cột */
+    border-radius: 6px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+
+  .event-photos img:hover {
+    transform: scale(1.02); 
+    z-index: 10;
+    position: relative;
+  }
+  
+  /* 1 Ảnh: Giữ nguyên tỷ lệ, căn giữa, giới hạn chiều cao để ảnh 9:16 không bị quá khổng lồ */
+  .event-photos.count-1 { 
+    display: flex; 
+    justify-content: center; 
+    background: var(--surface); 
+    border: 1px solid var(--border);
+  }
+  .event-photos.count-1 img { 
+    width: auto; 
+    max-width: 100%; 
+    max-height: 500px; 
+    margin-bottom: 0;
+  }
+  
+  /* Từ 2 đến 5 ảnh: Tự động chia cột thông minh */
+  .event-photos.count-2 { column-count: 2; display: block; }
+  .event-photos.count-3 { column-count: 2; display: block; } /* 1 cột 2 ảnh, 1 cột 1 ảnh */
+  .event-photos.count-4 { column-count: 2; display: block; } /* 2 cột, mỗi cột 2 ảnh */
+  .event-photos.count-5 { column-count: 3; display: block; } /* Phân bổ đều ra 3 cột cực đẹp */
 
   /* Giao diện phân trang */
   .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text-2); cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.15s; }
@@ -2408,7 +2660,7 @@
   function renderEventPreview() {
     const grid = document.getElementById('event-preview-grid');
     grid.innerHTML = eventImages.map((img, i) => `
-      <div style="aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;">
+      <div style="aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative;">
         <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
         <div onclick="removeEventImg(${i})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.6);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;"><i class="ti ti-x"></i></div>
       </div>
@@ -2440,7 +2692,7 @@
   function renderEventEditPreview() {
     const grid = document.getElementById('edit-event-preview-grid');
     let html = eventImages.map((img, i) => `
-      <div style="aspect-ratio:16/9;border-radius:6px;overflow:hidden;position:relative;border:1px solid var(--border);">
+      <div style="aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative;border:1px solid var(--border);">
         <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
         <div onclick="removeEventImg(${i})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.7);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;transition:0.15s;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'"><i class="ti ti-x"></i></div>
       </div>
@@ -2449,7 +2701,7 @@
     // Nếu chưa đủ 5 ảnh, hiện thêm nút Add
     if (eventImages.length < 5) {
       html += `
-        <div onclick="document.getElementById('event-file-input').click()" style="aspect-ratio:16/9;border-radius:6px;border:1.5px dashed var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);background:#eff6ff;flex-direction:column;gap:4px;transition:0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
+        <div onclick="document.getElementById('event-file-input').click()" style="aspect-ratio:1/1;border-radius:6px;border:1.5px dashed var(--accent);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--accent);background:#eff6ff;flex-direction:column;gap:4px;transition:0.15s;" onmouseover="this.style.background='#dbeafe'" onmouseout="this.style.background='#eff6ff'">
           <i class="ti ti-plus" style="font-size:22px;"></i>
           <span style="font-size:11px;font-weight:600;">Thêm ảnh</span>
         </div>
@@ -2500,20 +2752,29 @@
   }
 
   // ── LOGIC CROPPER & UPLOAD (DÙNG CHUNG) ─────────────
+  // ── LOGIC UPLOAD ẢNH (TỰ ĐỘNG SẮP XẾP) ─────────────
   function handleEventFiles(e) {
     const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
     if (eventImages.length + files.length > 5) {
       alert('Chỉ được phép tối đa 5 ảnh trong 1 sự kiện!'); 
       e.target.value = ''; return; 
     }
-    rawFilesQueue.push(...files);
+    
+    // Đọc file trực tiếp và đưa ngay vào hệ thống (không qua bước cắt)
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        eventImages.push(event.target.result);
+        if (cropperContext === 'create') renderEventPreview();
+        else renderEventEditPreview();
+      };
+      reader.readAsDataURL(file);
+    });
     e.target.value = '';
-    processNextCrop();
   }
 
   function removeEventImg(idx) { 
     eventImages.splice(idx,1); 
-    // Tự động phân luồng vẽ lại UI tùy chế độ
     if (cropperContext === 'create') renderEventPreview();
     else renderEventEditPreview(); 
   }
@@ -2667,7 +2928,93 @@ const PLACEHOLDER_TABS = [];
     // Scroll top
     document.querySelector('.main').scrollTop = 0;
   }
+// ── LOGIC TỰ ĐỘNG TẠO DÒNG THỜI GIAN (AUTO TIMELINE) ─────────────
+  
+  // 1. Dữ liệu tổng hợp từ các phân hệ (Không có Quản lý CV)
+  const timelineData = [
+    { type: 'kinhnghiem', year: 2026, date: 'Tháng 4 / 2026', title: 'Thực tập sinh IT (Full-stack)', desc: 'Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js.', tags: 'Công ty Công nghệ' },
+    { type: 'portfolio', year: 2026, date: 'Tháng 4 / 2026', title: 'Ra mắt hệ thống TravelGood', desc: 'Thiết kế hệ thống quản lý lịch trình và điểm đến (CRUD nghiệp vụ), vận hành theo mô hình Agile/Scrum.', tags: 'React, Node.js' },
+    { type: 'chungchi', year: 2025, date: '15/05/2025', title: 'Đạt chứng chỉ AWS Cloud Practitioner', desc: 'Hoàn thành chứng chỉ đám mây cơ bản của Amazon Web Services.', tags: 'Cloud Computing' },
+    { type: 'thanhtuu', year: 2025, date: 'Tháng 4 / 2025', title: 'Giải Nhì Hackathon HCMUT 2025', desc: 'Đảm nhiệm vị trí Full-stack Developer trong đội thi. Phát triển thành công ứng dụng tích hợp AI hỗ trợ học tập.', tags: 'Giải thưởng' },
+    { type: 'portfolio', year: 2025, date: 'Tháng 12 / 2025', title: 'Dự án Dịch vụ in ấn tài liệu', desc: 'Phát triển nền tảng web đặt in tài liệu từ xa bằng PHP và MySQL.', tags: 'PHP, MySQL' },
+    { type: 'hocvan', year: 2024, date: 'Học kỳ I (2024)', title: 'Học bổng Xuất sắc - Khoa CNTT', desc: 'Đạt thành tích GPA nằm trong top 5% sinh viên có điểm số cao nhất toàn khóa.', tags: 'Học bổng' },
+    { type: 'hocvan', year: 2022, date: 'Tháng 9 / 2022', title: 'Nhập học Chuyên ngành CNTT', desc: 'Bắt đầu hành trình đại học tại Trường Đại học / Cao đẳng Công nghệ.', tags: 'Đại học' }
+  ];
 
+  // 2. Cấu hình giao diện cho từng loại dữ liệu
+  const typeConfig = {
+    hocvan:     { icon: 'ti-school', color: '#16a34a', bg: '#f0fdf4', label: 'Học vấn' },
+    kinhnghiem: { icon: 'ti-briefcase', color: '#3b82f6', bg: '#eff6ff', label: 'Kinh nghiệm' },
+    portfolio:  { icon: 'ti-device-laptop', color: '#0d9488', bg: '#f0fdfa', label: 'Dự án' },
+    chungchi:   { icon: 'ti-file-certificate', color: '#8b5cf6', bg: '#f3e8ff', label: 'Chứng chỉ' },
+    thanhtuu:   { icon: 'ti-trophy', color: '#dc2626', bg: '#fef2f2', label: 'Thành tựu' }
+  };
+
+  // 3. Hàm tự động vẽ Dòng thời gian
+  function renderAutoTimeline() {
+    // Nhóm dữ liệu theo năm
+    const grouped = timelineData.reduce((acc, curr) => {
+      if (!acc[curr.year]) acc[curr.year] = [];
+      acc[curr.year].push(curr);
+      return acc;
+    }, {});
+
+    // Sắp xếp năm từ mới nhất đến cũ nhất
+    const sortedYears = Object.keys(grouped).sort((a, b) => b - a);
+
+    let mainHtml = '';
+    let sidebarHtml = '';
+
+    sortedYears.forEach((year, index) => {
+      // Sidebar Menu (Năm mới nhất sẽ active)
+      sidebarHtml += `
+        <div class="ht-nav-item ${index === 0 ? 'active' : ''}">
+          <div class="dot"></div> Năm ${year}
+        </div>
+      `;
+
+      // Dựng các sự kiện trong Năm đó
+      const eventsHtml = grouped[year].map(ev => {
+        const config = typeConfig[ev.type];
+        return `
+          <div class="ht-card" style="margin-bottom: 20px;">
+            <div class="ht-card-body" style="padding: 20px;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="width:32px; height:32px; border-radius:8px; background:${config.bg}; color:${config.color}; display:flex; align-items:center; justify-content:center; font-size:16px;">
+                    <i class="ti ${config.icon}"></i>
+                  </div>
+                  <span style="font-size:12px; font-weight:600; color:${config.color}; text-transform:uppercase; letter-spacing:0.5px;">${config.label}</span>
+                </div>
+                <div style="font-size:12px; color:var(--text-3); font-weight:500; display:flex; align-items:center; gap:4px;">
+                  <i class="ti ti-calendar"></i> ${ev.date}
+                </div>
+              </div>
+              <div style="font-size:16px; font-weight:700; color:var(--text-1); margin-bottom:8px;">${ev.title}</div>
+              <div style="font-size:13.5px; color:var(--text-2); line-height:1.5; margin-bottom:12px;">${ev.desc}</div>
+              <span class="tag" style="background:var(--surface); border:1px solid var(--border); font-size:11px;">${ev.tags}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Gói vào khối của Năm
+      mainHtml += `
+        <div class="ht-period">
+          <div class="ht-badge">Năm ${year}</div>
+          <div class="ht-dot"></div>
+          ${eventsHtml}
+        </div>
+      `;
+    });
+
+    // Bơm HTML vào Giao diện
+    document.getElementById('timeline-main-content').innerHTML = mainHtml;
+    document.getElementById('timeline-sidebar-content').innerHTML = sidebarHtml;
+  }
+
+  // Chạy hàm ngay khi load trang
+  renderAutoTimeline();
   // ── Init ──────────────────────────────────────────
   renderAlbum();
 
@@ -2719,6 +3066,46 @@ const PLACEHOLDER_TABS = [];
     alert('Đã cập nhật thông tin hồ sơ thành công!');
     closeEditProfileModal();
   }
+  // ── LOGIC LỰA CHỌN PHƯƠNG THỨC TẠO CV ──────────────────
+  function openCvMethodModal() {
+    document.getElementById('cv-method-backdrop').style.display = 'flex';
+  }
+
+  function closeCvMethodModal() {
+    document.getElementById('cv-method-backdrop').style.display = 'none';
+  }
+
+  // Đóng khi click ngoài nền xám
+  document.getElementById('cv-method-backdrop').addEventListener('click', function(e) {
+    if (e.target === this) closeCvMethodModal();
+  });
+
+  // Xử lý tạo tự động
+  function generateAutomaticCv() {
+    closeCvMethodModal();
+    alert('ProfileVault đang thu thập dữ liệu từ các phân hệ: \n- Thông tin cá nhân\n- Học vấn & Trình độ\n- Kinh nghiệm & Kỹ năng\n\nĐang đồng bộ dữ liệu vào Template... Thành công!');
+    // Đoạn này sau này bạn viết code lưu mảng hoặc gọi API sinh file tự động nhé
+  }
+
+  // Xử lý tạo thủ công
+  function generateManualCv() {
+    closeCvMethodModal();
+    alert('Đang khởi tạo trình soạn thảo CV trống... Vui lòng nhập liệu thông tin từ đầu.');
+  }
+  // ── LOGIC MENU NGƯỜI DÙNG ──────────────────────────────
+  function toggleUserMenu(event) {
+    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+    const menu = document.getElementById('user-menu');
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  }
+
+  // Đóng menu khi click bất kỳ đâu trên màn hình
+  window.addEventListener('click', function() {
+    const menu = document.getElementById('user-menu');
+    if (menu.style.display === 'block') {
+      menu.style.display = 'none';
+    }
+  });
 </script>
 <div id="share-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.55); z-index:1050; align-items:center; justify-content:center;">
     <div style="background:var(--card); border-radius:14px; padding:24px; width:400px; max-width:90vw; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
@@ -2883,6 +3270,39 @@ const PLACEHOLDER_TABS = [];
         </button>
       </div>
 
+    </div>
+  </div>
+  <div id="cv-method-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.6); z-index:1050; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:14px; padding:24px; width:460px; max-width:92vw; position:relative; box-shadow:0 15px 35px rgba(0,0,0,0.15);">
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Tạo CV mới</div>
+        <button onclick="closeCvMethodModal()" style="border:none; background:transparent; cursor:pointer; color:var(--text-2); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%;">
+          <i class="ti ti-x" style="font-size:18px;"></i>
+        </button>
+      </div>
+      
+      <div style="font-size:13px; color:var(--text-2); margin-bottom:20px;">Vui lòng chọn phương thức khởi tạo nội dung cho bản CV của bạn:</div>
+      
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <div onclick="generateAutomaticCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#f0f6ff';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
+          <div style="width:40px; height:40px; border-radius:8px; background:#eff6ff; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-wand"></i></div>
+          <div style="flex:1;">
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo tự động (Khuyên dùng)</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Hệ thống tự động đồng bộ và điền đầy đủ dữ liệu từ Hồ sơ cá nhân, Học vấn, Kinh nghiệm của bạn vào CV.</div>
+          </div>
+        </div>
+
+        <div onclick="generateManualCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--text-2)'; this.style.background='var(--surface)';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
+          <div style="width:40px; height:40px; border-radius:8px; background:var(--surface); color:var(--text-2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-edit"></i></div>
+          <div style="flex:1;">
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo thủ công từ form trống</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Bắt đầu với một bản thiết kế trống hoàn toàn. Bạn sẽ tự viết lại nội dung theo ý muốn của mình.</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </body>
