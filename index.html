@@ -901,7 +901,7 @@
       <i class="ti ti-trophy"></i> Thành tựu
     </a>
     <a class="nav-item" href="#" data-tab="kinhnghiem" onclick="switchTab('kinhnghiem',this);return false;">
-      <i class="ti ti-medal"></i> Kinh nghiệm & Giải thưởng
+      <i class="ti ti-briefcase"></i> Kinh nghiệm làm việc
     </a>
     <a class="nav-item" href="#" data-tab="album" onclick="switchTab('album',this);return false;">
       <i class="ti ti-layout-grid"></i> Album ảnh nổi bật
@@ -1698,72 +1698,43 @@
   
  <div id="tab-kinhnghiem" class="tab-page" style="display:none;">
     <div style="margin-bottom: 24px;">
-      <h2 style="font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Kinh nghiệm & Giải thưởng</h2>
-      <div style="font-size: 13.5px; color: var(--text-2);">Quá trình công tác và những thành tựu nổi bật trong sự nghiệp.</div>
+      <h2 style="font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Kinh nghiệm làm việc</h2>
+      <div style="font-size: 13.5px; color: var(--text-2);">Quá trình công tác và các vị trí đã đảm nhiệm.</div>
     </div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-      
-      <div class="section-card">
-        <div class="section-head">
-          <div class="section-head-title"><i class="ti ti-briefcase"></i>Kinh nghiệm làm việc</div>
-          <div style="display: flex; gap: 6px;">
-            <button onclick="alert('Chức năng chỉnh sửa danh sách kinh nghiệm...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text-2); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--card)'">
-              <i class="ti ti-edit" style="font-size: 13px; color: var(--text-2);"></i> Sửa
-            </button>
-            <button onclick="alert('Chức năng thêm kinh nghiệm mới...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: none; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500; transition: 0.15s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-              <i class="ti ti-plus" style="font-size: 13px;"></i> Thêm
-            </button>
-          </div>
-        </div>
-        
-        <div class="activity-list" style="padding: 16px 20px;">
-          <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
-            <div style="width: 2px; background: var(--border); position: absolute; left: 19px; top: 40px; bottom: -24px;"></div>
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-code"></i></div>
-            <div>
-              <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Thực tập sinh IT (Full-stack)</div>
-              <div style="font-size: 12.5px; color: var(--accent); font-weight: 500; margin-bottom: 6px;">Công ty Công nghệ • Thực tập</div>
-              <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js. Quản lý source code qua GitHub và tracking task bằng Jira.</div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 16px; position: relative;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-car"></i></div>
-            <div>
-              <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Tài xế công nghệ</div>
-              <div style="font-size: 12.5px; color: var(--amber); font-weight: 500; margin-bottom: 6px;">Be Group • Bán thời gian</div>
-              <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Làm việc linh hoạt ngoài giờ học để gia tăng thu nhập và trải nghiệm môi trường dịch vụ khách hàng thực tế.</div>
-            </div>
-          </div>
+    <div class="section-card">
+      <div class="section-head">
+        <div class="section-head-title"><i class="ti ti-briefcase"></i>Kinh nghiệm làm việc</div>
+        <div style="display: flex; gap: 6px;">
+          <button onclick="alert('Chức năng chỉnh sửa danh sách kinh nghiệm...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text-2); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--card)'">
+            <i class="ti ti-edit" style="font-size: 13px; color: var(--text-2);"></i> Sửa
+          </button>
+          <button onclick="alert('Chức năng thêm kinh nghiệm mới...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: none; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500; transition: 0.15s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+            <i class="ti ti-plus" style="font-size: 13px;"></i> Thêm
+          </button>
         </div>
       </div>
 
-      <div class="section-card">
-        <div class="section-head">
-          <div class="section-head-title"><i class="ti ti-medal"></i>Thành tích & Giải thưởng</div>
-          <div style="display: flex; gap: 6px;">
-            <button onclick="alert('Chức năng chỉnh sửa danh sách giải thưởng...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--text-2); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='var(--card)'">
-              <i class="ti ti-edit" style="font-size: 13px; color: var(--text-2);"></i> Sửa
-            </button>
-            <button onclick="alert('Chức năng thêm giải thưởng mới...')" style="font-family: inherit; font-size: 12px; padding: 5px 10px; border: none; border-radius: 6px; background: var(--accent); color: #fff; cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 500; transition: 0.15s;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
-              <i class="ti ti-plus" style="font-size: 13px;"></i> Thêm
-            </button>
+      <div class="activity-list" style="padding: 16px 20px;">
+        <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
+          <div style="width: 2px; background: var(--border); position: absolute; left: 19px; top: 40px; bottom: -24px;"></div>
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-code"></i></div>
+          <div>
+            <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Thực tập sinh IT (Full-stack)</div>
+            <div style="font-size: 12.5px; color: var(--accent); font-weight: 500; margin-bottom: 6px;">Công ty Công nghệ • Thực tập</div>
+            <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js. Quản lý source code qua GitHub và tracking task bằng Jira.</div>
           </div>
         </div>
-        
-        <div class="activity-list" style="padding: 16px 20px;">
-          <div style="display: flex; gap: 16px; position: relative;">
-            <div style="width: 40px; height: 40px; border-radius: 10px; background: #fef2f2; color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-trophy"></i></div>
-            <div>
-              <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Giải Nhì Hackathon HCMUT 2025</div>
-              <div style="font-size: 12.5px; color: var(--red); font-weight: 500; margin-bottom: 6px;">Đại học Bách Khoa TP.HCM • Tháng 4/2025</div>
-              <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Phát triển ứng dụng AI hỗ trợ học tập. Đảm nhiệm vị trí Full-stack Developer cho dự án.</div>
-            </div>
+
+        <div style="display: flex; gap: 16px; position: relative;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-car"></i></div>
+          <div>
+            <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Tài xế công nghệ</div>
+            <div style="font-size: 12.5px; color: var(--amber); font-weight: 500; margin-bottom: 6px;">Be Group • Bán thời gian</div>
+            <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Làm việc linh hoạt ngoài giờ học để gia tăng thu nhập và trải nghiệm môi trường dịch vụ khách hàng thực tế.</div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 
@@ -2443,6 +2414,171 @@
   .month-group { margin-bottom: 32px; }
 </style>
 
+<div id="share-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.55); z-index:1050; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:14px; padding:24px; width:400px; max-width:90vw; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Chia sẻ tài liệu</div>
+        <button onclick="closeShareModal()" style="border:none; background:transparent; cursor:pointer; color:var(--text-2); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
+          <i class="ti ti-x" style="font-size:18px;"></i>
+        </button>
+      </div>
+      
+      <div style="font-size:13px; color:var(--text-2); margin-bottom:20px;">Chọn nền tảng bạn muốn gửi tài liệu này:</div>
+      
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <button onclick="alert('Mở ứng dụng Zalo...')" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#0068ff'; this.style.color='#0068ff'; this.style.background='#f0f4ff'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
+          <div style="width:24px; height:24px; background:#0068ff; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:10px; font-weight:bold;">Zalo</div>
+          <span style="font-size:13.5px; font-weight:600;">Zalo</span>
+        </button>
+        
+        <button onclick="window.location.href='mailto:?subject=Hồ sơ ứng tuyển - Nguyễn Văn An&body=Chào bạn,%0A%0AĐây là liên kết xem hồ sơ của tôi: https://profilevault.com/cv/nguyen-van-an'" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#ea4335'; this.style.color='#ea4335'; this.style.background='#fef2f2'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
+          <i class="ti ti-mail" style="font-size:22px; color:#ea4335;"></i>
+          <span style="font-size:13.5px; font-weight:600;">Gmail</span>
+        </button>
+
+        <button onclick="alert('Mở ứng dụng Messenger...')" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#0084ff'; this.style.color='#0084ff'; this.style.background='#eff6ff'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
+          <i class="ti ti-brand-messenger" style="font-size:22px; color:#0084ff;"></i>
+          <span style="font-size:13.5px; font-weight:600;">Messenger</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="edit-profile-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.65); z-index:1050; align-items:center; justify-content:center; padding: 20px;">
+    <div style="background:var(--card); border-radius:14px; width:600px; max-width:100%; max-height:90vh; display:flex; flex-direction:column; position:relative; box-shadow:0 20px 40px rgba(0,0,0,0.15); overflow:hidden;">
+      
+      <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--card); z-index:10;">
+        <div style="font-size:17px; font-weight:700; color:var(--text-1); display:flex; align-items:center; gap:8px;">
+          <i class="ti ti-user-edit" style="color:var(--accent); font-size:20px;"></i> Cập nhật hồ sơ
+        </div>
+        <button onclick="closeEditProfileModal()" style="border:none; background:var(--surface); cursor:pointer; color:var(--text-1); display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; transition: 0.15s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='var(--surface)'">
+          <i class="ti ti-x" style="font-size:16px;"></i>
+        </button>
+      </div>
+      
+      <div style="padding:24px; overflow-y:auto; flex:1;">
+        
+        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+          <div style="width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg, var(--navy-2) 0%, var(--accent) 100%); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; color:#fff;">NV</div>
+          <div>
+            <div style="display:flex; gap:8px; margin-bottom:6px;">
+              <button style="padding:6px 14px; border:none; border-radius:6px; background:var(--accent); color:#fff; font-family:inherit; font-size:12.5px; font-weight:500; cursor:pointer;">Tải ảnh lên</button>
+              <button style="padding:6px 14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text-2); font-family:inherit; font-size:12.5px; font-weight:500; cursor:pointer;">Gỡ ảnh</button>
+            </div>
+            <div style="font-size:11px; color:var(--text-3);">Định dạng hỗ trợ: JPG, PNG (Tối đa 2MB)</div>
+          </div>
+        </div>
+<div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
+          <i class="ti ti-info-circle"></i> Thông tin chung
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+          <div style="grid-column: 1 / -1; display:flex; align-items:center; gap:16px; margin-bottom:8px;">
+            <div style="width:60px; height:60px; border-radius:50%; background:var(--navy-2); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:#fff;">NV</div>
+            <button style="padding:6px 12px; border:1px solid var(--border); border-radius:6px; background:#fff; font-size:12px; cursor:pointer;">Thay ảnh</button>
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Họ và tên</label>
+            <input type="text" value="Nguyễn Văn An" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Vị trí</label>
+            <input type="text" value="Thực tập sinh IT (Full-stack)" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Khu vực</label>
+            <input type="text" value="TP. Hồ Chí Minh, Việt Nam" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Ngày sinh</label>
+            <input type="date" value="2004-11-28" style="width:100%; padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+        </div>
+
+        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
+          <i class="ti ti-link"></i> Liên kết chuyên môn
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">GitHub Profile</label>
+            <input type="text" value="github.com/an-nguyen" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">LinkedIn Profile</label>
+            <input type="text" value="linkedin.com/in/an-nguyen-it" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
+          </div>
+        </div>
+
+        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+          <span><i class="ti ti-bolt"></i> Kỹ năng chuyên môn</span>
+          <button style="border:none; background:none; color:var(--accent); font-size:12px; cursor:pointer;">+ Thêm</button>
+        </div>
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px; margin-bottom:24px;">
+          <input type="text" value="Java / Spring Boot" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
+          <input type="number" value="82" placeholder="%" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
+          
+          <input type="text" value="React & Next.js" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
+          <input type="number" value="78" placeholder="%" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
+        </div>
+
+        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
+          <i class="ti ti-school"></i> Học vấn & Trình độ
+        </div>
+        <div style="margin-bottom:24px;">
+          <input type="text" value="Chuyên ngành Công nghệ thông tin" placeholder="Tên ngành" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:10px;">
+          <input type="text" value="Trường Đại học / Cao đẳng Công nghệ" placeholder="Tên trường" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:10px;">
+          <input type="text" value="Niên khóa: 2022 - 2026" placeholder="Thời gian" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
+        </div>
+
+        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
+          <i class="ti ti-heart"></i> Sở thích & Giải trí
+        </div>
+        <input type="text" value="Nghiên cứu dự án, Nghe nhạc, Chơi game survival" placeholder="Các sở thích cách nhau bởi dấu phẩy" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:16px;">
+      </div>
+
+      <div style="padding:16px 24px; border-top:1px solid var(--border); background:var(--surface); display:flex; justify-content:flex-end; gap:10px; border-radius: 0 0 14px 14px;">
+        <button onclick="closeEditProfileModal()" style="padding:9px 18px; border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--text-2); font-family:inherit; font-size:13.5px; font-weight:500; cursor:pointer;">Huỷ bỏ</button>
+        <button onclick="saveProfileChanges()" style="padding:9px 24px; border:none; border-radius:8px; background:var(--accent); color:#fff; font-family:inherit; font-size:13.5px; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <i class="ti ti-device-floppy" style="font-size:16px;"></i> Lưu thay đổi
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div id="cv-method-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.6); z-index:1050; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:14px; padding:24px; width:460px; max-width:92vw; position:relative; box-shadow:0 15px 35px rgba(0,0,0,0.15);">
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Tạo CV mới</div>
+        <button onclick="closeCvMethodModal()" style="border:none; background:transparent; cursor:pointer; color:var(--text-2); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%;">
+          <i class="ti ti-x" style="font-size:18px;"></i>
+        </button>
+      </div>
+      
+      <div style="font-size:13px; color:var(--text-2); margin-bottom:20px;">Vui lòng chọn phương thức khởi tạo nội dung cho bản CV của bạn:</div>
+      
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        
+        <div onclick="generateAutomaticCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#f0f6ff';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
+          <div style="width:40px; height:40px; border-radius:8px; background:#eff6ff; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-wand"></i></div>
+          <div style="flex:1;">
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo tự động (Khuyên dùng)</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Hệ thống tự động đồng bộ và điền đầy đủ dữ liệu từ Hồ sơ cá nhân, Học vấn, Kinh nghiệm của bạn vào CV.</div>
+          </div>
+        </div>
+
+        <div onclick="generateManualCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--text-2)'; this.style.background='var(--surface)';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
+          <div style="width:40px; height:40px; border-radius:8px; background:var(--surface); color:var(--text-2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-edit"></i></div>
+          <div style="flex:1;">
+            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo thủ công từ form trống</div>
+            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Bắt đầu với một bản thiết kế trống hoàn toàn. Bạn sẽ tự viết lại nội dung theo ý muốn của mình.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
 <script>
   // ── Seed data ────────────────────────────────────
   const COLORS = [
@@ -2491,64 +2627,6 @@
     document.body.style.overflow = 'hidden'; 
   }
 
- 
-  // ── LOGIC CHỈNH SỬA SỰ KIỆN ────────────────────────
-  function editEvent() {
-    const ev = eventList.find(x => x.id === detailEvId);
-    if (!ev) return;
-    
-    // Đổ dữ liệu hiện tại vào form nhập liệu
-    document.getElementById('edit-event-title').value = ev.title;
-    document.getElementById('edit-event-desc').value = ev.desc || '';
-    
-    // Hiển thị form sửa đổi thông tin
-    document.getElementById('event-edit-panel').style.display = 'block';
-    
-    // Cuộn mượt modal xuống khu vực chỉnh sửa dưới đáy
-    document.getElementById('detail-backdrop').scrollTo({
-      top: document.getElementById('detail-box').scrollHeight,
-      behavior: 'smooth'
-    });
-  }
-
-  function cancelEventEdit() {
-    document.getElementById('event-edit-panel').style.display = 'none';
-  }
-
-  function saveEventEdit() {
-    const ev = eventList.find(x => x.id === detailEvId);
-    if (!ev) return;
-
-    const newTitle = document.getElementById('edit-event-title').value.trim();
-    const newDesc = document.getElementById('edit-event-desc').value.trim();
-
-    if (!newTitle) {
-      alert('Vui lòng nhập tiêu đề sự kiện!');
-      return;
-    }
-
-    const now = new Date();
-    const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
-    const timeStr = `${dateStr} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-    // Cập nhật dữ liệu vào mảng chính
-    ev.title = newTitle;
-    ev.desc = newDesc;
-    ev.updatedDate = timeStr;
-
-    // Cập nhật nóng nội dung đang hiển thị ngay trên màn hình chi tiết
-    document.getElementById('detail-title').textContent = ev.title;
-    const descEl = document.getElementById('detail-desc');
-    descEl.textContent = ev.desc || '';
-    descEl.style.display = ev.desc ? 'block' : 'none';
-    document.getElementById('detail-updated').textContent = ev.updatedDate;
-
-    // Đóng panel chỉnh sửa thông tin
-    document.getElementById('event-edit-panel').style.display = 'none';
-
-    // Làm mới danh sách bài đăng ở background phía sau
-    renderAlbum();
-  }
 
 
   function deleteEvent() {
@@ -2873,7 +2951,7 @@
     portfolio:   'Portfolio dự án',
     quanlycv:    'Quản lý CV',                
     thanhtuu:    'Thành tựu',
-    kinhnghiem:  'Kinh nghiệm & Giải thưởng',
+    kinhnghiem:  'Kinh nghiệm làm việc',
     chiase:      'Chia sẻ hồ sơ',
     album:       'Album ảnh nổi bật',
     lich:        'Lịch / Công việc',
@@ -2889,7 +2967,7 @@
     portfolio:  'ti-briefcase',
     quanlycv:   'ti-file-cv',                
     thanhtuu:   'ti-trophy',
-    kinhnghiem: 'ti-medal',
+    kinhnghiem: 'ti-briefcase',
     chiase:     'ti-share',
     album:      'ti-photo-album',
     lich:       'ti-calendar',
@@ -3107,203 +3185,5 @@ const PLACEHOLDER_TABS = [];
     }
   });
 </script>
-<div id="share-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.55); z-index:1050; align-items:center; justify-content:center;">
-    <div style="background:var(--card); border-radius:14px; padding:24px; width:400px; max-width:90vw; position:relative; box-shadow:0 10px 25px rgba(0,0,0,0.1);">
-      
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Chia sẻ tài liệu</div>
-        <button onclick="closeShareModal()" style="border:none; background:transparent; cursor:pointer; color:var(--text-2); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
-          <i class="ti ti-x" style="font-size:18px;"></i>
-        </button>
-      </div>
-      
-      <div style="font-size:13px; color:var(--text-2); margin-bottom:20px;">Chọn nền tảng bạn muốn gửi tài liệu này:</div>
-      
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-        <button onclick="alert('Mở ứng dụng Zalo...')" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#0068ff'; this.style.color='#0068ff'; this.style.background='#f0f4ff'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
-          <div style="width:24px; height:24px; background:#0068ff; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:10px; font-weight:bold;">Zalo</div>
-          <span style="font-size:13.5px; font-weight:600;">Zalo</span>
-        </button>
-        
-        <button onclick="window.location.href='mailto:?subject=Hồ sơ ứng tuyển - Nguyễn Văn An&body=Chào bạn,%0A%0AĐây là liên kết xem hồ sơ của tôi: https://profilevault.com/cv/nguyen-van-an'" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#ea4335'; this.style.color='#ea4335'; this.style.background='#fef2f2'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
-          <i class="ti ti-mail" style="font-size:22px; color:#ea4335;"></i>
-          <span style="font-size:13.5px; font-weight:600;">Gmail</span>
-        </button>
-
-        <button onclick="alert('Mở ứng dụng Messenger...')" style="display:flex; align-items:center; gap:10px; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--card); cursor:pointer; transition:all 0.2s;" onmouseover="this.style.borderColor='#0084ff'; this.style.color='#0084ff'; this.style.background='#eff6ff'" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-1)'; this.style.background='var(--card)'">
-          <i class="ti ti-brand-messenger" style="font-size:22px; color:#0084ff;"></i>
-          <span style="font-size:13.5px; font-weight:600;">Messenger</span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-  <div id="edit-profile-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.65); z-index:1050; align-items:center; justify-content:center; padding: 20px;">
-    <div style="background:var(--card); border-radius:14px; width:600px; max-width:100%; max-height:90vh; display:flex; flex-direction:column; position:relative; box-shadow:0 20px 40px rgba(0,0,0,0.15); overflow:hidden;">
-      
-      <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; background:var(--card); z-index:10;">
-        <div style="font-size:17px; font-weight:700; color:var(--text-1); display:flex; align-items:center; gap:8px;">
-          <i class="ti ti-user-edit" style="color:var(--accent); font-size:20px;"></i> Cập nhật hồ sơ
-        </div>
-        <button onclick="closeEditProfileModal()" style="border:none; background:var(--surface); cursor:pointer; color:var(--text-1); display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:50%; transition: 0.15s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='var(--surface)'">
-          <i class="ti ti-x" style="font-size:16px;"></i>
-        </button>
-      </div>
-      
-      <div style="padding:24px; overflow-y:auto; flex:1;">
-        
-        <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
-          <div style="width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg, var(--navy-2) 0%, var(--accent) 100%); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; color:#fff;">NV</div>
-          <div>
-            <div style="display:flex; gap:8px; margin-bottom:6px;">
-              <button style="padding:6px 14px; border:none; border-radius:6px; background:var(--accent); color:#fff; font-family:inherit; font-size:12.5px; font-weight:500; cursor:pointer;">Tải ảnh lên</button>
-              <button style="padding:6px 14px; border:1px solid var(--border); border-radius:6px; background:var(--card); color:var(--text-2); font-family:inherit; font-size:12.5px; font-weight:500; cursor:pointer;">Gỡ ảnh</button>
-            </div>
-            <div style="font-size:11px; color:var(--text-3);">Định dạng hỗ trợ: JPG, PNG (Tối đa 2MB)</div>
-          </div>
-        </div>
-<div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
-          <i class="ti ti-info-circle"></i> Thông tin chung
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
-          <div style="grid-column: 1 / -1; display:flex; align-items:center; gap:16px; margin-bottom:8px;">
-            <div style="width:60px; height:60px; border-radius:50%; background:var(--navy-2); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:700; color:#fff;">NV</div>
-            <button style="padding:6px 12px; border:1px solid var(--border); border-radius:6px; background:#fff; font-size:12px; cursor:pointer;">Thay ảnh</button>
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Họ và tên</label>
-            <input type="text" value="Nguyễn Văn An" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Vị trí</label>
-            <input type="text" value="Thực tập sinh IT (Full-stack)" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Khu vực</label>
-            <input type="text" value="TP. Hồ Chí Minh, Việt Nam" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Ngày sinh</label>
-            <input type="date" value="2004-11-28" style="width:100%; padding:8px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-        </div>
-
-        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
-          <i class="ti ti-link"></i> Liên kết chuyên môn
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px;">
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">GitHub Profile</label>
-            <input type="text" value="github.com/an-nguyen" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">LinkedIn Profile</label>
-            <input type="text" value="linkedin.com/in/an-nguyen-it" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; outline:none;">
-          </div>
-        </div>
-
-        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-          <span><i class="ti ti-bolt"></i> Kỹ năng chuyên môn</span>
-          <button style="border:none; background:none; color:var(--accent); font-size:12px; cursor:pointer;">+ Thêm</button>
-        </div>
-        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:12px; margin-bottom:24px;">
-          <input type="text" value="Java / Spring Boot" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
-          <input type="number" value="82" placeholder="%" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
-          
-          <input type="text" value="React & Next.js" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
-          <input type="number" value="78" placeholder="%" style="padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
-        </div>
-
-        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
-          <i class="ti ti-school"></i> Học vấn & Trình độ
-        </div>
-        <div style="margin-bottom:24px;">
-          <input type="text" value="Chuyên ngành Công nghệ thông tin" placeholder="Tên ngành" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:10px;">
-          <input type="text" value="Trường Đại học / Cao đẳng Công nghệ" placeholder="Tên trường" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:10px;">
-          <input type="text" value="Niên khóa: 2022 - 2026" placeholder="Thời gian" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px;">
-        </div>
-
-        <div style="font-size:14px; font-weight:700; color:var(--accent); margin-bottom:16px; border-bottom:1px solid var(--accent-light); padding-bottom:8px;">
-          <i class="ti ti-heart"></i> Sở thích & Giải trí
-        </div>
-        <input type="text" value="Nghiên cứu dự án, Nghe nhạc, Chơi game survival" placeholder="Các sở thích cách nhau bởi dấu phẩy" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-size:13px; margin-bottom:16px;">
-       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Họ và tên</label>
-            <input type="text" value="Nguyễn Văn An" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Vị trí / Chức danh</label>
-            <input type="text" value="Thực tập sinh IT (Full-stack)" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-          
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Ngày sinh</label>
-            <input type="date" value="2004-11-28" style="width:100%; padding:9px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Số điện thoại</label>
-            <input type="tel" value="+84 987 654 321" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Khu vực</label>
-            <input type="text" value="TP. Hồ Chí Minh, Việt Nam" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Email liên hệ</label>
-            <input type="email" value="an.nguyen.it@example.com" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1);">
-          </div>
-
-          <div style="grid-column: 1 / -1;">
-            <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;">Giới thiệu bản thân</label>
-            <textarea style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13.5px; outline:none; color:var(--text-1); resize:vertical; min-height:100px; line-height:1.5;">Xin chào, tôi là An! Hiện tại tôi đang là sinh viên ngành CNTT và làm Thực tập sinh dưới sự hướng dẫn trực tiếp từ các Senior Mentor...</textarea>
-          </div>
-        </div>
-      </div>
-
-      <div style="padding:16px 24px; border-top:1px solid var(--border); background:var(--surface); display:flex; justify-content:flex-end; gap:10px; border-radius: 0 0 14px 14px;">
-        <button onclick="closeEditProfileModal()" style="padding:9px 18px; border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--text-2); font-family:inherit; font-size:13.5px; font-weight:500; cursor:pointer;">Huỷ bỏ</button>
-        <button onclick="saveProfileChanges()" style="padding:9px 24px; border:none; border-radius:8px; background:var(--accent); color:#fff; font-family:inherit; font-size:13.5px; font-weight:500; cursor:pointer; display:flex; align-items:center; gap:6px;">
-          <i class="ti ti-device-floppy" style="font-size:16px;"></i> Lưu thay đổi
-        </button>
-      </div>
-
-    </div>
-  </div>
-  <div id="cv-method-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.6); z-index:1050; align-items:center; justify-content:center;">
-    <div style="background:var(--card); border-radius:14px; padding:24px; width:460px; max-width:92vw; position:relative; box-shadow:0 15px 35px rgba(0,0,0,0.15);">
-      
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Tạo CV mới</div>
-        <button onclick="closeCvMethodModal()" style="border:none; background:transparent; cursor:pointer; color:var(--text-2); display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%;">
-          <i class="ti ti-x" style="font-size:18px;"></i>
-        </button>
-      </div>
-      
-      <div style="font-size:13px; color:var(--text-2); margin-bottom:20px;">Vui lòng chọn phương thức khởi tạo nội dung cho bản CV của bạn:</div>
-      
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        
-        <div onclick="generateAutomaticCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--accent)'; this.style.background='#f0f6ff';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
-          <div style="width:40px; height:40px; border-radius:8px; background:#eff6ff; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-wand"></i></div>
-          <div style="flex:1;">
-            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo tự động (Khuyên dùng)</div>
-            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Hệ thống tự động đồng bộ và điền đầy đủ dữ liệu từ Hồ sơ cá nhân, Học vấn, Kinh nghiệm của bạn vào CV.</div>
-          </div>
-        </div>
-
-        <div onclick="generateManualCv()" style="display:flex; align-items:center; gap:16px; padding:16px; border:1px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; background:var(--card);" onmouseover="this.style.borderColor='var(--text-2)'; this.style.background='var(--surface)';" onmouseout="this.style.borderColor='var(--border)'; this.style.background='var(--card)';">
-          <div style="width:40px; height:40px; border-radius:8px; background:var(--surface); color:var(--text-2); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;"><i class="ti ti-edit"></i></div>
-          <div style="flex:1;">
-            <div style="font-size:14px; font-weight:700; color:var(--text-1);">Tạo thủ công từ form trống</div>
-            <div style="font-size:12px; color:var(--text-2); margin-top:2px; line-height:1.4;">Bắt đầu với một bản thiết kế trống hoàn toàn. Bạn sẽ tự viết lại nội dung theo ý muốn của mình.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
 </body>
 </html>
