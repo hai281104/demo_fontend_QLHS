@@ -30,6 +30,7 @@
     --text-2: #475569;
     --text-3: #94a3b8;
     --sidebar-w: 240px;
+    --sidebar-mini: 58px;
     --header-h: 60px;
   }
 
@@ -46,7 +47,7 @@
 
   /* ── Sidebar ─────────────────────────────────── */
   .sidebar {
-    width: var(--sidebar-w);
+    width: var(--sidebar-mini);
     background: var(--navy);
     min-height: 100vh;
     display: flex;
@@ -54,57 +55,92 @@
     position: fixed;
     top: 0; left: 0;
     z-index: 100;
+    overflow: hidden;
+    transition: width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  .sidebar:hover {
+    width: var(--sidebar-w);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+  }
+
+  /* Logo */
   .logo {
-    padding: 20px 20px 16px;
+    padding: 10px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+    overflow: hidden;
   }
 
-  .logo-mark {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    color: #fff;
-    letter-spacing: -0.5px;
+  .logo-img {
+    width: auto;
+    max-width: 100%;
+    max-height: 40px;
+    object-fit: contain;
+    object-position: left center;
+    flex-shrink: 0;
   }
 
-  .logo-mark span {
+  .logo-tagline {
+    opacity: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity 0.2s 0.05s;
+    font-size: 11px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1.4;
+    border-left: 2px solid rgba(255,255,255,0.2);
+    padding-left: 12px;
+    margin-left: 4px;
+  }
+
+  .logo-tagline span {
     color: var(--accent-mid);
   }
 
-  .logo-sub {
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
+  .sidebar:hover .logo-tagline { opacity: 1; }
 
+  /* Nav sections */
   .nav-section {
-    padding: 16px 12px 8px;
+    padding: 10px 8px 4px;
+    overflow: hidden;
   }
 
   .nav-label {
-    font-size: 10px;
+    font-size: 9.5px;
     color: rgba(255,255,255,0.3);
     letter-spacing: 1.2px;
     text-transform: uppercase;
     padding: 0 8px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.15s;
   }
+
+  .sidebar:hover .nav-label { opacity: 1; }
 
   .nav-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 9px 10px;
+    padding: 8px 10px;
     border-radius: 8px;
     color: rgba(255,255,255,0.55);
     cursor: pointer;
     transition: all 0.15s;
-    font-size: 13.5px;
+    font-size: 13px;
     margin-bottom: 1px;
     text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
@@ -114,7 +150,21 @@
     color: var(--accent-mid);
   }
 
-  .nav-item .ti { font-size: 17px; }
+  .nav-item .ti {
+    font-size: 18px;
+    flex-shrink: 0;
+    width: 22px;
+    text-align: center;
+  }
+
+  .nav-item-label {
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.15s 0.05s;
+    white-space: nowrap;
+  }
+
+  .sidebar:hover .nav-item-label { opacity: 1; }
 
   .nav-badge {
     margin-left: auto;
@@ -124,21 +174,55 @@
     padding: 1px 6px;
     border-radius: 99px;
     font-weight: 600;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
   }
 
+  .sidebar:hover .nav-badge { opacity: 1; }
+
+  /* Tooltip khi collapsed */
+  .nav-item { position: relative; }
+
+  .sidebar:not(:hover) .nav-item::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(var(--sidebar-mini) - 4px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1e293b;
+    color: rgba(255,255,255,0.9);
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 200;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .sidebar:not(:hover) .nav-item:hover::after {
+    opacity: 1;
+  }
+
+  /* Footer */
   .sidebar-footer {
     margin-top: auto;
-    padding: 12px;
+    padding: 10px 8px;
     border-top: 1px solid rgba(255,255,255,0.07);
+    overflow: hidden;
   }
 
   .user-chip {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px;
+    padding: 7px 8px;
     border-radius: 8px;
     cursor: pointer;
+    white-space: nowrap;
   }
 
   .user-chip:hover { background: rgba(255,255,255,0.07); }
@@ -152,7 +236,14 @@
     flex-shrink: 0;
   }
 
-  .user-info { flex: 1; min-width: 0; }
+  .user-info {
+    flex: 1; min-width: 0;
+    opacity: 0;
+    transition: opacity 0.15s;
+    overflow: hidden;
+  }
+
+  .sidebar:hover .user-info { opacity: 1; }
 
   .user-name {
     font-size: 13px; font-weight: 500;
@@ -165,12 +256,21 @@
     color: rgba(255,255,255,0.3);
   }
 
+  .user-menu-btn {
+    opacity: 0;
+    transition: opacity 0.15s;
+    flex-shrink: 0;
+  }
+
+  .sidebar:hover .user-menu-btn { opacity: 1; }
+
   /* ── Main ─────────────────────────────────────── */
   .main {
-    margin-left: var(--sidebar-w);
+    margin-left: var(--sidebar-mini);
     flex: 1;
     display: flex;
     flex-direction: column;
+    transition: margin-left 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   /* ── Topbar ───────────────────────────────────── */
@@ -862,8 +962,8 @@
 <!-- SIDEBAR -->
 <aside class="sidebar">
   <div class="logo">
-    <div class="logo-mark">Profile<span>Vault</span></div>
-    <div class="logo-sub">Hồ sơ số cá nhân</div>
+    <img src="logo.png" alt="Logo" class="logo-img">
+    <div class="logo-tagline">HỒ SƠ SỐ<br><span>CÁ NHÂN</span></div>
   </div>
 
   <div class="nav-section">
@@ -930,11 +1030,11 @@
       <div class="user-role">Sinh viên CNTT</div>
     </div>
     
-    <div onclick="toggleUserMenu(event)" style="cursor:pointer; padding: 4px;">
-      <i class="ti ti-dots-vertical" style="color:rgba(255,255,255,0.3); font-size:16px;"></i>
+    <div id="user-menu-btn" onclick="toggleUserMenu(event)" style="cursor:pointer; padding: 4px;" class="user-menu-btn">
+      <i class="ti ti-dots-vertical" style="color:rgba(255,255,255,0.5); font-size:16px;"></i>
     </div>
 
-    <div id="user-menu" style="display:none; position:absolute; bottom:110%; right:0; width:160px; background:#fff; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.15); z-index:200; overflow:hidden;">
+    <div id="user-menu" style="display:none; position:fixed; width:180px; background:#fff; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.18); z-index:9999; overflow:hidden;">
       <div onclick="alert('Mở Cài đặt...')" style="padding:10px 16px; cursor:pointer; font-size:13px; color:var(--text-1); transition:0.1s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><i class="ti ti-settings" style="margin-right:8px;"></i>Cài đặt</div>
       <div onclick="alert('Mở Chính sách...')" style="padding:10px 16px; cursor:pointer; font-size:13px; color:var(--text-1); transition:0.1s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='transparent'"><i class="ti ti-file-text" style="margin-right:8px;"></i>Chính sách</div>
       <div style="height:1px; background:var(--border);"></div>
@@ -2988,6 +3088,16 @@ const PLACEHOLDER_TABS = [];
       </div>`;
   });
 
+  // ── Sidebar hover → push main content ──────────
+  const sidebar = document.querySelector('.sidebar');
+  const mainEl  = document.querySelector('.main');
+  sidebar.addEventListener('mouseenter', () => {
+    mainEl.style.marginLeft = 'var(--sidebar-w)';
+  });
+  sidebar.addEventListener('mouseleave', () => {
+    mainEl.style.marginLeft = 'var(--sidebar-mini)';
+  });
+
   let currentTab = 'dashboard';
 
   function switchTab(tabId, linkEl) {
@@ -3172,18 +3282,31 @@ const PLACEHOLDER_TABS = [];
   }
   // ── LOGIC MENU NGƯỜI DÙNG ──────────────────────────────
   function toggleUserMenu(event) {
-    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
-    const menu = document.getElementById('user-menu');
-    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-  }
-
-  // Đóng menu khi click bất kỳ đâu trên màn hình
-  window.addEventListener('click', function() {
     const menu = document.getElementById('user-menu');
     if (menu.style.display === 'block') {
       menu.style.display = 'none';
+      return;
     }
-  });
+    const btn  = document.getElementById('user-menu-btn');
+    const rect = btn.getBoundingClientRect();
+    menu.style.display = 'block';
+    menu.style.left = (rect.right + 8) + 'px';
+    menu.style.top  = (rect.bottom - menu.offsetHeight) + 'px';
+    const menuRect = menu.getBoundingClientRect();
+    if (menuRect.bottom > window.innerHeight) {
+      menu.style.top = (window.innerHeight - menuRect.height - 8) + 'px';
+    }
+  }
+
+  // Đóng menu khi click ra ngoài (capture phase để không bị stopPropagation chặn)
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('user-menu');
+    const btn  = document.getElementById('user-menu-btn');
+    if (!menu || menu.style.display !== 'block') return;
+    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+      menu.style.display = 'none';
+    }
+  }, true);
 </script>
 </body>
 </html>
