@@ -60,7 +60,7 @@
                 box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .sidebar:hover {
+  .sidebar.is-open {
     width: var(--sidebar-w);
     box-shadow: 4px 0 24px rgba(0,0,0,0.18);
   }
@@ -104,7 +104,7 @@
     color: var(--accent-mid);
   }
 
-  .sidebar:hover .logo-tagline { opacity: 1; }
+  .sidebar.is-open .logo-tagline { opacity: 1; }
 
   /* Nav sections */
   .nav-section {
@@ -125,7 +125,7 @@
     transition: opacity 0.15s;
   }
 
-  .sidebar:hover .nav-label { opacity: 1; }
+  .sidebar.is-open .nav-label { opacity: 1; }
 
   .nav-item {
     display: flex;
@@ -164,7 +164,7 @@
     white-space: nowrap;
   }
 
-  .sidebar:hover .nav-item-label { opacity: 1; }
+  .sidebar.is-open .nav-item-label { opacity: 1; }
 
   .nav-badge {
     margin-left: auto;
@@ -179,12 +179,12 @@
     transition: opacity 0.15s;
   }
 
-  .sidebar:hover .nav-badge { opacity: 1; }
+  .sidebar.is-open .nav-badge { opacity: 1; }
 
   /* Tooltip khi collapsed */
   .nav-item { position: relative; }
 
-  .sidebar:not(:hover) .nav-item::after {
+  .sidebar:not(.is-open) .nav-item::after {
     content: attr(data-tooltip);
     position: absolute;
     left: calc(var(--sidebar-mini) - 4px);
@@ -203,7 +203,7 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
 
-  .sidebar:not(:hover) .nav-item:hover::after {
+  .sidebar:not(.is-open) .nav-item:hover::after {
     opacity: 1;
   }
 
@@ -767,6 +767,58 @@
     background: var(--border);
     margin: 0;
   }
+
+  /* ── Aspect Ratio Selector ────────────────────── */
+  .ar-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 10px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    min-width: 72px;
+  }
+
+  .ar-btn:hover {
+    border-color: var(--accent-mid);
+    background: #eff6ff;
+  }
+
+  .ar-btn.active {
+    border-color: var(--accent);
+    background: #eff6ff;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+  }
+
+  .ar-btn .ar-preview {
+    background: var(--border);
+    border-radius: 3px;
+    width: 100%;
+    max-width: 52px;
+    transition: background 0.15s;
+  }
+
+  .ar-btn.active .ar-preview {
+    background: var(--accent);
+  }
+
+  .ar-btn span {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-1);
+    line-height: 1;
+  }
+
+  .ar-btn small {
+    font-size: 10px;
+    color: var(--text-3);
+    line-height: 1;
+  }
   /* ── TAB: HÀNH TRÌNH PHÁT TRIỂN (TIMELINE CHUẨN) ── */
   .hanhtrinh-wrapper {
     display: flex;
@@ -955,6 +1007,169 @@
   .ht-nav-item.active {
     background: #6b46c1;
     color: #fff;
+
+}
+    /* ── Nút liên kết dự án (Portfolio Links) ─────────────── */
+  .prj-links {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  
+  .prj-link-btn {
+    width: 30px; 
+    height: 30px;
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--text-3);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .prj-link-btn:hover {
+    background: var(--card);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  /* Màu sắc đặc trưng khi hover cho từng nền tảng */
+  .prj-link-btn.gh:hover { color: #0f172a; border-color: #cbd5e1; } /* Github */
+  .prj-link-btn.wb:hover { color: #059669; border-color: #6ee7b7; } /* Website */
+  .prj-link-btn.fb:hover { color: #2563eb; border-color: #93c5fd; } /* Facebook */
+  .prj-link-btn.ig:hover { color: #db2777; border-color: #f9a8d4; } /* Instagram */
+  .prj-link-btn.yt:hover { color: #dc2626; border-color: #fca5a5; } /* YouTube */
+
+
+ /* ── Bố cục Lịch Full màn hình (Google Calendar style) ── */
+  /* ── Bố cục Lịch Full màn hình (Google Calendar style) ── */
+  .cal-wrapper {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    height: calc(100vh - 120px);
+    overflow-y: auto;  /* SỬA LỖI 1: Chuyển thanh cuộn ra ngoài cùng bao bọc cả lịch */
+    overflow-x: hidden;
+  }
+  
+  .cal-header {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr)); /* SỬA LỖI 2: Khóa cứng 7 cột luôn bằng nhau */
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    position: sticky; /* Giữ thanh Thứ/Ngày luôn ghim trên cùng khi cuộn chuột */
+    top: 0;
+    z-index: 20;
+  }
+  
+  .cal-header > div {
+    padding: 10px 0;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-2);
+    border-right: 1px solid var(--border);
+    text-transform: uppercase;
+  }
+  .cal-header > div:last-child { border-right: none; }
+  
+  .cal-body {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr)); /* Khóa cứng 7 cột luôn bằng nhau */
+    grid-auto-rows: 1fr;
+    flex: 1;
+  }
+  
+  .cal-cell {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-height: 110px; 
+    min-width: 0; /* Khóa lỗi tràn chữ đùn cột */
+  }
+  .cal-cell:nth-child(7n) { border-right: none; }
+  .cal-cell.out-month .cal-date { color: var(--text-3); }
+  
+  .cal-date {
+    font-size: 12.5px;
+    font-weight: 500;
+    text-align: center;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 50%;
+    margin: 2px auto 4px;
+    color: var(--text-1);
+  }
+  
+  .cal-date.today {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+  }
+  
+/* Cấu hình các khối sự kiện (Event Bars) */
+  .cal-event {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+  }
+  /* Bảng màu phân loại dự án đa dạng */
+  .cal-event.bg-blue { background: #0ea5e9; }
+  .cal-event.bg-green { background: #10b981; }
+  .cal-event.bg-amber { background: #f59e0b; }
+  .cal-event.bg-purple { background: #8b5cf6; }
+  .cal-event.bg-red { background: #ef4444; }
+  .cal-event.bg-gray { background: #64748b; }
+  
+  /* Hiệu ứng nối liền mạch giữa các ngày */
+  .cal-event.span-right { border-top-right-radius: 0; border-bottom-right-radius: 0; margin-right: -5px; padding-right: 10px; }
+  .cal-event.span-left { border-top-left-radius: 0; border-bottom-left-radius: 0; margin-left: -5px; padding-left: 10px; }
+  .cal-event.span-both { border-radius: 0; margin: 0 -5px; padding: 3px 10px; }
+  
+  /* Cấu hình sự kiện có khung giờ (Time-specific Events) */
+  .cal-time-event {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--text-1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+  .cal-time-event:hover { background: var(--surface); }
+  .cal-time-event .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; display: inline-block; }
+  
+  .dot-blue { background: #0ea5e9; }
+  .dot-green { background: #10b981; }
+  .dot-amber { background: #f59e0b; }
+  
+  .cal-spacer { height: 20px; flex-shrink: 0; }
+  .cal-more { font-size: 11px; font-weight: 600; color: var(--text-2); padding: 2px 6px; cursor: pointer; }
+  .cal-more:hover { text-decoration: underline; color: var(--text-1); }
 </style>
 </head>
 <body>
@@ -1308,46 +1523,36 @@
 
     <div id="event-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(15,27,53,0.55);z-index:900;align-items:center;justify-content:center;">
       <div style="background:var(--card);border-radius:14px;padding:28px;width:520px;max-width:90vw;position:relative;">
-        <div style="font-size:16px;font-weight:600;margin-bottom:4px;">Tạo nhóm sự kiện mới</div>
-        <div style="font-size:12.5px;color:var(--text-3);margin-bottom:20px;">Tối đa 5 ảnh cho mỗi sự kiện. Ảnh sẽ tự động được yêu cầu cắt về tỷ lệ 16:9.</div>
-        
-        <div style="margin-bottom:16px;">
-          <input id="event-title" type="text" placeholder="Tên sự kiện..." style="width:100%;font-family:inherit;font-size:14px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:10px;font-weight:500;">
-          <textarea id="event-desc" placeholder="Mô tả chi tiết (tuỳ chọn)..." style="width:100%;font-family:inherit;font-size:13.5px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:80px;"></textarea>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+          <div style="font-size:16px;font-weight:700;">Tạo sự kiện mới</div>
+          <button onclick="closeAddEventModal()" style="border:none;background:var(--surface);border-radius:50%;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-2);font-size:16px;"><i class="ti ti-x"></i></button>
         </div>
+        <div style="display:none;">PLACEHOLDER_REMOVE</div>
 
-        <div id="event-preview-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px;">
-          </div>
+        <input id="event-title" type="text" placeholder="Tên sự kiện..." style="width:100%;font-family:inherit;font-size:14px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;margin-bottom:10px;font-weight:500;box-sizing:border-box;">
+        <textarea id="event-desc" placeholder="Mô tả chi tiết (tuỳ chọn)..." style="width:100%;font-family:inherit;font-size:13px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;outline:none;resize:none;height:68px;margin-bottom:16px;box-sizing:border-box;"></textarea>
 
-        <div id="event-drop-zone" style="border:2px dashed var(--border);border-radius:10px;padding:24px 20px;text-align:center;cursor:pointer;transition:border-color 0.15s;margin-bottom:20px;" onclick="document.getElementById('event-file-input').click()">
-          <i class="ti ti-photo-plus" style="font-size:32px;color:var(--accent);display:block;margin-bottom:8px;"></i>
-          <div style="font-size:13.5px;font-weight:500;">Chọn tối đa 5 ảnh</div>
+        <div id="event-preview-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:12px;min-height:0;"></div>
+
+        <div id="event-drop-zone" onclick="document.getElementById('event-file-input').click()"
+          style="border:2px dashed var(--border);border-radius:10px;padding:22px 16px;text-align:center;cursor:pointer;transition:all 0.15s;margin-bottom:18px;"
+          onmouseover="this.style.borderColor='var(--accent)';this.style.background='#f0f6ff'"
+          onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+          <i class="ti ti-photo-plus" style="font-size:28px;color:var(--accent);display:block;margin-bottom:6px;"></i>
+          <div style="font-size:13.5px;font-weight:600;color:var(--text-1);">Nhấn để chọn ảnh</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:3px;">Mọi tỉ lệ đều được · Tối đa 5 ảnh</div>
         </div>
 
         <div style="display:flex;gap:8px;justify-content:flex-end;">
           <button onclick="closeAddEventModal()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:1px solid var(--border);border-radius:8px;background:var(--card);color:var(--text-2);cursor:pointer;">Huỷ</button>
-          <button onclick="confirmEventAdd()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Đăng sự kiện</button>
+          <button onclick="confirmEventAdd()" style="font-family:inherit;font-size:13px;padding:8px 18px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-weight:600;"><i class="ti ti-check" style="font-size:13px;margin-right:4px;"></i>Đăng sự kiện</button>
         </div>
       </div>
     </div>
 
-    <div id="cropper-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;align-items:center;justify-content:center;flex-direction:column;">
-      <div style="color:#fff;font-size:16px;font-weight:600;margin-bottom:16px;">Cắt ảnh theo chuẩn 16:9</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:24px;">Giữ chuột/chạm và kéo để di chuyển vùng hiển thị của ảnh.</div>
-      
-      <div style="width:800px;max-width:90vw;aspect-ratio:1/1;background:#111;position:relative;border:2px solid #fff;border-radius:8px;overflow:hidden;box-shadow:0 0 0 9999px rgba(0,0,0,0.5);">
-        <canvas id="cropper-canvas" width="800" height="450" style="width:100%;height:100%;cursor:move;touch-action:none;"></canvas>
-        <div style="position:absolute;top:33.33%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
-        <div style="position:absolute;top:66.66%;left:0;width:100%;height:1px;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:33.33%;width:1px;height:100%;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
-        <div style="position:absolute;top:0;left:66.66%;width:1px;height:100%;background:rgba(255,255,255,0.3);pointer-events:none;"></div>
-      </div>
-
-      <div style="display:flex;gap:12px;margin-top:24px;">
-        <button onclick="skipCrop()" style="padding:10px 24px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-weight:500;">Bỏ qua</button>
-        <button onclick="confirmCrop()" style="padding:10px 24px;border:none;border-radius:8px;background:var(--accent);color:#fff;cursor:pointer;font-weight:500;"><i class="ti ti-crop" style="margin-right:6px;"></i>Xác nhận cắt</button>
-      </div>
-    </div>
+    <!-- canvas ẩn giữ lại để JS không lỗi tham chiếu -->
+    <canvas id="cropper-canvas" style="display:none;"></canvas>
+    <div id="cropper-modal" style="display:none;"></div>
     <div id="detail-backdrop" style="display:none;position:fixed;inset:0;background:rgba(10,18,40,0.85);z-index:1000;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto;" onclick="if(event.target===this) closeDetail()">
       <div id="detail-box" style="background:var(--card);border-radius:16px;width:100%;max-width:680px;margin:auto;overflow:hidden;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.2);">
         
@@ -1366,7 +1571,7 @@
         <div style="padding:24px;">
            <div id="detail-desc" style="font-size:14.5px;color:var(--text-2);line-height:1.6;margin-bottom:24px;white-space:pre-wrap;"></div>
            
-           <div id="detail-images" style="display:flex;flex-direction:column;gap:16px;margin-bottom:24px;"></div>
+           <div id="detail-images" style="display:grid;gap:8px;margin-bottom:24px;"></div>
 
            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--border);padding-top:20px;">
               <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
@@ -1717,13 +1922,21 @@
               <span class="tag" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-2); font-size: 11px; padding: 4px 10px;">RESTful API</span>
             </div>
             
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px;">
-              <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 4 / 2026</span>
-              <div style="display: flex; gap: 12px;">
-                <a href="#" onclick="alert('Đi tới liên kết GitHub...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 4px; font-weight: 500;"><i class="ti ti-brand-github" style="font-size: 15px;"></i> Source</a>
-                <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
-              </div>
-            </div>
+         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px;">
+  <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 4 / 2026</span>
+  
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <div class="prj-links">
+      <a href="#" class="prj-link-btn gh" title="Mã nguồn GitHub"><i class="ti ti-brand-github" style="font-size: 16px;"></i></a>
+      <a href="#" class="prj-link-btn wb" title="Truy cập Website"><i class="ti ti-world" style="font-size: 16px;"></i></a>
+      <a href="#" class="prj-link-btn fb" title="Fanpage Facebook"><i class="ti ti-brand-facebook" style="font-size: 16px;"></i></a>
+    </div>
+    
+    <div style="width: 1px; height: 16px; background: var(--border);"></div>
+    
+    <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -1750,12 +1963,20 @@
             </div>
             
             <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px;">
-              <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 4 / 2026</span>
-              <div style="display: flex; gap: 12px;">
-                <a href="#" onclick="alert('Đi tới liên kết GitHub...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 4px; font-weight: 500;"><i class="ti ti-brand-github" style="font-size: 15px;"></i> Source</a>
-                <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
-              </div>
-            </div>
+  <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 4 / 2026</span>
+  
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <div class="prj-links">
+      <a href="#" class="prj-link-btn gh" title="Mã nguồn GitHub"><i class="ti ti-brand-github" style="font-size: 16px;"></i></a>
+      <a href="#" class="prj-link-btn wb" title="Truy cập Website"><i class="ti ti-world" style="font-size: 16px;"></i></a>
+      <a href="#" class="prj-link-btn ig" title="Instagram Dự án"><i class="ti ti-brand-instagram" style="font-size: 16px;"></i></a>
+    </div>
+    
+    <div style="width: 1px; height: 16px; background: var(--border);"></div>
+    
+    <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -1781,13 +2002,20 @@
               <span class="tag" style="background: var(--surface); border: 1px solid var(--border); color: var(--text-2); font-size: 11px; padding: 4px 10px;">Shell Script</span>
             </div>
             
-            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px;">
-              <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 12 / 2025</span>
-              <div style="display: flex; gap: 12px;">
-                <a href="#" onclick="alert('Đi tới liên kết GitHub...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--text-2); display: flex; align-items: center; gap: 4px; font-weight: 500;"><i class="ti ti-brand-github" style="font-size: 15px;"></i> Source</a>
-                <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
-              </div>
-            </div>
+       <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px;">
+  <span style="font-size: 11.5px; color: var(--text-3); font-weight: 500; display: flex; align-items: center; gap: 4px;"><i class="ti ti-calendar" style="font-size: 13px;"></i> Tháng 12 / 2025</span>
+  
+  <div style="display: flex; gap: 12px; align-items: center;">
+    <div class="prj-links">
+      <a href="#" class="prj-link-btn gh" title="Mã nguồn GitHub"><i class="ti ti-brand-github" style="font-size: 16px;"></i></a>
+      <a href="#" class="prj-link-btn yt" title="Xem video Demo trên Youtube"><i class="ti ti-brand-youtube" style="font-size: 16px;"></i></a>
+    </div>
+    
+    <div style="width: 1px; height: 16px; background: var(--border);"></div>
+    
+    <a href="#" onclick="alert('Xem tài liệu chi tiết dự án...'); return false;" style="text-decoration: none; font-size: 12.5px; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 2px;">Chi tiết →</a>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -1815,25 +2043,59 @@
         </div>
       </div>
 
-      <div class="activity-list" style="padding: 16px 20px;">
-        <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
-          <div style="width: 2px; background: var(--border); position: absolute; left: 19px; top: 40px; bottom: -24px;"></div>
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-code"></i></div>
-          <div>
-            <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Thực tập sinh IT (Full-stack)</div>
-            <div style="font-size: 12.5px; color: var(--accent); font-weight: 500; margin-bottom: 6px;">Công ty Công nghệ • Thực tập</div>
-            <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js. Quản lý source code qua GitHub và tracking task bằng Jira.</div>
+     <div style="padding: 30px 24px 10px;">
+        
+        <div style="display: flex;">
+          <div style="width: 160px; flex-shrink: 0; text-align: right; padding-right: 24px; padding-top: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">01/2026 - Hiện tại</div>
+            <span class="tag" style="background: #eff6ff; color: var(--accent); font-size: 11px; padding: 4px 10px; display: inline-block; font-weight: 600;">Đang làm việc</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; margin-right: 24px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #eff6ff; color: var(--accent); border: 4px solid var(--card); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: relative; z-index: 2;">
+              <i class="ti ti-code"></i>
+            </div>
+            <div style="width: 2px; flex: 1; background: var(--border); min-height: 40px; margin: 4px 0;"></div>
+          </div>
+
+          <div style="flex: 1; min-width: 0; padding-bottom: 30px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: 0.2s;" onmouseover="this.style.background='#fff'; this.style.borderColor='var(--accent)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.05)';" onmouseout="this.style.background='var(--surface)'; this.style.borderColor='var(--border)'; this.style.boxShadow='none';">
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;">Thực tập sinh IT (Full-stack)</div>
+              <div style="font-size: 13.5px; color: var(--accent); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                <i class="ti ti-building" style="font-size: 16px;"></i> Công ty Công nghệ • Thực tập
+              </div>
+              <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6;">
+                Tham gia phát triển module Quản lý hợp đồng CRM và dự án TravelGood bằng Java Spring Boot và Next.js. Quản lý source code qua GitHub và tracking task bằng Jira.
+              </div>
+            </div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 16px; position: relative;">
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-car"></i></div>
-          <div>
-            <div style="font-size: 14.5px; font-weight: 600; color: var(--text-1);">Tài xế công nghệ</div>
-            <div style="font-size: 12.5px; color: var(--amber); font-weight: 500; margin-bottom: 6px;">Be Group • Bán thời gian</div>
-            <div style="font-size: 13px; color: var(--text-2); line-height: 1.5;">Làm việc linh hoạt ngoài giờ học để gia tăng thu nhập và trải nghiệm môi trường dịch vụ khách hàng thực tế.</div>
+        <div style="display: flex;">
+          <div style="width: 160px; flex-shrink: 0; text-align: right; padding-right: 24px; padding-top: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">2024 - 2025</div>
+            <span class="tag" style="background: var(--border); color: var(--text-2); font-size: 11px; padding: 4px 10px; display: inline-block; font-weight: 600;">Đã kết thúc</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; margin-right: 24px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #fffbeb; color: var(--amber); border: 4px solid var(--card); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: relative; z-index: 2;">
+              <i class="ti ti-car"></i>
+            </div>
+            </div>
+
+          <div style="flex: 1; min-width: 0; padding-bottom: 10px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: 0.2s;" onmouseover="this.style.background='#fff'; this.style.borderColor='var(--amber)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.05)';" onmouseout="this.style.background='var(--surface)'; this.style.borderColor='var(--border)'; this.style.boxShadow='none';">
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;">Tài xế công nghệ</div>
+              <div style="font-size: 13.5px; color: var(--amber); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                <i class="ti ti-building" style="font-size: 16px;"></i> Be Group • Bán thời gian
+              </div>
+              <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6;">
+                Làm việc linh hoạt ngoài giờ học để gia tăng thu nhập và trải nghiệm môi trường dịch vụ khách hàng thực tế.
+              </div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -1936,41 +2198,55 @@
         </div>
       </div>
       
-      <div class="activity-list" style="padding: 24px 24px 16px;">
+     <div style="padding: 30px 24px 10px;">
         
-        <div style="display: flex; gap: 16px; margin-bottom: 28px; position: relative;">
-          <div style="width: 2px; background: var(--border); position: absolute; left: 19px; top: 40px; bottom: -28px;"></div>
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #f0fdf4; color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-school"></i></div>
-          
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-              <div style="font-size: 15px; font-weight: 600; color: var(--text-1);">Chuyên ngành Công nghệ thông tin</div>
-              <span class="tag tag-ok" style="font-size: 11px; padding: 2px 8px; flex-shrink: 0;">Đang theo học</span>
+        <div style="display: flex;">
+          <div style="width: 160px; flex-shrink: 0; text-align: right; padding-right: 24px; padding-top: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">2022 - 2026</div>
+            <span class="tag tag-ok" style="font-size: 11px; padding: 4px 10px; display: inline-block;">Đang theo học</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; margin-right: 24px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #f0fdf4; color: var(--green); border: 4px solid var(--card); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: relative; z-index: 2;">
+              <i class="ti ti-school"></i>
             </div>
-            <div style="font-size: 13px; color: var(--green); font-weight: 500; margin-top: 2px;">Trường Đại học / Cao đẳng Công nghệ</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-              <i class="ti ti-calendar" style="font-size: 13px;"></i> Niên khóa: 2022 - 2026 (Dự kiến tốt nghiệp)
-            </div>
-            <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin-top: 10px;">
-              Tập trung nghiên cứu Kiến trúc phần mềm, Hệ quản trị cơ sở dữ liệu và Phát triển ứng dụng Web hệ phân tán. Tích cực tham gia các đồ án thực hành xây dựng hệ thống quản lý để tích lũy kinh nghiệm thực tiễn.
+            <div style="width: 2px; flex: 1; background: var(--border); min-height: 40px; margin: 4px 0;"></div>
+          </div>
+
+          <div style="flex: 1; min-width: 0; padding-bottom: 30px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: 0.2s;" onmouseover="this.style.background='#fff'; this.style.borderColor='var(--green)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.05)';" onmouseout="this.style.background='var(--surface)'; this.style.borderColor='var(--border)'; this.style.boxShadow='none';">
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;">Chuyên ngành Công nghệ thông tin</div>
+              <div style="font-size: 13.5px; color: var(--green); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                <i class="ti ti-building-community" style="font-size: 16px;"></i> Trường Đại học / Cao đẳng Công nghệ
+              </div>
+              <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6;">
+                Tập trung nghiên cứu Kiến trúc phần mềm, Hệ quản trị cơ sở dữ liệu và Phát triển ứng dụng Web hệ phân tán. Tích cực tham gia các đồ án thực hành xây dựng hệ thống quản lý để tích lũy kinh nghiệm thực tiễn.
+              </div>
             </div>
           </div>
         </div>
 
-        <div style="display: flex; gap: 16px; position: relative;">
-          <div style="width: 40px; height: 40px; border-radius: 10px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; position: relative; z-index: 2;"><i class="ti ti-building-community"></i></div>
-          
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
-              <div style="font-size: 15px; font-weight: 600; color: var(--text-1);">Tốt nghiệp Trung học Phổ thông</div>
-              <span class="tag" style="background: #f1f5f9; color: var(--text-2); font-size: 11px; padding: 2px 8px; flex-shrink: 0;">Đã hoàn thành</span>
+        <div style="display: flex;">
+          <div style="width: 160px; flex-shrink: 0; text-align: right; padding-right: 24px; padding-top: 14px;">
+            <div style="font-size: 14.5px; font-weight: 700; color: var(--text-1); margin-bottom: 8px;">2019 - 2022</div>
+            <span class="tag" style="background: var(--border); color: var(--text-2); font-size: 11px; padding: 4px 10px; display: inline-block; font-weight: 600;">Đã hoàn thành</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; align-items: center; margin-right: 24px;">
+            <div style="width: 44px; height: 44px; border-radius: 50%; background: #eff6ff; color: var(--accent); border: 4px solid var(--card); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: relative; z-index: 2;">
+              <i class="ti ti-books"></i>
             </div>
-            <div style="font-size: 13px; color: var(--accent); font-weight: 500; margin-top: 2px;">Trường THPT Chuyên / Công lập</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-              <i class="ti ti-calendar" style="font-size: 13px;"></i> Niên khóa: 2019 - 2022
             </div>
-            <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6; margin-top: 10px;">
-              Tốt nghiệp loại Giỏi. Tham gia sôi nổi vào các hoạt động phong trào đoàn trường và các câu lạc bộ học thuật định hướng tin học ứng dụng.
+
+          <div style="flex: 1; min-width: 0; padding-bottom: 10px;">
+            <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 22px; transition: 0.2s;" onmouseover="this.style.background='#fff'; this.style.borderColor='var(--accent)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.05)';" onmouseout="this.style.background='var(--surface)'; this.style.borderColor='var(--border)'; this.style.boxShadow='none';">
+              <div style="font-size: 16px; font-weight: 700; color: var(--text-1); margin-bottom: 6px;">Tốt nghiệp Trung học Phổ thông</div>
+              <div style="font-size: 13.5px; color: var(--accent); font-weight: 600; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;">
+                <i class="ti ti-building-community" style="font-size: 16px;"></i> Trường THPT Chuyên / Công lập
+              </div>
+              <div style="font-size: 13.5px; color: var(--text-2); line-height: 1.6;">
+                Tốt nghiệp loại Giỏi. Tham gia sôi nổi vào các hoạt động phong trào đoàn trường và các câu lạc bộ học thuật định hướng tin học ứng dụng.
+              </div>
             </div>
           </div>
         </div>
@@ -1982,158 +2258,174 @@
 
  <div id="tab-lich" class="tab-page" style="display:none;">
     
-    <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end;">
-      <div>
-        <h2 style="font-size: 18px; font-weight: 700; color: var(--text-1); margin-bottom: 4px;">Lịch & Công việc</h2>
-        <div style="font-size: 13.5px; color: var(--text-2);">Quản lý thời gian, deadline dự án và lịch trình cá nhân.</div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <button onclick="goTodayCal()" class="btn-secondary" style="padding: 6px 16px; border-radius: 8px; font-weight: 500;">Hôm nay</button>
+        <div style="display: flex; gap: 4px;">
+          <button onclick="prevCalMonth()" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="ti ti-chevron-left" style="font-size: 16px;"></i></button>
+          <button onclick="nextCalMonth()" style="width: 32px; height: 32px; border-radius: 6px; border: 1px solid var(--border); background: var(--card); cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="ti ti-chevron-right" style="font-size: 16px;"></i></button>
+        </div>
+        <div id="cal-current-month-year" style="font-size: 22px; font-weight: 500; color: var(--text-1); margin-left: 8px;">Tháng 5, 2026</div>
       </div>
-      <div style="display: flex; gap: 8px;">
-        <button class="btn-secondary"><i class="ti ti-calendar-stats" style="margin-right: 6px;"></i>Đồng bộ Google Calendar</button>
-        <button class="btn-primary"><i class="ti ti-plus" style="margin-right: 6px;"></i>Thêm công việc</button>
-      </div>
-    </div>
-
-    <div style="display: grid; grid-template-columns: 320px 1fr; gap: 20px;">
       
-      <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
         
-        <div class="section-card" style="padding: 20px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--text-1);">Tháng 5, 2026</div>
-            <div style="display: flex; gap: 4px;">
-              <button style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="ti ti-chevron-left" style="font-size: 14px;"></i></button>
-              <button style="width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="ti ti-chevron-right" style="font-size: 14px;"></i></button>
-            </div>
-          </div>
-          
-          <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 11px; font-weight: 600; color: var(--text-3); margin-bottom: 12px; text-transform: uppercase;">
-            <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div>CN</div>
-          </div>
-          
-          <div style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 6px; font-size: 13px; color: var(--text-1);">
-            <div style="color: var(--text-3);">27</div><div style="color: var(--text-3);">28</div><div style="color: var(--text-3);">29</div><div style="color: var(--text-3);">30</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">1</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">2</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">3</div>
-            
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">4</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">5</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">6</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">7</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">8</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">9</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">10</div>
-            
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">11</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">12</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">13</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">14</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">15</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">16</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">17</div>
-            
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">18</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer; background: var(--surface); font-weight: 600;">19</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">20</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">21</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">22</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer; background: var(--accent); color: #fff; font-weight: 600; box-shadow: 0 4px 10px rgba(59,130,246,0.3);">23</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">24</div>
-            
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">25</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">26</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">27</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">28</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">29</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">30</div>
-            <div style="padding: 6px 0; border-radius: 6px; cursor: pointer;">31</div>
-          </div>
-        </div>
-
-        <div class="section-card" style="padding: 12px;">
-          <div style="padding: 10px 12px; border-radius: 8px; background: var(--surface); color: var(--accent); font-weight: 600; font-size: 13.5px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 4px;">
-            <div style="display: flex; align-items: center; gap: 10px;"><i class="ti ti-inbox" style="font-size: 16px;"></i> Tất cả công việc</div>
-            <div style="background: var(--card); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; font-size: 11px; color: var(--text-2);">12</div>
-          </div>
-          <div style="padding: 10px 12px; border-radius: 8px; color: var(--text-2); font-weight: 500; font-size: 13.5px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; margin-bottom: 4px; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
-            <div style="display: flex; align-items: center; gap: 10px;"><i class="ti ti-star" style="font-size: 16px;"></i> Quan trọng</div>
-            <div style="background: var(--surface); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; font-size: 11px;">3</div>
-          </div>
-          <div style="padding: 10px 12px; border-radius: 8px; color: var(--text-2); font-weight: 500; font-size: 13.5px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.15s;" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background='transparent'">
-            <div style="display: flex; align-items: center; gap: 10px;"><i class="ti ti-circle-check" style="font-size: 16px;"></i> Đã hoàn thành</div>
-            <div style="background: var(--surface); border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px; font-size: 11px;">45</div>
-          </div>
-          
-          <div style="height: 1px; background: var(--border); margin: 12px 0;"></div>
-          
-          <div style="font-size: 11px; font-weight: 600; color: var(--text-3); text-transform: uppercase; margin: 0 12px 10px; letter-spacing: 0.5px;">Phân loại</div>
-          <div style="padding: 8px 12px; font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 10px; height: 10px; border-radius: 50%; background: var(--accent);"></div> Học tập / Đại học</div>
-          <div style="padding: 8px 12px; font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 10px; height: 10px; border-radius: 50%; background: var(--teal);"></div> IT Intern / Công ty</div>
-          
-          <div style="padding: 8px 12px; font-size: 13px; color: var(--text-2); display: flex; align-items: center; gap: 10px; cursor: pointer;"><div style="width: 10px; height: 10px; border-radius: 50%; background: var(--text-3);"></div> Cá nhân</div>
-        </div>
-
+        <button class="btn-primary" onclick="openCalModal()" style="display: flex; align-items: center; gap: 6px; padding: 8px 18px;"><i class="ti ti-calendar-plus" style="font-size: 16px;"></i>Tạo sự kiện</button>
       </div>
-
-      <div style="display: flex; flex-direction: column; gap: 24px;">
-        
-        <div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--text-1);">Hôm nay</div>
-            <div style="font-size: 12px; color: var(--text-3); font-weight: 500;">Thứ 7, 23 Tháng 5</div>
-            <div style="flex: 1; height: 1px; background: var(--border); margin-left: 10px;"></div>
-          </div>
-
-          <div style="display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border); border-left: 4px solid var(--red); border-radius: 10px; background: var(--card); margin-bottom: 12px; align-items: center; transition: 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)'">
-            <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent);">
-            <div style="flex: 1; min-width: 0;">
-              <div style="font-weight: 600; font-size: 14.5px; color: var(--text-1); margin-bottom: 4px;">Hoàn thành báo cáo môn Kiến trúc phần mềm</div>
-              <div style="font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 16px;">
-                <span style="display: flex; align-items: center; gap: 4px; color: var(--red); font-weight: 500;"><i class="ti ti-clock"></i> 23:59 (Hạn chót)</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><i class="ti ti-tag"></i> Học tập / Đại học</span>
-              </div>
-            </div>
-            <span class="tag" style="background: var(--red-light); color: var(--red);">Quan trọng</span>
-            <button class="icon-btn" style="border: none; background: transparent;"><i class="ti ti-dots-vertical"></i></button>
-          </div>
-
-          <div style="display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); margin-bottom: 12px; align-items: center; opacity: 0.7;">
-            <input type="checkbox" checked style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--green);">
-            <div style="flex: 1; min-width: 0;">
-              <div style="font-weight: 500; font-size: 14.5px; color: var(--text-2); margin-bottom: 4px; text-decoration: line-through;">Họp Daily Scrum với team TravelGood</div>
-              <div style="font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 16px;">
-                <span style="display: flex; align-items: center; gap: 4px;"><i class="ti ti-clock"></i> Đã xong lúc 09:30</span>
-                <span style="display: flex; align-items: center; gap: 4px;"><i class="ti ti-tag"></i> IT Intern / Công ty</span>
-              </div>
-            </div>
-            <button class="icon-btn" style="border: none; background: transparent;"><i class="ti ti-dots-vertical"></i></button>
-          </div>
-
-          <div style="display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border); border-left: 4px solid var(--amber); border-radius: 10px; background: var(--card); margin-bottom: 12px; align-items: center; transition: 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)'">
-            <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent);">
-            
-            <button class="icon-btn" style="border: none; background: transparent;"><i class="ti ti-dots-vertical"></i></button>
-          </div>
-        </div>
-
-        <div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--text-1);">Ngày mai</div>
-            <div style="font-size: 12px; color: var(--text-3); font-weight: 500;">Chủ nhật, 24 Tháng 5</div>
-            <div style="flex: 1; height: 1px; background: var(--border); margin-left: 10px;"></div>
-          </div>
-
-          <div style="display: flex; gap: 14px; padding: 16px; border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 10px; background: var(--card); margin-bottom: 12px; align-items: center; transition: 0.15s; box-shadow: 0 2px 6px rgba(0,0,0,0.02);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 6px rgba(0,0,0,0.02)'">
-            <input type="checkbox" style="width: 18px; height: 18px; cursor: pointer; accent-color: var(--accent);">
-           
-            <button class="icon-btn" style="border: none; background: transparent;"><i class="ti ti-dots-vertical"></i></button>
-          </div>
-        </div>
-
-      </div>
-
     </div>
 
+    <div class="cal-wrapper">
+      
+      <div class="cal-header">
+        <div>SUN</div><div>MON</div><div>TUE</div><div>WED</div><div>THU</div><div>FRI</div><div>SAT</div>
+      </div>
+      
+      <div class="cal-body">
+        
+        <div class="cal-cell out-month"><div class="cal-date">26</div></div>
+        <div class="cal-cell out-month"><div class="cal-date">27</div></div>
+        <div class="cal-cell out-month"><div class="cal-date">28</div></div>
+        <div class="cal-cell out-month"><div class="cal-date">29</div></div>
+        <div class="cal-cell out-month"><div class="cal-date">30</div>
+          <div class="cal-event bg-green span-right">Ngày Giải phóng miền Nam</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">1</div>
+          <div class="cal-event bg-green span-left">Quốc tế Lao động</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">2</div></div>
+
+        <div class="cal-cell"><div class="cal-date">3</div></div>
+        <div class="cal-cell"><div class="cal-date">4</div>
+          <div class="cal-event bg-blue span-right">Code Frontend TravelGood (React)</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">5</div>
+          <div class="cal-event bg-blue span-both">&nbsp;</div>
+          <div class="cal-time-event"><span class="dot dot-amber"></span> 09:00 Daily Scrum Jira</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">6</div>
+          <div class="cal-event bg-blue span-both">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">7</div>
+          <div class="cal-event bg-blue span-both">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">8</div>
+          <div class="cal-event bg-blue span-left">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">9</div></div>
+
+        <div class="cal-cell"><div class="cal-date">10</div></div>
+        <div class="cal-cell"><div class="cal-date">11</div>
+          <div class="cal-event bg-green span-right">API Quản lý hợp đồng CRM (Java)</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">12</div>
+          <div class="cal-event bg-green span-both">&nbsp;</div>
+          <div class="cal-time-event"><span class="dot dot-blue"></span> 14:00 Review Code DAO</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">13</div>
+          <div class="cal-event bg-green span-both">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">14</div>
+          <div class="cal-event bg-green span-left">&nbsp;</div>
+          <div class="cal-event bg-blue span-right">Tối ưu UI Next.js CRM</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">15</div>
+          <div class="cal-spacer"></div>
+          <div class="cal-event bg-blue span-left">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">16</div></div>
+
+        <div class="cal-cell"><div class="cal-date">17</div></div>
+        <div class="cal-cell"><div class="cal-date">18</div>
+          <div class="cal-event bg-blue span-right">Bảo trì DB Web In ấn (MySQL)</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">19</div>
+          <div class="cal-event bg-blue span-left">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">20</div>
+          <div class="cal-time-event"><span class="dot dot-green"></span> 10:00 Họp với Mentor (Sprint)</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">21</div></div>
+        <div class="cal-cell"><div class="cal-date">22</div></div>
+        <div class="cal-cell"><div class="cal-date">23</div></div>
+
+        <div class="cal-cell"><div class="cal-date">24</div></div>
+        <div class="cal-cell"><div class="cal-date">25</div>
+          <div class="cal-event bg-green span-right">Viết báo cáo Thực tập</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">26</div>
+          <div class="cal-event bg-green span-both">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">27</div>
+          <div class="cal-event bg-green span-both">&nbsp;</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">28</div>
+          <div class="cal-event bg-green span-left">&nbsp;</div>
+          <div class="cal-time-event"><span class="dot dot-amber"></span> 14:00 Nộp báo cáo cho Quản lý</div>
+        </div>
+        <div class="cal-cell"><div class="cal-date">29</div></div>
+        <div class="cal-cell"><div class="cal-date today">30</div>
+          <div class="cal-time-event"><span class="dot dot-blue"></span> 09:00 Deploy CRM lên Staging</div>
+        </div>
+
+      </div>
+     
+
+
+    </div>
+  </div>
+
+  <div id="cal-event-modal" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.65); z-index:2050; align-items:center; justify-content:center;">
+    <div style="background:var(--card); border-radius:14px; padding:24px; width:420px; max-width:90vw; position:relative; box-shadow:0 20px 40px rgba(0,0,0,0.15);">
+      
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <div style="font-size:16px; font-weight:700; color:var(--text-1);">Thêm lịch / Công việc mới</div>
+        <button onclick="closeCalModal()" style="border:none; background:var(--surface); border-radius:50%; width:32px; height:32px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='var(--surface)'"><i class="ti ti-x" style="color:var(--text-1);"></i></button>
+      </div>
+
+      <div style="margin-bottom:14px;">
+        <input type="text" placeholder="Tiêu đề sự kiện (VD: Họp team)..." style="width:100%; font-family:inherit; font-size:14px; padding:10px 14px; border:1px solid var(--border); border-radius:8px; outline:none; background:var(--card); color:var(--text-1); box-sizing:border-box; font-weight: 500;">
+      </div>
+
+      <div style="display:flex; gap:12px; margin-bottom:14px;">
+         <div style="flex:1;">
+           <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;"><i class="ti ti-calendar-event"></i> Ngày bắt đầu</label>
+           <input type="date" id="cal-input-start-date" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px; outline:none; color:var(--text-1); box-sizing:border-box;">
+         </div>
+         <div style="flex:1;">
+           <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;"><i class="ti ti-clock-play"></i> Giờ bắt đầu</label>
+           <input type="time" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px; outline:none; color:var(--text-1); box-sizing:border-box;">
+         </div>
+      </div>
+
+      <div style="display:flex; gap:12px; margin-bottom:14px;">
+         <div style="flex:1;">
+           <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;"><i class="ti ti-calendar-off"></i> Ngày kết thúc</label>
+           <input type="date" id="cal-input-end-date" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px; outline:none; color:var(--text-1); box-sizing:border-box;">
+         </div>
+         <div style="flex:1;">
+           <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;"><i class="ti ti-clock-stop"></i> Giờ kết thúc</label>
+           <input type="time" style="width:100%; padding:9px 12px; border:1px solid var(--border); border-radius:8px; font-family:inherit; font-size:13px; outline:none; color:var(--text-1); box-sizing:border-box;">
+         </div>
+      </div>
+
+      <div style="margin-bottom:20px;">
+        <label style="display:block; font-size:12px; font-weight:600; color:var(--text-2); margin-bottom:6px;"><i class="ti ti-tag"></i> Phân loại công việc</label>
+        <select style="width:100%; font-family:inherit; font-size:13.5px; padding:10px 14px; border:1px solid var(--border); border-radius:8px; outline:none; cursor:pointer; background:var(--card); color:var(--text-1); box-sizing:border-box;">
+          
+           <optgroup label="Danh mục chung">
+             <option value="amber">🟠 Họp / Làm việc nhóm (Teamwork)</option>
+             <option value="blue">🔵 Nghiên cứu & Học tập</option>
+             <option value="red">🔴 Khẩn cấp / Deadline</option>
+             <option value="gray">⚪ Việc cá nhân / Khác</option>
+           </optgroup>
+        </select>
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; border-top:1px solid var(--border); padding-top:16px;">
+        <button onclick="closeCalModal()" style="padding:8px 18px; border:1px solid var(--border); border-radius:8px; background:var(--card); cursor:pointer; font-family:inherit; font-size:13px; font-weight:500; color:var(--text-2);">Huỷ</button>
+        <button onclick="alert('Đã thêm sự kiện thành công!'); closeCalModal();" style="padding:8px 18px; border:none; border-radius:8px; background:var(--accent); color:#fff; cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; display:flex; align-items:center; gap:6px;"><i class="ti ti-device-floppy" style="font-size:15px;"></i> Lưu sự kiện</button>
+      </div>
+    </div>
   </div>
 
   
@@ -2253,65 +2545,77 @@
       </button>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
       
-      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.15s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
-        <div style="padding: 24px; flex: 1; display: flex; gap: 16px; align-items: flex-start;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: #fef2f2; color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;"><i class="ti ti-trophy"></i></div>
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 4px;">
-              <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.4;">Giải Nhì Hackathon HCMUT 2025</h3>
-              <span class="tag" style="background: var(--red-light); color: var(--red); font-size: 11px; padding: 2px 8px; flex-shrink: 0; font-weight: 600;">Giải thưởng</span>
-            </div>
-            <div style="font-size: 13px; color: var(--text-2); font-weight: 500;">Đại học Bách Khoa TP.HCM</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-              <i class="ti ti-calendar"></i> Tháng 4 / 2025
-            </div>
-            <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin-top: 10px;">Đảm nhiệm vị trí Full-stack Developer cốt lõi trong đội thi. Phát triển thành công ứng dụng tích hợp AI hỗ trợ tối ưu hóa lộ trình học tập, xuất sắc vượt qua hơn 50 đội thi tại vòng chung kết.</p>
-          </div>
+      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.08)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+        
+        <div style="width: 100%; height: 160px; position: relative; overflow: hidden; background: var(--navy-2);">
+          <img src="https://images.unsplash.com/photo-1567168544813-cc03465b4fa8?q=80&w=600&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; transition: 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+          <span class="tag" style="position: absolute; top: 12px; right: 12px; background: rgba(254, 242, 242, 0.9); color: var(--red); font-size: 11.5px; padding: 4px 12px; font-weight: 700; backdrop-filter: blur(4px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Giải thưởng</span>
         </div>
-        <div style="background: var(--surface); padding: 10px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px;">
-          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 5px 12px; font-size: 12px; display: flex; align-items: center; gap: 4px;"><i class="ti ti-edit" style="font-size: 13px;"></i>Chỉnh sửa</button>
+
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: 15.5px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 6px;">Giải Nhì Hackathon HCMUT 2025</h3>
+          <div style="font-size: 13px; color: var(--text-2); font-weight: 500; margin-bottom: 10px;">Đại học Bách Khoa TP.HCM</div>
+          
+          <div style="font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 4px; margin-bottom: 12px;">
+            <i class="ti ti-calendar" style="font-size: 14px;"></i> Tháng 4 / 2025
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">Đảm nhiệm vị trí Full-stack Developer cốt lõi trong đội thi. Phát triển thành công ứng dụng tích hợp AI hỗ trợ tối ưu hóa lộ trình học tập, xuất sắc vượt qua hơn 50 đội thi tại vòng chung kết.</p>
+        </div>
+
+        <div style="background: var(--surface); padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+          <div style="width: 34px; height: 34px; border-radius: 8px; background: #fef2f2; color: var(--red); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ti ti-trophy"></i></div>
+          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; display: flex; align-items: center; gap: 6px; font-weight: 500;"><i class="ti ti-edit" style="font-size: 14px;"></i>Chỉnh sửa</button>
         </div>
       </div>
 
-      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.15s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
-        <div style="padding: 24px; flex: 1; display: flex; gap: 16px; align-items: flex-start;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;"><i class="ti ti-medal"></i></div>
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 4px;">
-              <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.4;">Học bổng Khuyến khích Học tập loại Xuất sắc</h3>
-              <span class="tag" style="background: var(--amber-light); color: #92400e; font-size: 11px; padding: 2px 8px; flex-shrink: 0; font-weight: 600;">Học bổng</span>
-            </div>
-            <div style="font-size: 13px; color: var(--text-2); font-weight: 500;">Khoa Công nghệ thông tin</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-              <i class="ti ti-calendar"></i> Học kỳ I (2024 - 2025)
-            </div>
-            <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin-top: 10px;">Đạt thành tích điểm trung bình học tập tích lũy (GPA) nằm trong top 5% sinh viên có điểm số cao nhất toàn khóa, nhận chứng nhận tuyên dương từ Ban giám hiệu trường.</p>
-          </div>
+      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.08)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+        
+        <div style="width: 100%; height: 160px; position: relative; overflow: hidden; background: var(--navy-2);">
+          <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=600&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; transition: 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+          <span class="tag" style="position: absolute; top: 12px; right: 12px; background: rgba(254, 243, 199, 0.9); color: #92400e; font-size: 11.5px; padding: 4px 12px; font-weight: 700; backdrop-filter: blur(4px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Học bổng</span>
         </div>
-        <div style="background: var(--surface); padding: 10px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px;">
-          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 5px 12px; font-size: 12px; display: flex; align-items: center; gap: 4px;"><i class="ti ti-edit" style="font-size: 13px;"></i>Chỉnh sửa</button>
+
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: 15.5px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 6px;">Học bổng Khuyến khích Học tập loại Xuất sắc</h3>
+          <div style="font-size: 13px; color: var(--text-2); font-weight: 500; margin-bottom: 10px;">Khoa Công nghệ thông tin</div>
+          
+          <div style="font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 4px; margin-bottom: 12px;">
+            <i class="ti ti-calendar" style="font-size: 14px;"></i> Học kỳ I (2024 - 2025)
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">Đạt thành tích điểm trung bình học tập tích lũy (GPA) nằm trong top 5% sinh viên có điểm số cao nhất toàn khóa, nhận chứng nhận tuyên dương từ Ban giám hiệu trường.</p>
+        </div>
+
+        <div style="background: var(--surface); padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+          <div style="width: 34px; height: 34px; border-radius: 8px; background: #fffbeb; color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ti ti-medal"></i></div>
+          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; display: flex; align-items: center; gap: 6px; font-weight: 500;"><i class="ti ti-edit" style="font-size: 14px;"></i>Chỉnh sửa</button>
         </div>
       </div>
 
-      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.15s;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
-        <div style="padding: 24px; flex: 1; display: flex; gap: 16px; align-items: flex-start;">
-          <div style="width: 48px; height: 48px; border-radius: 12px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;"><i class="ti ti-award"></i></div>
-          <div style="flex: 1; min-width: 0;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 4px;">
-              <h3 style="font-size: 15px; font-weight: 700; color: var(--text-1); line-height: 1.4;">Danh hiệu Sinh viên 5 Tốt cấp Trường</h3>
-              <span class="tag" style="background: var(--accent-light); color: #1e3a8a; font-size: 11px; padding: 2px 8px; flex-shrink: 0; font-weight: 600;">Danh hiệu</span>
-            </div>
-            <div style="font-size: 13px; color: var(--text-2); font-weight: 500;">Hội Sinh viên Trường</div>
-            <div style="font-size: 12px; color: var(--text-3); margin-top: 6px; display: flex; align-items: center; gap: 4px;">
-              <i class="ti ti-calendar"></i> Năm học 2024 - 2025
-            </div>
-            <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin-top: 10px;">Đạt trọn vẹn 5 tiêu chí xét duyệt chuẩn mực: Học tập tốt, Đạo đức tốt, Thể lực tốt, Tình nguyện tốt và Hội nhập tốt trong suốt chu kỳ năm học.</p>
-          </div>
+      <div class="section-card" style="display: flex; flex-direction: column; justify-content: space-between; transition: 0.2s; overflow: hidden;" onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.08)';" onmouseout="this.style.transform='none'; this.style.boxShadow='none';">
+        
+        <div style="width: 100%; height: 160px; position: relative; overflow: hidden; background: var(--navy-2);">
+          <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?q=80&w=600&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; transition: 0.3s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+          <span class="tag" style="position: absolute; top: 12px; right: 12px; background: rgba(239, 246, 255, 0.9); color: #1e40af; font-size: 11.5px; padding: 4px 12px; font-weight: 700; backdrop-filter: blur(4px); box-shadow: 0 4px 10px rgba(0,0,0,0.1);">Danh hiệu</span>
         </div>
-        <div style="background: var(--surface); padding: 10px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 8px;">
-          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 5px 12px; font-size: 12px; display: flex; align-items: center; gap: 4px;"><i class="ti ti-edit" style="font-size: 13px;"></i>Chỉnh sửa</button>
+
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <h3 style="font-size: 15.5px; font-weight: 700; color: var(--text-1); line-height: 1.4; margin-bottom: 6px;">Danh hiệu Sinh viên 5 Tốt cấp Trường</h3>
+          <div style="font-size: 13px; color: var(--text-2); font-weight: 500; margin-bottom: 10px;">Hội Sinh viên Trường</div>
+          
+          <div style="font-size: 12px; color: var(--text-3); display: flex; align-items: center; gap: 4px; margin-bottom: 12px;">
+            <i class="ti ti-calendar" style="font-size: 14px;"></i> Năm học 2024 - 2025
+          </div>
+          
+          <p style="font-size: 13px; color: var(--text-2); line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">Đạt trọn vẹn 5 tiêu chí xét duyệt chuẩn mực: Học tập tốt, Đạo đức tốt, Thể lực tốt, Tình nguyện tốt và Hội nhập tốt trong suốt chu kỳ năm học.</p>
+        </div>
+
+        <div style="background: var(--surface); padding: 12px 20px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+          <div style="width: 34px; height: 34px; border-radius: 8px; background: #eff6ff; color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 18px;"><i class="ti ti-award"></i></div>
+          <button onclick="alert('Chỉnh sửa thành tựu...')" class="btn-secondary" style="padding: 6px 14px; font-size: 12px; display: flex; align-items: center; gap: 6px; font-weight: 500;"><i class="ti ti-edit" style="font-size: 14px;"></i>Chỉnh sửa</button>
         </div>
       </div>
 
@@ -2437,81 +2741,166 @@
 </div><!-- /main -->
 
 <style>
-  
- /* Cấu trúc Grid cho Nhóm Sự kiện (1 đến 5 ảnh chuẩn 16:9) */
-.event-card { 
-    background: var(--card); 
-    border: 1px solid var(--border); 
-    border-radius: 12px; 
-    padding: 20px; 
-    margin-bottom: 24px; 
-    transition: transform 0.15s, box-shadow 0.15s; 
-    cursor: pointer; 
-  }
-  .event-card:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 24px rgba(15,27,53,0.08); 
-  }
-  .event-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-  .event-title { font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; }
-  .event-desc { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
-  .event-date { font-size: 12px; font-weight: 500; color: var(--text-3); background: var(--surface); padding: 4px 10px; border-radius: 99px; }
-  
- /* Bố cục Collage tự động sắp xếp thông minh */
- /* ── Bố cục Masonry (Pinterest Style) - Giữ 100% tỷ lệ gốc, KHÔNG CẮT ẢNH ── */
-  .event-photos { 
-    column-gap: 4px; /* Khoảng cách giữa các cột */
-    border-radius: 12px; 
-    overflow: hidden; 
-  }
-  
-  .event-photos img { 
-    width: 100%; 
-    height: auto !important; /* Tôn trọng tuyệt đối chiều cao gốc của ảnh */
-    display: block;
-    margin-bottom: 4px; /* Khoảng cách giữa các ảnh trong cùng 1 cột */
-    break-inside: avoid; /* Ngăn ảnh bị bẻ nửa vắt ngang qua 2 cột */
-    border-radius: 6px;
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  }
 
-  .event-photos img:hover {
-    transform: scale(1.02); 
-    z-index: 10;
-    position: relative;
-  }
-  
-  /* 1 Ảnh: Giữ nguyên tỷ lệ, căn giữa, giới hạn chiều cao để ảnh 9:16 không bị quá khổng lồ */
-  .event-photos.count-1 { 
+ /* ── Album: Month group header ────────────────────── */
+  .month-group { margin-bottom: 32px; }
+
+  .month-label {
     display: flex; 
-    justify-content: center; 
-    background: var(--surface); 
+    align-items: center; 
+    gap: 14px;
+    padding: 12px 18px;
+    margin-bottom: 20px;
+    background: var(--card);
     border: 1px solid var(--border);
+    border-left: 5px solid var(--accent);
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
   }
-  .event-photos.count-1 img { 
-    width: auto; 
-    max-width: 100%; 
-    max-height: 500px; 
-    margin-bottom: 0;
+
+  .month-label-icon {
+    width: 38px;
+    height: 38px;
+    background: #eff6ff;
+    color: var(--accent);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .month-label-text {
+    font-size: 16px; 
+    font-weight: 800; 
+    color: var(--text-1);
+  }
+
+  .month-label-text span {
+    color: var(--text-2);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+
+  .month-label-count {
+    margin-left: auto; /* Đẩy thẻ số lượng sang góc phải */
+    font-size: 12px; 
+    font-weight: 600;
+    background: var(--accent); 
+    color: #fff;
+    padding: 5px 14px; 
+    border-radius: 99px;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.25);
+  }
+  /* ── Event card: Lưới thẻ dọc (Grid Layout) ─────────────── */
+  .events-grid {
+    display: grid;
+    /* Tự động chia cột: mỗi cột tối thiểu 280px, tối đa 1 phần đều nhau */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .event-card {
+    display: flex;
+    flex-direction: column; /* Đổi thành dọc: Ảnh trên, chữ dưới */
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s;
+    height: 100%;
+  }
+
+  .event-card:hover {
+    border-color: var(--accent-mid);
+    box-shadow: 0 10px 25px rgba(59,130,246,0.12);
+    transform: translateY(-4px);
+  }
+
+  /* Khung ảnh Thumbnail */
+  .event-thumb-strip {
+    flex-shrink: 0;
+    width: 100%;
+    height: 180px; /* Cố định chiều cao phần ảnh */
+    display: grid;
+    gap: 2px;
+    background: var(--navy-3);
+    overflow: hidden;
+  }
+  .event-thumb-strip.count-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+  .event-thumb-strip.count-2 { grid-template-columns: 1fr 1fr; }
+  .event-thumb-strip.count-3 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .event-thumb-strip > div { overflow: hidden; position: relative; min-height: 0; }
+  .event-thumb-strip.count-3 > div:first-child { grid-row: 1 / 3; }
+
+  .event-thumb-strip img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .event-card:hover .event-thumb-strip img {
+    transform: scale(1.05); /* Hiệu ứng zoom nhẹ ảnh khi hover */
+  }
+
+  .thumb-more-overlay {
+    position: absolute; inset: 0;
+    background: rgba(15,27,53,0.58);
+    color: #fff; font-size: 16px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Thông tin thẻ */
+  .event-info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .event-title {
+    font-size: 15px; font-weight: 700; color: var(--text-1);
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .event-desc {
+    font-size: 12.5px; color: var(--text-2); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden; 
+    margin-bottom: 16px;
+    flex: 1; /* Tự động đẩy phần ngày tháng xuống đáy nếu mô tả ngắn */
   }
   
-  /* Từ 2 đến 5 ảnh: Tự động chia cột thông minh */
-  .event-photos.count-2 { column-count: 2; display: block; }
-  .event-photos.count-3 { column-count: 2; display: block; } /* 1 cột 2 ảnh, 1 cột 1 ảnh */
-  .event-photos.count-4 { column-count: 2; display: block; } /* 2 cột, mỗi cột 2 ảnh */
-  .event-photos.count-5 { column-count: 3; display: block; } /* Phân bổ đều ra 3 cột cực đẹp */
+  .event-meta {
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+  }
+  .event-date {
+    font-size: 11.5px; font-weight: 500; color: var(--text-3);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .event-photo-count {
+    font-size: 11px; font-weight: 600;
+    background: var(--surface); color: var(--text-2);
+    border: 1px solid var(--border);
+    padding: 2px 8px; border-radius: 99px;
+  }
 
-  /* Giao diện phân trang */
-  .page-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 1px solid var(--border); background: var(--card); color: var(--text-2); cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.15s; }
+  /* Ẩn mũi tên vì dạng card dọc không cần thiết */
+  .event-card-arrow { display: none; }
+
+  /* Pagination */
+  .page-btn {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text-2);
+    cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.15s;
+  }
   .page-btn:hover { background: var(--surface); color: var(--accent); border-color: var(--accent-mid); }
   .page-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-
-  /* Group Tháng */
-  .month-label { display: flex; align-items: center; gap: 12px; background: linear-gradient(90deg, #1a2d52 0%, #243a6a 60%, transparent 100%); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 18px 10px 14px; margin: 0 0 16px; }
-  .month-label-text { font-size: 15px; font-weight: 700; color: #fff; }
-  .month-label-count { font-size: 11.5px; font-weight: 500; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.85); padding: 2px 10px; border-radius: 99px; margin-left: auto; }
-  .month-group { margin-bottom: 32px; }
 </style>
 
 <div id="share-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(15,27,53,0.55); z-index:1050; align-items:center; justify-content:center;">
@@ -2700,7 +3089,11 @@
     { id: 4, title: 'Lễ tốt nghiệp khóa IELTS', desc: 'Nhận chứng chỉ band 7.0', month: 3, year: 2025, date: '10/03/2025', updatedDate: '10/03/2025 11:30', images: [getMock169('#16a34a','Ảnh 1')] },
     { id: 5, title: 'Year End Party 2024', desc: 'Tổng kết năm cũ cùng team dự án', month: 1, year: 2025, date: '15/01/2025', updatedDate: '15/01/2025 23:10', images: [getMock169('#dc2626','Ảnh 1'), getMock169('#991b1b','Ảnh 2'), getMock169('#7f1d1d','Ảnh 3'), getMock169('#f87171','Ảnh 4')] }
   ];
-  // ── XEM CHI TIẾT SỰ KIỆN ──────────────────────────
+  // ── BIẾN TOÀN CỤC QUẢN LÝ LIGHTBOX XEM ẢNH FULL MỐC THỜI GIAN ────────────────
+  let lightboxImages = [];
+  let currentLightboxIdx = 0;
+
+  // ── XEM CHI TIẾT SỰ KIỆN VỚI DANH SÁCH ẢNH 1:1 ──────────────────────────
   let detailEvId = null;
 
   function viewEvent(id) {
@@ -2714,17 +3107,119 @@
     descEl.textContent = ev.desc || '';
     descEl.style.display = ev.desc ? 'block' : 'none';
 
-    // Đổ danh sách ảnh sự kiện
+    // Đổ danh sách ảnh sự kiện dạng Lưới ô vuông tỉ lệ 1:1 gọn gàng
     const imgContainer = document.getElementById('detail-images');
-    imgContainer.innerHTML = ev.images.map(img => `<img src="${img}" style="width:100%; border-radius:8px; border:1px solid var(--border);">`).join('');
+    imgContainer.innerHTML = `
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 8px;">
+        ${ev.images.map((img, idx) => `
+          <div onclick="openLightbox(${id}, ${idx})" 
+               style="aspect-ratio: 1/1; border-radius: 8px; overflow: hidden; background: var(--navy-3); border: 1px solid var(--border); cursor: pointer; transition: all 0.2s;"
+               onmouseover="this.style.transform='scale(1.04)'; this.style.borderColor='var(--accent)'" 
+               onmouseout="this.style.transform='none'; this.style.borderColor='var(--border)'">
+            <img src="${img}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        `).join('')}
+      </div>
+    `;
 
     // Hiển thị ngày tạo và ngày sửa đổi chi tiết
     document.getElementById('detail-created').textContent = ev.date;
     document.getElementById('detail-updated').textContent = ev.updatedDate || ev.date;
 
-    // Bật hiệu ứng mở modal
+    // Bật hiệu ứng mở modal chi tiết nhóm sự kiện
     document.getElementById('detail-backdrop').style.display = 'flex';
     document.body.style.overflow = 'hidden'; 
+  }
+
+  // ── HỆ THỐNG TRÌNH CHIẾU ALBUM ẢNH (DI ĐỘNG & PC LIGHTBOX) ─────────────────────
+  function openLightbox(eventId, imgIdx) {
+    const ev = eventList.find(x => x.id === eventId);
+    if (!ev) return;
+
+    lightboxImages = ev.images;
+    currentLightboxIdx = imgIdx;
+
+    // Tự động khởi tạo cấu trúc HTML Lightbox vào cuối body nếu chưa tồn tại trên trang
+    let lightbox = document.getElementById('album-lightbox-backdrop');
+    if (!lightbox) {
+      lightbox = document.createElement('div');
+      lightbox.id = 'album-lightbox-backdrop';
+      lightbox.style = `
+        position: fixed; inset: 0; background: rgba(10, 15, 30, 0.96); z-index: 2100;
+        display: flex; align-items: center; justify-content: center; select-index: none;
+      `;
+      lightbox.innerHTML = `
+        <button onclick="closeLightbox()" style="position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; width: 42px; height: 42px; color: #fff; font-size: 20px; cursor: pointer; z-index: 2200; display: flex; align-items: center; justify-content: center; transition: 0.2s;" onmouseover="this.style.background='var(--red)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><i class="ti ti-x"></i></button>
+        
+        <button onclick="prevLightboxImg(event)" id="lt-btn-prev" style="position: absolute; left: 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 48px; height: 48px; color: #fff; font-size: 24px; cursor: pointer; z-index: 2200; display: flex; align-items: center; justify-content: center; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="ti ti-chevron-left"></i></button>
+        
+        <div style="width: 88vw; height: 82vh; display: flex; align-items: center; justify-content: center;">
+          <img id="lt-full-display" src="" style="max-width: 100%; max-height: 100%; object-fit: contain; user-select: none; border-radius: 4px; transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);">
+        </div>
+        
+        <button onclick="nextLightboxImg(event)" id="lt-btn-next" style="position: absolute; right: 24px; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 48px; height: 48px; color: #fff; font-size: 24px; cursor: pointer; z-index: 2200; display: flex; align-items: center; justify-content: center; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.25)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="ti ti-chevron-right"></i></button>
+        
+        <div id="lt-image-counter" style="position: absolute; bottom: 24px; color: rgba(255,255,255,0.8); font-size: 13.5px; font-weight: 600; background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); padding: 5px 16px; border-radius: 99px; letter-spacing: 0.5px;"></div>
+      `;
+      document.body.appendChild(lightbox);
+
+      // Cho phép bấm vùng tối bên ngoài để thoát trình xem ảnh nhanh
+      lightbox.addEventListener('click', function(e) {
+        if(e.target === this) closeLightbox();
+      });
+
+      // Tích hợp phím mũi tên điều hướng và phím ESC để nâng cao trải nghiệm
+      window.addEventListener('keydown', (e) => {
+        if (document.getElementById('album-lightbox-backdrop')?.style.display === 'flex') {
+          if (e.key === 'ArrowRight' || e.key === 'Right') nextLightboxImg();
+          if (e.key === 'ArrowLeft' || e.key === 'Left') prevLightboxImg();
+          if (e.key === 'Escape') closeLightbox();
+        }
+      });
+    }
+
+    lightbox.style.display = 'flex';
+    syncLightboxView();
+  }
+
+  function syncLightboxView() {
+    const fullImg = document.getElementById('lt-full-display');
+    const counter = document.getElementById('lt-image-counter');
+    
+    if (fullImg && lightboxImages.length > 0) {
+      // Áp dụng hiệu ứng mờ chuyển tiếp nhẹ nhàng khi đổi ảnh
+      fullImg.style.opacity = '0.3';
+      
+      setTimeout(() => {
+        fullImg.src = lightboxImages[currentLightboxIdx];
+        counter.textContent = `${currentLightboxIdx + 1} / ${lightboxImages.length}`;
+        fullImg.style.opacity = '1';
+      }, 60);
+      
+      // Ẩn các nút chuyển ảnh nếu album chỉ có duy nhất 1 tấm hình
+      const displayState = lightboxImages.length <= 1 ? 'none' : 'flex';
+      document.getElementById('lt-btn-prev').style.display = displayState;
+      document.getElementById('lt-btn-next').style.display = displayState;
+    }
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('album-lightbox-backdrop');
+    if (lightbox) lightbox.style.display = 'none';
+  }
+
+  function nextLightboxImg(e) {
+    if (e) e.stopPropagation();
+    if (lightboxImages.length <= 1) return;
+    currentLightboxIdx = (currentLightboxIdx + 1) % lightboxImages.length;
+    syncLightboxView();
+  }
+
+  function prevLightboxImg(e) {
+    if (e) e.stopPropagation();
+    if (lightboxImages.length <= 1) return;
+    currentLightboxIdx = (currentLightboxIdx - 1 + lightboxImages.length) % lightboxImages.length;
+    syncLightboxView();
   }
 
 
@@ -2738,7 +3233,7 @@
 
   let activeMonth = '', activeYear = '';
   let currentPage = 1;
-  const MONTHS_PER_PAGE = 2; // Số tháng hiển thị trên 1 trang
+const MONTHS_PER_PAGE = 3; // Số tháng hiển thị trên 1 trang
 
   // ── RENDER ALBUM SỰ KIỆN ──────────────────────────
   function renderAlbum() {
@@ -2775,29 +3270,49 @@
 
     // Render HTML
     body.innerHTML = pageGroups.map(g => {
-      const eventsHtml = g.events.map(ev => `
-        <div class="event-card" onclick="viewEvent(${ev.id})">
-          <div class="event-header">
-            <div>
-              <div class="event-title">${ev.title}</div>
-              <div class="event-desc">${ev.desc || ''}</div>
-            </div>
-            <div class="event-date">${ev.date}</div>
-          </div>
-          <div class="event-photos count-${ev.images.length}">
-            ${ev.images.map(img => `<img src="${img}" alt="Photo">`).join('')}
-          </div>
-        </div>
-      `).join('');
+      const MONTH_VI = ['','Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8','Tháng 9','Tháng 10','Tháng 11','Tháng 12'];
 
-      return `
+      const eventsHtml = g.events.map(ev => {
+        const n = ev.images.length;
+        // Hiển thị tối đa 3 ô thumb, ô cuối overlay +N nếu còn dư
+        const slots = Math.min(n, 3);
+        const extra = n - slots;
+
+        const thumbsHtml = ev.images.slice(0, slots).map((img, idx) => {
+          const isLast = idx === slots - 1 && extra > 0;
+          return `<div>
+            <img src="${img}" alt="">
+            ${isLast ? `<div class="thumb-more-overlay">+${extra}</div>` : ''}
+          </div>`;
+        }).join('');
+
+        return `
+        <div class="event-card" onclick="viewEvent(${ev.id})">
+          <div class="event-thumb-strip count-${slots}">${thumbsHtml}</div>
+          <div class="event-info">
+            <div class="event-title">${ev.title}</div>
+            ${ev.desc ? `<div class="event-desc">${ev.desc}</div>` : ''}
+            <div class="event-meta">
+              <div class="event-date"><i class="ti ti-calendar" style="font-size:11px;"></i>${ev.date}</div>
+              <div class="event-photo-count"><i class="ti ti-photo" style="font-size:10px;margin-right:2px;"></i>${n} ảnh</div>
+            </div>
+          </div>
+          <div class="event-card-arrow"><i class="ti ti-chevron-right"></i></div>
+        </div>`;
+      }).join('');
+
+    return `
         <div class="month-group">
           <div class="month-label">
-            <i class="ti ti-calendar-month" style="font-size:18px;color:var(--accent-mid);flex-shrink:0;"></i>
-            <span class="month-label-text">Tháng ${g.month}/${g.year}</span>
+            <div class="month-label-icon">
+              <i class="ti ti-calendar-month"></i>
+            </div>
+            <span class="month-label-text">${MONTH_VI[g.month]} <span>· ${g.year}</span></span>
             <span class="month-label-count">${g.events.length} sự kiện</span>
           </div>
-          ${eventsHtml}
+          <div class="events-grid">
+            ${eventsHtml}
+          </div>
         </div>
       `;
     }).join('');
@@ -2825,7 +3340,7 @@
   function openAddEventModal() {
     cropperContext = 'create';
     rawFilesQueue = []; eventImages = [];
-    document.getElementById('event-title').value = ''; 
+    document.getElementById('event-title').value = '';
     document.getElementById('event-desc').value = '';
     renderEventPreview();
     document.getElementById('event-modal-backdrop').style.display = 'flex';
@@ -2838,11 +3353,14 @@
   function renderEventPreview() {
     const grid = document.getElementById('event-preview-grid');
     grid.innerHTML = eventImages.map((img, i) => `
-      <div style="aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative;">
-        <img src="${img}" style="width:100%;height:100%;object-fit:cover;">
-        <div onclick="removeEventImg(${i})" style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.6);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:12px;"><i class="ti ti-x"></i></div>
+      <div style="aspect-ratio:1/1;border-radius:6px;overflow:hidden;position:relative;border:1px solid var(--border);background:var(--navy-2);">
+        <img src="${img}" style="width:100%;height:100%;object-fit:cover;display:block;">
+        <div onclick="removeEventImg(${i})" style="position:absolute;top:3px;right:3px;background:rgba(0,0,0,0.65);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;"><i class="ti ti-x"></i></div>
       </div>
     `).join('');
+    // Ẩn/hiện drop zone
+    const dz = document.getElementById('event-drop-zone');
+    if (dz) dz.style.display = eventImages.length >= 5 ? 'none' : 'block';
   }
 
   // ── LOGIC CHỈNH SỬA (EDIT) ─────────────────────────
@@ -2889,8 +3407,7 @@
   }
 
   function cancelEventEdit() { document.getElementById('event-edit-panel').style.display = 'none'; }
-
-  function saveEventEdit() {
+function saveEventEdit() {
     const ev = eventList.find(x => x.id === detailEvId);
     if (!ev) return;
 
@@ -2904,24 +3421,21 @@
     const dateStr = `${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
     const timeStr = `${dateStr} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
+    // Cập nhật thông tin sự kiện
     ev.title = newTitle;
     ev.desc = newDesc;
     ev.updatedDate = timeStr;
-    ev.images = [...eventImages]; // Lưu toàn bộ ảnh mới/cũ đã cập nhật
+    ev.images = [...eventImages];
 
-    // Cập nhật lại màn hình chi tiết hiện tại
-    document.getElementById('detail-title').textContent = ev.title;
-    const descEl = document.getElementById('detail-desc');
-    descEl.textContent = ev.desc || '';
-    descEl.style.display = ev.desc ? 'block' : 'none';
-    document.getElementById('detail-updated').textContent = ev.updatedDate;
-    
-    document.getElementById('detail-images').innerHTML = ev.images.map(img => `<img src="${img}" style="width:100%; border-radius:8px; border:1px solid var(--border);">`).join('');
-
+    // Ẩn bảng chỉnh sửa
     document.getElementById('event-edit-panel').style.display = 'none';
-    renderAlbum(); // Render lại mảng lưới sự kiện ngoài cùng
+    
+    // Cập nhật lại giao diện danh sách bên ngoài
+    renderAlbum(); 
+    
+    // QUAN TRỌNG: Gọi lại viewEvent để hệ thống tự render lại Lưới 1:1 & Lightbox chuẩn xác!
+    viewEvent(ev.id); 
   }
-
   function closeDetail() {
     document.getElementById('detail-backdrop').style.display = 'none';
     document.getElementById('event-edit-panel').style.display = 'none';
@@ -2929,22 +3443,27 @@
     detailEvId = null;
   }
 
-  // ── LOGIC CROPPER & UPLOAD (DÙNG CHUNG) ─────────────
-  // ── LOGIC UPLOAD ẢNH (TỰ ĐỘNG SẮP XẾP) ─────────────
+  // ── LOGIC TỈ LỆ KHUNG HÌNH (giữ lại để không lỗi nếu còn tham chiếu) ──
+  let selectedAR = { label: '16:9', w: 16, h: 9 };
+  function selectAspectRatio(btn) {}
+
+  // ── UPLOAD ẢNH THẲNG (không crop) ────────────────────
   function handleEventFiles(e) {
     const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
     if (eventImages.length + files.length > 5) {
-      alert('Chỉ được phép tối đa 5 ảnh trong 1 sự kiện!'); 
-      e.target.value = ''; return; 
+      alert('Chỉ được phép tối đa 5 ảnh trong 1 sự kiện!');
+      e.target.value = ''; return;
     }
-    
-    // Đọc file trực tiếp và đưa ngay vào hệ thống (không qua bước cắt)
+    let loaded = 0;
     files.forEach(file => {
       const reader = new FileReader();
-      reader.onload = (event) => {
-        eventImages.push(event.target.result);
-        if (cropperContext === 'create') renderEventPreview();
-        else renderEventEditPreview();
+      reader.onload = ev => {
+        eventImages.push(ev.target.result);
+        loaded++;
+        if (loaded === files.length) {
+          if (cropperContext === 'create') renderEventPreview();
+          else renderEventEditPreview();
+        }
       };
       reader.readAsDataURL(file);
     });
@@ -2952,22 +3471,47 @@
   }
 
   function removeEventImg(idx) { 
-    eventImages.splice(idx,1); 
+    eventImages.splice(idx, 1); 
     if (cropperContext === 'create') renderEventPreview();
     else renderEventEditPreview(); 
   }
 
-  let crpImg = null; let crpScale = 1, crpX = 0, crpY = 0;
+  // ── BIẾN CROPPER ─────────────────────────────────────
+  let crpImg = null;
+  let crpScale = 1, crpX = 0, crpY = 0;
+  let crpCanvasW = 800, crpCanvasH = 450;
   let isDrag = false, lastX, lastY;
   const cvs = document.getElementById('cropper-canvas');
   const ctx = cvs.getContext('2d');
 
+  // ── XỬ LÝ ZOOM SLIDER ────────────────────────────────
+  function onZoomSlider(val) {
+    if (!crpImg) return;
+    const baseScale = Math.max(crpCanvasW / crpImg.width, crpCanvasH / crpImg.height);
+    const newScale = baseScale * (val / 100);
+    // Giữ tâm khi zoom
+    const cx = crpCanvasW / 2, cy = crpCanvasH / 2;
+    crpX = cx - (cx - crpX) * (newScale / crpScale);
+    crpY = cy - (cy - crpY) * (newScale / crpScale);
+    crpScale = newScale;
+    clampCrop();
+    drawCropper();
+  }
+
+  function clampCrop() {
+    const maxX = crpCanvasW - crpImg.width * crpScale;
+    const maxY = crpCanvasH - crpImg.height * crpScale;
+    if (crpX > 0) crpX = 0;
+    if (crpY > 0) crpY = 0;
+    if (crpX < maxX) crpX = maxX;
+    if (crpY < maxY) crpY = maxY;
+  }
+
   function processNextCrop() {
-    if(rawFilesQueue.length === 0) { 
-       // Dừng crop -> Render lại ảnh
-       if (cropperContext === 'create') renderEventPreview(); 
-       else renderEventEditPreview();
-       return; 
+    if (rawFilesQueue.length === 0) { 
+      if (cropperContext === 'create') renderEventPreview(); 
+      else renderEventEditPreview();
+      return; 
     }
     const file = rawFilesQueue.shift();
     const reader = new FileReader();
@@ -2981,45 +3525,85 @@
 
   function openCropper(img) {
     crpImg = img;
-    crpScale = Math.max(800 / img.width, 450 / img.height);
-    crpX = (800 - img.width * crpScale) / 2; 
-    crpY = (450 - img.height * crpScale) / 2;
+    // Tính kích thước canvas theo tỉ lệ đã chọn, giới hạn max 800px
+    const ar = selectedAR;
+    const maxW = Math.min(800, window.innerWidth * 0.88);
+    const maxH = Math.min(window.innerHeight * 0.58, 600);
+    let cw = maxW, ch = maxW * ar.h / ar.w;
+    if (ch > maxH) { ch = maxH; cw = ch * ar.w / ar.h; }
+    crpCanvasW = Math.round(cw);
+    crpCanvasH = Math.round(ch);
+    cvs.width = crpCanvasW;
+    cvs.height = crpCanvasH;
+    cvs.style.width  = crpCanvasW + 'px';
+    cvs.style.height = crpCanvasH + 'px';
+
+    // Fit ảnh vào canvas
+    crpScale = Math.max(crpCanvasW / img.width, crpCanvasH / img.height);
+    crpX = (crpCanvasW - img.width * crpScale) / 2;
+    crpY = (crpCanvasH - img.height * crpScale) / 2;
+
+    // Reset zoom slider
+    document.getElementById('zoom-slider').value = 100;
+
+    // Cập nhật label tỉ lệ trong modal
+    document.getElementById('cropper-ratio-label').textContent = `Tỉ lệ: ${ar.label} · Kéo để chỉnh vị trí, dùng thanh để zoom`;
+
     drawCropper();
     document.getElementById('cropper-modal').style.display = 'flex';
   }
 
   function drawCropper() {
-    ctx.fillStyle = '#000'; ctx.fillRect(0,0,800,450);
-    if(crpImg) ctx.drawImage(crpImg, crpX, crpY, crpImg.width * crpScale, crpImg.height * crpScale);
+    ctx.fillStyle = '#111';
+    ctx.fillRect(0, 0, crpCanvasW, crpCanvasH);
+    if (crpImg) ctx.drawImage(crpImg, crpX, crpY, crpImg.width * crpScale, crpImg.height * crpScale);
   }
 
   function startDrag(clientX, clientY) { isDrag = true; lastX = clientX; lastY = clientY; }
   function moveDrag(clientX, clientY) {
-    if(!isDrag) return;
-    crpX += (clientX - lastX) * 1.5; crpY += (clientY - lastY) * 1.5;
-    const maxX = 800 - crpImg.width * crpScale; const maxY = 450 - crpImg.height * crpScale;
-    if(crpX > 0) crpX = 0; if(crpY > 0) crpY = 0;
-    if(crpX < maxX) crpX = maxX; if(crpY < maxY) crpY = maxY;
+    if (!isDrag || !crpImg) return;
+    crpX += clientX - lastX;
+    crpY += clientY - lastY;
+    clampCrop();
     lastX = clientX; lastY = clientY;
     drawCropper();
   }
-  
-  cvs.onmousedown = (e) => startDrag(e.clientX, e.clientY);
+
+  cvs.onmousedown  = (e) => startDrag(e.clientX, e.clientY);
   window.addEventListener('mousemove', (e) => moveDrag(e.clientX, e.clientY));
-  window.addEventListener('mouseup', () => { isDrag = false; });
-  cvs.ontouchstart = (e) => { startDrag(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }
-  cvs.ontouchmove = (e) => { moveDrag(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }
-  cvs.ontouchend = () => { isDrag = false; }
+  window.addEventListener('mouseup',   () => { isDrag = false; });
+  cvs.ontouchstart = (e) => { startDrag(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); };
+  cvs.ontouchmove  = (e) => { moveDrag(e.touches[0].clientX,  e.touches[0].clientY);  e.preventDefault(); };
+  cvs.ontouchend   = ()  => { isDrag = false; };
+
+  // Scroll-to-zoom
+  cvs.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.05 : 0.05;
+    const baseScale = Math.max(crpCanvasW / crpImg.width, crpCanvasH / crpImg.height);
+    const newScale = Math.max(baseScale, Math.min(crpScale * (1 + delta), baseScale * 4));
+    const rect = cvs.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+    crpX = mx - (mx - crpX) * (newScale / crpScale);
+    crpY = my - (my - crpY) * (newScale / crpScale);
+    crpScale = newScale;
+    clampCrop();
+    drawCropper();
+    // Sync slider
+    document.getElementById('zoom-slider').value = Math.round(crpScale / baseScale * 100);
+  }, { passive: false });
 
   function confirmCrop() {
-    eventImages.push(cvs.toDataURL('image/jpeg', 0.85));
+    eventImages.push(cvs.toDataURL('image/jpeg', 0.88));
     document.getElementById('cropper-modal').style.display = 'none';
     processNextCrop();
   }
 
   function skipCrop() {
+    // Lưu ảnh nguyên gốc không cắt (vẽ fit vào canvas để có dữ liệu)
+    eventImages.push(cvs.toDataURL('image/jpeg', 0.88));
     document.getElementById('cropper-modal').style.display = 'none';
-    processNextCrop(); 
+    processNextCrop();
   }
 
   // ── LƯU SỰ KIỆN MỚI ────────────────────────────────
@@ -3088,14 +3672,26 @@ const PLACEHOLDER_TABS = [];
       </div>`;
   });
 
-  // ── Sidebar hover → push main content ──────────
+  // ── Sidebar hover → push main content (delay 1s to open) ──────────
   const sidebar = document.querySelector('.sidebar');
   const mainEl  = document.querySelector('.main');
+  let sidebarOpenTimer = null;
+
   sidebar.addEventListener('mouseenter', () => {
-    mainEl.style.marginLeft = 'var(--sidebar-w)';
+    sidebarOpenTimer = setTimeout(() => {
+
+      sidebar.classList.add('is-open');
+      mainEl.style.marginLeft = 'var(--sidebar-w)';
+    }, 500);
   });
+
   sidebar.addEventListener('mouseleave', () => {
+    clearTimeout(sidebarOpenTimer);
+    sidebar.classList.remove('is-open');
     mainEl.style.marginLeft = 'var(--sidebar-mini)';
+    // Đóng menu 3 chấm nếu đang mở
+    const userMenu = document.getElementById('user-menu');
+    if (userMenu) userMenu.style.display = 'none';
   });
 
   let currentTab = 'dashboard';
@@ -3282,6 +3878,7 @@ const PLACEHOLDER_TABS = [];
   }
   // ── LOGIC MENU NGƯỜI DÙNG ──────────────────────────────
   function toggleUserMenu(event) {
+    event.stopPropagation();
     const menu = document.getElementById('user-menu');
     if (menu.style.display === 'block') {
       menu.style.display = 'none';
@@ -3289,16 +3886,25 @@ const PLACEHOLDER_TABS = [];
     }
     const btn  = document.getElementById('user-menu-btn');
     const rect = btn.getBoundingClientRect();
+
+    // Hiển thị tạm để đo kích thước
+    menu.style.visibility = 'hidden';
     menu.style.display = 'block';
-    menu.style.left = (rect.right + 8) + 'px';
-    menu.style.top  = (rect.bottom - menu.offsetHeight) + 'px';
-    const menuRect = menu.getBoundingClientRect();
-    if (menuRect.bottom > window.innerHeight) {
-      menu.style.top = (window.innerHeight - menuRect.height - 8) + 'px';
-    }
+
+    const menuH = menu.offsetHeight;
+
+    // Menu xuất hiện bên phải sidebar, căn đáy với nút bấm
+    const left = rect.right + 8;
+    let top = rect.bottom - menuH;
+    if (top < 8) top = 8;
+    if (top + menuH > window.innerHeight - 8) top = window.innerHeight - menuH - 8;
+
+    menu.style.left = left + 'px';
+    menu.style.top  = top  + 'px';
+    menu.style.visibility = 'visible';
   }
 
-  // Đóng menu khi click ra ngoài (capture phase để không bị stopPropagation chặn)
+  // Đóng menu khi click ra ngoài
   document.addEventListener('click', function(e) {
     const menu = document.getElementById('user-menu');
     const btn  = document.getElementById('user-menu-btn');
@@ -3306,7 +3912,118 @@ const PLACEHOLDER_TABS = [];
     if (!menu.contains(e.target) && !btn.contains(e.target)) {
       menu.style.display = 'none';
     }
-  }, true);
+  });
+  // ── HỆ THỐNG TẠO SỰ KIỆN VÀ ĐIỀU HƯỚNG LỊCH ──
+  let currentCalDate = new Date(2026, 4, 1); // Mặc định ở Tháng 5, 2026 (Tháng 5 trong JS là index 4)
+  let mockMay2026HTML = ""; // Biến lưu giữ giao diện mẫu của bạn
+
+  function openCalModal(dateVal) {
+    document.getElementById('cal-event-modal').style.display = 'flex';
+    if (dateVal && typeof dateVal === 'string') {
+      document.getElementById('cal-input-start-date').value = dateVal;
+      document.getElementById('cal-input-end-date').value = dateVal;
+    } else {
+      document.getElementById('cal-input-start-date').value = '';
+      document.getElementById('cal-input-end-date').value = '';
+    }
+  }
+
+  function closeCalModal() {
+    document.getElementById('cal-event-modal').style.display = 'none';
+  }
+
+  // Hàm vẽ lại lưới lịch
+  function renderCalendarGrid() {
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth(); 
+    
+    // Cập nhật text tiêu đề
+    document.getElementById('cal-current-month-year').textContent = `Tháng ${month + 1}, ${year}`;
+    const calBody = document.querySelector('.cal-body');
+    
+    // Nếu là Tháng 5/2026 -> Trả lại giao diện có sẵn các sự kiện màu sắc
+    if (year === 2026 && month === 4 && mockMay2026HTML !== "") {
+      calBody.innerHTML = mockMay2026HTML;
+    } else {
+      // Các tháng khác -> Tự động tính toán & sinh lịch trống
+      let html = '';
+      const firstDay = new Date(year, month, 1).getDay(); // 0(CN) -> 6(T7)
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const prevMonthDays = new Date(year, month, 0).getDate();
+      
+      // Sinh ô ngày của tháng trước (in mờ)
+      for (let i = firstDay - 1; i >= 0; i--) {
+        html += `<div class="cal-cell out-month"><div class="cal-date">${prevMonthDays - i}</div></div>`;
+      }
+      // Sinh ô ngày của tháng hiện tại
+      const today = new Date();
+      for (let i = 1; i <= daysInMonth; i++) {
+        let isToday = (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) ? 'today' : '';
+        html += `<div class="cal-cell"><div class="cal-date ${isToday}">${i}</div></div>`;
+      }
+      // Sinh ô ngày của tháng sau để lấp đầy lưới
+      const totalCells = firstDay + daysInMonth;
+      const nextDays = (totalCells <= 35) ? 35 - totalCells : 42 - totalCells;
+      for (let i = 1; i <= nextDays; i++) {
+        html += `<div class="cal-cell out-month"><div class="cal-date">${i}</div></div>`;
+      }
+      calBody.innerHTML = html;
+    }
+    
+    attachCalendarClickEvents(); // Gắn lại khả năng bấm cho các ô vừa sinh ra
+  }
+
+  // Gắn hiệu ứng bấm mở Modal thêm công việc
+  function attachCalendarClickEvents() {
+    const cells = document.querySelectorAll('.cal-body .cal-cell');
+    cells.forEach(cell => {
+      cell.style.cursor = 'pointer';
+      cell.addEventListener('mouseenter', () => cell.style.backgroundColor = 'rgba(0,0,0,0.02)');
+      cell.addEventListener('mouseleave', () => cell.style.backgroundColor = 'transparent');
+      
+      cell.addEventListener('click', function() {
+        const dateDiv = this.querySelector('.cal-date');
+        let day = dateDiv ? dateDiv.innerText.trim() : '';
+        let y = currentCalDate.getFullYear();
+        let m = String(currentCalDate.getMonth() + 1).padStart(2, '0');
+        let d = day.padStart(2, '0');
+        let formDate = day ? `${y}-${m}-${d}` : ''; 
+        openCalModal(formDate);
+      });
+    });
+
+    // Ngăn bấm nhầm vào thanh công việc cũ
+    const existingEvents = document.querySelectorAll('.cal-body .cal-event, .cal-body .cal-time-event, .cal-body .cal-more');
+    existingEvents.forEach(ev => {
+      ev.addEventListener('click', function(e) {
+        e.stopPropagation();
+        alert('Chức năng Xem / Chỉnh sửa sự kiện này đang được mở...');
+      });
+    });
+  }
+
+  // Các nút điều hướng
+  function prevCalMonth() { currentCalDate.setMonth(currentCalDate.getMonth() - 1); renderCalendarGrid(); }
+  function nextCalMonth() { currentCalDate.setMonth(currentCalDate.getMonth() + 1); renderCalendarGrid(); }
+  function goTodayCal()   { currentCalDate = new Date(); renderCalendarGrid(); }
+
+  // Khởi chạy khi tải trang
+  document.addEventListener("DOMContentLoaded", function() {
+    // 1. "Chụp ảnh" lại giao diện Tháng 5/2026 lưu vào bộ nhớ
+    const calBody = document.querySelector('.cal-body');
+    if (calBody) mockMay2026HTML = calBody.innerHTML;
+
+    // 2. Kích hoạt lịch
+    attachCalendarClickEvents();
+
+    // 3. Cho phép click ra ngoài để đóng Modal
+    const modalBg = document.getElementById('cal-event-modal');
+    if (modalBg) {
+      modalBg.addEventListener('click', function(e) {
+        if (e.target === this) closeCalModal();
+      });
+    }
+  });
 </script>
 </body>
 </html>
